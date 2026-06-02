@@ -1,0 +1,2422 @@
+<!DOCTYPE html>
+<html lang="no"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Clean — for bedriftskunder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("df720d07-bdb0-41ce-990f-8ed7e84aba51") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("61a2aa2c-f660-49ff-b6d3-4d64ff13dd55") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("c2d4de09-c045-421f-a8d8-7b38f00c85d1") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("99089934-6d4b-4b36-bc27-c8f98fbc38db") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("65f9c152-5755-4f10-b182-c8b58ea1f153") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("cef953c9-5e0d-4faa-b021-8089ca6990ad") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("af111210-1865-4420-ac81-6b5fa58b234e") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("df720d07-bdb0-41ce-990f-8ed7e84aba51") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("61a2aa2c-f660-49ff-b6d3-4d64ff13dd55") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("c2d4de09-c045-421f-a8d8-7b38f00c85d1") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("99089934-6d4b-4b36-bc27-c8f98fbc38db") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("65f9c152-5755-4f10-b182-c8b58ea1f153") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("cef953c9-5e0d-4faa-b021-8089ca6990ad") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("af111210-1865-4420-ac81-6b5fa58b234e") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("df720d07-bdb0-41ce-990f-8ed7e84aba51") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("61a2aa2c-f660-49ff-b6d3-4d64ff13dd55") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("c2d4de09-c045-421f-a8d8-7b38f00c85d1") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("99089934-6d4b-4b36-bc27-c8f98fbc38db") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("65f9c152-5755-4f10-b182-c8b58ea1f153") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("cef953c9-5e0d-4faa-b021-8089ca6990ad") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("af111210-1865-4420-ac81-6b5fa58b234e") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("df720d07-bdb0-41ce-990f-8ed7e84aba51") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("61a2aa2c-f660-49ff-b6d3-4d64ff13dd55") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("c2d4de09-c045-421f-a8d8-7b38f00c85d1") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("99089934-6d4b-4b36-bc27-c8f98fbc38db") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("65f9c152-5755-4f10-b182-c8b58ea1f153") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("cef953c9-5e0d-4faa-b021-8089ca6990ad") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("af111210-1865-4420-ac81-6b5fa58b234e") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("d8251243-328a-437a-983d-86a10ccb0628") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("b275ea6d-72cb-4022-8ac1-3cea83e6bd44") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("3d044f5a-5e4d-4a41-bc67-836cda3e5337") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("cdbba77e-ef13-441a-8432-cf1e51326c2d") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("d8251243-328a-437a-983d-86a10ccb0628") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("b275ea6d-72cb-4022-8ac1-3cea83e6bd44") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("3d044f5a-5e4d-4a41-bc67-836cda3e5337") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("cdbba77e-ef13-441a-8432-cf1e51326c2d") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("184c734e-ea24-46de-9a1e-c5a3aa40a0f3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2c2b9ed3-b940-4f16-8458-34825eecd9aa") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("f1d1179a-dfeb-4ff1-95ef-4d0e024c43e9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("8767330b-9767-4145-829a-70021ab3f968") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("184c734e-ea24-46de-9a1e-c5a3aa40a0f3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("2c2b9ed3-b940-4f16-8458-34825eecd9aa") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("f1d1179a-dfeb-4ff1-95ef-4d0e024c43e9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("8767330b-9767-4145-829a-70021ab3f968") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("184c734e-ea24-46de-9a1e-c5a3aa40a0f3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("2c2b9ed3-b940-4f16-8458-34825eecd9aa") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("f1d1179a-dfeb-4ff1-95ef-4d0e024c43e9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("8767330b-9767-4145-829a-70021ab3f968") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("184c734e-ea24-46de-9a1e-c5a3aa40a0f3") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("2c2b9ed3-b940-4f16-8458-34825eecd9aa") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("f1d1179a-dfeb-4ff1-95ef-4d0e024c43e9") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("8767330b-9767-4145-829a-70021ab3f968") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #F4EFE6;
+    --bg-card: #FFFFFF;
+    --ink: #1F2A24;
+    --ink-soft: #4A554E;
+    --ink-muted: #8A9089;
+    --line: #E5DFD3;
+    --accent: #1F3D2F;
+    --accent-soft: #D5DDD3;
+    --warn: #A34E1C;
+    --warn-soft: #F2E0D0;
+    --success: #1F3D2F;
+  }
+
+  html, body {
+    background: #1A1D1A;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(45,74,62,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(180,84,31,0.08) 0%, transparent 50%),
+      #1A1D1A;
+  }
+
+  .device-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .device-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: rgba(245,242,237,0.5);
+    letter-spacing: 0.02em;
+  }
+
+  .phone {
+    width: 390px;
+    max-width: 100%;
+    height: 780px;
+    background: var(--bg);
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 0 0 10px #0a0a0a,
+      0 0 0 11px #2a2a2a,
+      0 30px 80px rgba(0,0,0,0.6),
+      0 10px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Status bar */
+  .status-bar {
+    height: 44px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    flex-shrink: 0;
+    padding-top: 8px;
+  }
+
+  .status-icons { display: flex; gap: 5px; align-items: center; }
+  .status-icons svg { width: 16px; height: 11px; }
+
+  /* Notch */
+  .notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 32px;
+    background: #0a0a0a;
+    border-radius: 20px;
+    z-index: 10;
+  }
+
+  /* App content area */
+  .app-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .app-content::-webkit-scrollbar { display: none; }
+
+  /* Screen */
+  .screen {
+    display: none;
+    padding: 8px 24px 100px;
+    animation: fadeIn 0.3s ease;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Typography */
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  h1.screen-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+  h1.screen-title em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+
+  /* HOME SCREEN */
+  .greeting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #F5F2ED;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .hero-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(217,225,220,0.08) 0%, transparent 70%);
+  }
+
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(217,225,220,0.12);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .hero-status .dot {
+    width: 6px;
+    height: 6px;
+    background: #7FB98A;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+  .hero-headline strong { font-weight: 500; }
+
+  .hero-meta {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(245,242,237,0.1);
+  }
+  .hero-meta-item .label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,242,237,0.5);
+    margin-bottom: 3px;
+  }
+  .hero-meta-item .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(244,239,230,0.75);
+    margin-top: 4px;
+    position: relative;
+  }
+
+  /* Hurtighandlinger — editorial liste */
+  .quick-list {
+    margin: 4px 0 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .quick-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 4px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: padding 0.2s ease;
+  }
+  .quick-row:active { background: rgba(31,61,47,0.03); }
+
+  .quick-row .row-icon {
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+  .quick-row.warn .row-icon { color: var(--warn); }
+
+  .quick-row .row-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .quick-row .row-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+  }
+  .quick-row .row-sub {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    letter-spacing: 0.01em;
+  }
+
+  .quick-row .row-arrow {
+    color: var(--ink-muted);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .quick-row:hover .row-arrow,
+  .quick-row:active .row-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+  .quick-row:hover .row-label {
+    color: var(--accent);
+  }
+
+  /* Updates feed */
+  .update-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .update-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .update-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .update-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .update-author {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .update-time {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .update-body {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  .update-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  .like-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--ink-soft);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .like-btn:active { transform: scale(0.94); }
+  .like-btn.liked {
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
+    color: var(--accent);
+  }
+  .like-btn.liked svg { fill: var(--accent); }
+
+  /* REPORT SCREEN */
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0;
+    cursor: pointer;
+    margin-top: 8px;
+    font-family: inherit;
+  }
+  .back-btn:active { opacity: 0.6; }
+
+  .input-group {
+    margin-bottom: 16px;
+  }
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .input-field {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .input-field:focus {
+    border-color: var(--accent);
+  }
+  textarea.input-field {
+    resize: none;
+    min-height: 90px;
+    line-height: 1.5;
+  }
+
+  .photo-upload {
+    background: var(--bg-card);
+    border: 1.5px dashed var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .photo-upload:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .photo-upload .icon {
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .photo-upload .label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .photo-upload .hint {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    padding: 8px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .chip.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .primary-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease;
+  }
+  .primary-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* BOOK SCREEN */
+  .service-card {
+    background: var(--bg-card);
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .service-card:active {
+    border-color: var(--accent);
+  }
+
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .service-info {
+    flex: 1;
+  }
+  .service-info .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .service-info .desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .service-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .service-price small {
+    font-size: 10px;
+    color: var(--ink-muted);
+    display: block;
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  /* ACTIVITY SCREEN */
+  .log-group {
+    margin-bottom: 24px;
+  }
+  .log-date {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .log-entry {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    margin-bottom: 8px;
+  }
+  .log-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .log-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .log-time {
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .log-staff {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .log-staff-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .log-staff .name {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .log-tasks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .log-task {
+    font-size: 11px;
+    color: var(--ink-soft);
+    padding: 3px 8px;
+    background: var(--bg);
+    border-radius: 100px;
+  }
+  .log-task::before {
+    content: '✓';
+    margin-right: 4px;
+    color: var(--success);
+  }
+
+  /* CHAT */
+  .chat-contact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .chat-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .chat-msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+  }
+  .chat-msg.them { align-self: flex-start; }
+  .chat-msg.you { align-self: flex-end; align-items: flex-end; }
+
+  .chat-msg .bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .chat-msg.them .bubble {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-bottom-left-radius: 6px;
+  }
+  .chat-msg.you .bubble {
+    background: var(--ink);
+    color: var(--bg);
+    border-bottom-right-radius: 6px;
+  }
+
+  .chat-msg .meta {
+    font-size: 10px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .chat-input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .chat-input-row .input-field { flex: 1; }
+
+  .chat-send {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+  .chat-send:active { transform: scale(0.94); }
+
+  /* NYHETER / FEED */
+  .news-post {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .news-post.pinned {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .news-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    background: rgba(217,225,220,0.15);
+    color: var(--accent-soft);
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+
+  .news-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .news-post.pinned .news-title { color: var(--bg); }
+
+  .news-date {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .news-post.pinned .news-date { color: rgba(245,242,237,0.55); }
+
+  .news-body {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .news-post.pinned .news-body { color: rgba(245,242,237,0.82); }
+
+
+  /* PERM */
+  .doc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .doc-card:active { border-color: var(--accent); }
+
+  .doc-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .doc-info .doc-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .doc-info .doc-meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+
+  /* GALLERI */
+  .gallery-item {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .gallery-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .gallery-date {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+  .gallery-tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 100px;
+    font-weight: 500;
+  }
+
+  .gallery-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .gallery-pic {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .pic-surface {
+    width: 100%;
+    height: 100%;
+  }
+  .pic-surface.dull {
+    background:
+      repeating-linear-gradient(90deg, #5a5a52 0, #5a5a52 30px, #4a4a42 30px, #4a4a42 60px);
+    filter: brightness(0.85);
+  }
+  .pic-surface.shiny {
+    background:
+      linear-gradient(115deg, rgba(255,255,255,0.4) 0%, transparent 40%),
+      repeating-linear-gradient(90deg, #7a7a70 0, #7a7a70 30px, #6a6a60 30px, #6a6a60 60px);
+  }
+  .pic-surface.carpet-dirty {
+    background:
+      radial-gradient(circle at 30% 40%, rgba(60,40,20,0.4) 0%, transparent 25%),
+      radial-gradient(circle at 70% 60%, rgba(80,50,30,0.3) 0%, transparent 20%),
+      #7a6a58;
+  }
+  .pic-surface.carpet-clean {
+    background: #a89a85;
+  }
+  .pic-surface.window-dirty {
+    background:
+      radial-gradient(circle at 40% 30%, rgba(150,140,120,0.5) 0%, transparent 30%),
+      radial-gradient(circle at 70% 70%, rgba(150,140,120,0.4) 0%, transparent 25%),
+      linear-gradient(180deg, #87a5b8 0%, #6b8ba0 100%);
+  }
+  .pic-surface.window-clean {
+    background: linear-gradient(180deg, #a8c5d8 0%, #87a5b8 100%);
+  }
+  .pic-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 3px 8px;
+    background: rgba(26,29,26,0.85);
+    color: #F5F2ED;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 100px;
+  }
+
+  /* MIN SIDE / PROFILE */
+  .profile-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 6px 18px;
+  }
+  .profile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .profile-key {
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.03em;
+  }
+  .profile-val {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .user-row {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .user-info { flex: 1; }
+  .user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .user-badge {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 100px;
+    font-weight: 500;
+  }
+  .user-role {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .invite-card {
+    background: var(--accent-soft);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .invite-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .invite-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .invite-sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .settings-row:active { border-color: var(--accent); }
+  .settings-row.logout .settings-label { color: var(--warn); }
+  .settings-row.logout svg { color: var(--warn); }
+  .settings-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* Avatar som knapp */
+  .avatar {
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .avatar:active { transform: scale(0.94); }
+
+  /* Bottom navigation */
+  .tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 84px;
+    background: rgba(245,242,237,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 16px 24px;
+    z-index: 5;
+  }
+
+  .tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 0;
+    font-family: inherit;
+    color: var(--ink-muted);
+    transition: color 0.15s ease;
+  }
+  .tab.active { color: var(--ink); }
+  .tab svg { width: 22px; height: 22px; stroke-width: 1.5; }
+  .tab .tab-label {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  /* Home indicator */
+  .home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    background: var(--ink);
+    border-radius: 100px;
+    opacity: 0.3;
+    z-index: 6;
+  }
+
+  /* Success toast */
+  .toast {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 20;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .logo-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .logo-brand em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  @media (max-width: 440px) {
+    body { padding: 12px 0; }
+    .phone {
+      border-radius: 0;
+      box-shadow: none;
+      height: 100vh;
+      max-height: none;
+    }
+    .device-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="device-wrapper">
+  <div class="device-label">Kundeapp — <em>Living Clean</em></div>
+
+  <div class="phone">
+    <div class="notch"></div>
+
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <svg viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"></rect><rect x="4" y="5" width="3" height="6" rx="0.5"></rect><rect x="8" y="2" width="3" height="9" rx="0.5"></rect><rect x="12" y="0" width="3" height="11" rx="0.5"></rect></svg>
+        <svg viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="3" width="11" height="6" rx="1.5"></rect><rect x="3" y="5" width="7" height="2" rx="0.5" fill="currentColor"></rect><path d="M13 5v2"></path></svg>
+      </div>
+    </div>
+
+    <div class="app-content" id="appContent">
+
+      <!-- HOME SCREEN -->
+      <div class="screen active" id="screen-home">
+        <div class="greeting-row">
+          <div>
+            <span class="eyebrow">Mandag, 20. april</span>
+            <div class="logo-brand">Living<em> Clean</em></div>
+          </div>
+          <div class="avatar" onclick="goTo('profile')" role="button" aria-label="Min side">SB</div>
+        </div>
+
+        <h1 class="screen-title">God morgen,<br><em>Solvik Bygg</em></h1>
+
+        <div class="hero-card">
+          <div class="hero-status"><span class="dot"></span> Miljøfyrtårn-sertifisert</div>
+          <div class="hero-headline">Renhold med<br><em>miljø</em> i fokus.</div>
+          <p class="hero-sub">Takk for at dere velger Living Clean. Her finner dere alt på ett sted — fra daglig renhold til ekstraoppdrag.</p>
+        </div>
+
+        <div class="quick-list">
+          <div class="quick-row warn" onclick="goTo('report')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path></svg>
+            <div class="row-text">
+              <div class="row-label">Meld inn</div>
+              <div class="row-sub">Avvik, tomt, ødelagt</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+
+          <div class="quick-row" onclick="goTo('book')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div class="row-text">
+              <div class="row-label">Bestill ekstra</div>
+              <div class="row-sub">Vindus, nedvask m.m.</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+
+          <div class="quick-row" onclick="goTo('kantine')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"></path></svg>
+            <div class="row-text">
+              <div class="row-label">Kantine</div>
+              <div class="row-sub">Frukt, lunsj, drikke</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+
+          <div class="quick-row" onclick="goTo('chat')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg>
+            <div class="row-text">
+              <div class="row-label">Kontakt oss</div>
+              <div class="row-sub">Svar på minutter</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+
+          <div class="quick-row" onclick="goTo('galleri')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <div class="row-text">
+              <div class="row-label">Før og etter</div>
+              <div class="row-sub">Bilder fra periodisk</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+
+          <div class="quick-row" onclick="goTo('perm')">
+            <svg class="row-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>
+            <div class="row-text">
+              <div class="row-label">Perm</div>
+              <div class="row-sub">HMS, rapporter, kontrakt</div>
+            </div>
+            <svg class="row-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </div>
+
+        <h2 class="section-title">Oppdateringer</h2>
+
+        <article class="update-card">
+          <div class="update-head">
+            <div class="update-brand">
+              <div class="update-logo">LC</div>
+              <div>
+                <div class="update-author">Living Clean</div>
+                <div class="update-time">2 timer siden</div>
+              </div>
+            </div>
+          </div>
+          <div class="update-body">Vi har byttet til Svanemerket allroundsåpe på alle lokasjoner. Bedre for inneklima, samme pris for dere.</div>
+          <div class="update-actions">
+            <button class="like-btn" onclick="toggleLike(this)" aria-label="Lik">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+              <span class="like-count">24</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="update-card">
+          <div class="update-head">
+            <div class="update-brand">
+              <div class="update-logo">LC</div>
+              <div>
+                <div class="update-author">Living Clean</div>
+                <div class="update-time">I går</div>
+              </div>
+            </div>
+          </div>
+          <div class="update-body">Påskeuken nærmer seg — skjærtorsdag og langfredag har vi minimumsbemanning. Daglig renhold er normalt fra 2. påskedag.</div>
+          <div class="update-actions">
+            <button class="like-btn" onclick="toggleLike(this)" aria-label="Lik">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+              <span class="like-count">18</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="update-card">
+          <div class="update-head">
+            <div class="update-brand">
+              <div class="update-logo">LC</div>
+              <div>
+                <div class="update-author">Living Clean</div>
+                <div class="update-time">3 dager siden</div>
+              </div>
+            </div>
+          </div>
+          <div class="update-body">Tips: bruk "Før og etter"-galleriet til å se resultatet av periodisk arbeid. Fint å vise sjefen eller huseier hva som faktisk er gjort.</div>
+          <div class="update-actions">
+            <button class="like-btn" onclick="toggleLike(this)" aria-label="Lik">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+              <span class="like-count">41</span>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- NYHETER / FEED SCREEN -->
+      <div class="screen" id="screen-news">
+        <span class="eyebrow">Fra Living Clean til alle kunder</span>
+        <h1 class="screen-title">Nyheter</h1>
+
+        <article class="news-post pinned">
+          <div class="news-tag">Festet innlegg</div>
+          <h3 class="news-title">Påskeuken 2026 — redusert drift</h3>
+          <div class="news-date">Publisert 15. april</div>
+          <p class="news-body">Skjærtorsdag og langfredag har vi minimumsbemanning. Daglig renhold utføres som normalt fra og med 2. påskedag. Ekstraoppdrag kan bestilles som vanlig i appen.</p>
+        </article>
+
+        <article class="news-post">
+          <h3 class="news-title">Nytt Svanemerket vaskemiddel i bruk</h3>
+          <div class="news-date">11. april</div>
+          <p class="news-body">Vi har byttet ut allroundsåpen til et Svanemerket alternativ som er bedre for inneklima og allergikere. Ingen endring i pris for dere.</p>
+        </article>
+
+        <article class="news-post">
+          <h3 class="news-title">Ny i teamet — velkommen Thomas</h3>
+          <div class="news-date">3. april</div>
+          <p class="news-body">Thomas Eide starter hos oss denne uken og vil dekke vindus- og spesialoppdrag i Bergen sentrum. Du møter ham sikkert snart.</p>
+        </article>
+
+        <article class="news-post">
+          <h3 class="news-title">Priser justert fra 1. mai</h3>
+          <div class="news-date">28. mars</div>
+          <p class="news-body">Årlig indeksregulering tilsvarer 2,8 % for 2026. Faktura i mai viser ny sats. Kontakt oss ved spørsmål.</p>
+        </article>
+      </div>
+
+      <!-- REPORT SCREEN -->
+      <div class="screen" id="screen-report">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Meld inn</span>
+        <h1 class="screen-title">Hva gjelder<br><em>det?</em></h1>
+
+        <div class="input-group">
+          <label>Kategori</label>
+          <div class="chips-row">
+            <div class="chip active" onclick="toggleChip(this)">Avvik</div>
+            <div class="chip" onclick="toggleChip(this)">Tomt for</div>
+            <div class="chip" onclick="toggleChip(this)">Ødelagt</div>
+            <div class="chip" onclick="toggleChip(this)">Tapt og funnet</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Hvor på bygget?</label>
+          <input type="text" class="input-field" value="2. etasje, møterom Fjord" readonly="">
+        </div>
+
+        <div class="input-group">
+          <label>Beskrivelse</label>
+          <textarea class="input-field" placeholder="Beskriv kort hva det gjelder..."></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Bilde (valgfritt men anbefalt)</label>
+          <div class="photo-upload" onclick="showToast('Kamera åpnes')">
+            <div class="icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            </div>
+            <div class="label">Ta bilde eller last opp</div>
+            <div class="hint">Hjelper oss rette opp raskere</div>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="submitReport()">Send melding</button>
+      </div>
+
+      <!-- BOOK SCREEN -->
+      <div class="screen" id="screen-book">
+        <span class="eyebrow">Bestill tjeneste</span>
+        <h1 class="screen-title">Trenger dere<br><em>noe mer?</em></h1>
+
+        <div class="service-card" onclick="showToast('Åpner booking')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Vindusvask</div>
+            <div class="desc">Innvendig + utvendig · 2–3 timer</div>
+          </div>
+          <div class="service-price">2 850<small>fra kr</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Åpner booking')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Gulvbehandling</div>
+            <div class="desc">Polering og voksing · hele bygget</div>
+          </div>
+          <div class="service-price">6 400<small>fra kr</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Åpner booking')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Nedvask før overtakelse</div>
+            <div class="desc">Grundig renhold · etter flytting</div>
+          </div>
+          <div class="service-price">Tilbud<small>ring oss</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Åpner booking')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Teppe og møbelrens</div>
+            <div class="desc">Flekkfjerning og dyprens</div>
+          </div>
+          <div class="service-price">3 200<small>fra kr</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Åpner booking')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12h6l2-3 4 6 2-3h6"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Desinfisering</div>
+            <div class="desc">Etter sykdomsutbrudd · rask</div>
+          </div>
+          <div class="service-price">1 950<small>fra kr</small></div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 24px;">Hurtigbestilling</h2>
+
+        <div class="service-card" onclick="showToast('Såpe bestilt')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Etterfyll forbruksvarer</div>
+            <div class="desc">Standardpakke · levert innen 48t</div>
+          </div>
+          <div class="service-price">890<small>kr</small></div>
+        </div>
+      </div>
+
+      <!-- KANTINE SCREEN -->
+      <div class="screen" id="screen-kantine">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Kantine</span>
+        <h1 class="screen-title">Mat og <em>frukt</em></h1>
+
+        <div class="service-card" onclick="showToast('Lagt til i bestilling')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"></path><path d="M12 6c-3 0-5 2-5 5"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Fruktkurv — ukentlig</div>
+            <div class="desc">Sesongfrukt, ca. 6 kg · hver mandag</div>
+          </div>
+          <div class="service-price">540<small>kr / uke</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Lagt til i bestilling')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h18M5 12V7a2 2 0 012-2h10a2 2 0 012 2v5M7 12v8h10v-8"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Lunsjlevering</div>
+            <div class="desc">Smørbrød, salater og varm mat</div>
+          </div>
+          <div class="service-price">Fra 95<small>kr / person</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Lagt til i bestilling')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Kaffe og te</div>
+            <div class="desc">Bønner, filter, te-utvalg · etterfyll</div>
+          </div>
+          <div class="service-price">320<small>fra kr</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Lagt til i bestilling')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2h8l1 4H7l1-4zM4 6h16l-1 14a2 2 0 01-2 2H7a2 2 0 01-2-2L4 6z"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Drikke — kjøleskap</div>
+            <div class="desc">Mineralvann, juice, brus</div>
+          </div>
+          <div class="service-price">Fra 420<small>pr. levering</small></div>
+        </div>
+
+        <div class="service-card" onclick="showToast('Lagt til i bestilling')">
+          <div class="service-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+          </div>
+          <div class="service-info">
+            <div class="name">Møtemat — bestill ved behov</div>
+            <div class="desc">Wraps, kaker, frukt · 24t varsel</div>
+          </div>
+          <div class="service-price">Tilbud<small>ring oss</small></div>
+        </div>
+
+        <button class="primary-btn" onclick="showToast('Bestilling sendt')">Gå til bestilling</button>
+      </div>
+
+      <!-- CHAT SCREEN -->
+      <div class="screen" id="screen-chat">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Direktekontakt</span>
+        <h1 class="screen-title">Chat med <em>oss</em></h1>
+
+        <div class="chat-contact">
+          <div class="log-staff-avatar" style="width:40px;height:40px;font-size:13px;">LO</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:var(--ink);">Lise Olsen</div>
+            <div style="font-size:12px;color:var(--ink-muted);">Driftsansvarlig · svarer vanligvis innen 15 min</div>
+          </div>
+        </div>
+
+        <div class="chat-thread">
+          <div class="chat-msg them">
+            <div class="bubble">Hei Solvik Bygg, alt vel? Si fra om det er noe vi kan hjelpe med 👋</div>
+            <div class="meta">Lise · 08:22</div>
+          </div>
+
+          <div class="chat-msg you">
+            <div class="bubble">Hei! Kan dere ta en ekstra runde på møterommene fredag? Vi har besøk.</div>
+            <div class="meta">Du · 09:14</div>
+          </div>
+
+          <div class="chat-msg them">
+            <div class="bubble">Klart det. Jeg setter det opp til fredag kl. 07:00 så er alt klart før dere kommer.</div>
+            <div class="meta">Lise · 09:18</div>
+          </div>
+        </div>
+
+        <div class="chat-input-row">
+          <input type="text" class="input-field" placeholder="Skriv melding...">
+          <button class="chat-send" onclick="showToast('Melding sendt')" aria-label="Send">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ACTIVITY / LOG SCREEN -->
+      <div class="screen" id="screen-log">
+        <span class="eyebrow">Dokumentasjon</span>
+        <h1 class="screen-title">Renholdslogg</h1>
+
+        <div class="log-group">
+          <div class="log-date">Denne uken</div>
+
+          <div class="log-entry">
+            <div class="log-top">
+              <div class="log-title">Daglig renhold</div>
+              <div class="log-time">Man. 06:15 — 08:40</div>
+            </div>
+            <div class="log-staff">
+              <div class="log-staff-avatar">MH</div>
+              <div class="name">Maria Hansen</div>
+            </div>
+            <div class="log-tasks">
+              <span class="log-task">Kontorer</span>
+              <span class="log-task">Sanitær</span>
+              <span class="log-task">Kjøkken</span>
+              <span class="log-task">Søppel</span>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-top">
+              <div class="log-title">Daglig renhold</div>
+              <div class="log-time">Fre. 06:08 — 08:52</div>
+            </div>
+            <div class="log-staff">
+              <div class="log-staff-avatar">MH</div>
+              <div class="name">Maria Hansen</div>
+            </div>
+            <div class="log-tasks">
+              <span class="log-task">Kontorer</span>
+              <span class="log-task">Sanitær</span>
+              <span class="log-task">Periodisk støvtørk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="log-group">
+          <div class="log-date">Forrige uke</div>
+
+          <div class="log-entry">
+            <div class="log-top">
+              <div class="log-title">Vindusvask — innvendig</div>
+              <div class="log-time">Ons. 09:00 — 12:30</div>
+            </div>
+            <div class="log-staff">
+              <div class="log-staff-avatar">TE</div>
+              <div class="name">Thomas Eide</div>
+            </div>
+            <div class="log-tasks">
+              <span class="log-task">1.–4. etg.</span>
+              <span class="log-task">Glassdører</span>
+              <span class="log-task">Resepsjon</span>
+            </div>
+          </div>
+
+          <div class="log-entry">
+            <div class="log-top">
+              <div class="log-title">Daglig renhold</div>
+              <div class="log-time">Tirs. 06:10 — 08:30</div>
+            </div>
+            <div class="log-staff">
+              <div class="log-staff-avatar">MH</div>
+              <div class="name">Maria Hansen</div>
+            </div>
+            <div class="log-tasks">
+              <span class="log-task">Kontorer</span>
+              <span class="log-task">Sanitær</span>
+              <span class="log-task">Kjøkken</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERM SCREEN -->
+      <div class="screen" id="screen-perm">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Digital perm</span>
+        <h1 class="screen-title">Alt <em>samlet</em></h1>
+
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:20px;">Klart til tilsyn, revisjon eller intern dokumentasjon.</p>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">Renholdsplan 2026</div>
+            <div class="doc-meta">PDF · 4 sider · oppdatert 3. jan</div>
+          </div>
+        </div>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 2"></path></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">Kontrakt og SLA</div>
+            <div class="doc-meta">PDF · signert 14. sept 2025</div>
+          </div>
+        </div>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">HMS-datablader (7 stk)</div>
+            <div class="doc-meta">Alle produkter i bruk · oppdatert løpende</div>
+          </div>
+        </div>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">Forsikringsbevis</div>
+            <div class="doc-meta">Ansvarsforsikring · gyldig til 31.12.2026</div>
+          </div>
+        </div>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">Opplæringsbevis — ansatte</div>
+            <div class="doc-meta">Maria, Thomas, Lise · NHO Service</div>
+          </div>
+        </div>
+
+        <div class="doc-card" onclick="showToast('Åpner dokument')">
+          <div class="doc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>
+          </div>
+          <div class="doc-info">
+            <div class="doc-name">Månedsrapport · mars 2026</div>
+            <div class="doc-meta">PDF · utført arbeid, avvik, miljødata</div>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="showToast('Alle filer lastet ned')">Last ned hele permen</button>
+      </div>
+
+      <!-- GALLERI SCREEN -->
+      <div class="screen" id="screen-galleri">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Periodisk arbeid</span>
+        <h1 class="screen-title">Før og <em>etter</em></h1>
+
+        <div class="gallery-item">
+          <div class="gallery-head">
+            <div>
+              <div class="gallery-title">Gulvbehandling · resepsjon</div>
+              <div class="gallery-date">12. april 2026</div>
+            </div>
+            <div class="gallery-tag">Polering</div>
+          </div>
+          <div class="gallery-pair">
+            <div class="gallery-pic before">
+              <div class="pic-surface dull"></div>
+              <span class="pic-label">Før</span>
+            </div>
+            <div class="gallery-pic after">
+              <div class="pic-surface shiny"></div>
+              <span class="pic-label">Etter</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-head">
+            <div>
+              <div class="gallery-title">Teppe rens · møterom Fjord</div>
+              <div class="gallery-date">28. mars 2026</div>
+            </div>
+            <div class="gallery-tag">Dyprens</div>
+          </div>
+          <div class="gallery-pair">
+            <div class="gallery-pic before">
+              <div class="pic-surface carpet-dirty"></div>
+              <span class="pic-label">Før</span>
+            </div>
+            <div class="gallery-pic after">
+              <div class="pic-surface carpet-clean"></div>
+              <span class="pic-label">Etter</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-head">
+            <div>
+              <div class="gallery-title">Vindusvask · 3. etasje</div>
+              <div class="gallery-date">15. mars 2026</div>
+            </div>
+            <div class="gallery-tag">Utvendig</div>
+          </div>
+          <div class="gallery-pair">
+            <div class="gallery-pic before">
+              <div class="pic-surface window-dirty"></div>
+              <span class="pic-label">Før</span>
+            </div>
+            <div class="gallery-pic after">
+              <div class="pic-surface window-clean"></div>
+              <span class="pic-label">Etter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIN SIDE / PROFILE SCREEN -->
+      <div class="screen" id="screen-profile">
+        <button class="back-btn" onclick="goTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+          Tilbake
+        </button>
+
+        <span class="eyebrow">Min side</span>
+        <h1 class="screen-title">Solvik <em>Bygg</em></h1>
+
+        <div class="profile-summary">
+          <div class="profile-row">
+            <div class="profile-key">Kontaktperson</div>
+            <div class="profile-val">Ola Solvik</div>
+          </div>
+          <div class="profile-row">
+            <div class="profile-key">E-post</div>
+            <div class="profile-val">ola@solvikbygg.no</div>
+          </div>
+          <div class="profile-row">
+            <div class="profile-key">Adresse</div>
+            <div class="profile-val">Storgata 14, 5003 Bergen</div>
+          </div>
+          <div class="profile-row">
+            <div class="profile-key">Kundenr.</div>
+            <div class="profile-val">LC-2241</div>
+          </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:28px;">Brukere på kontoen</h2>
+
+        <div class="user-row">
+          <div class="user-avatar">OS</div>
+          <div class="user-info">
+            <div class="user-name">Ola Solvik <span class="user-badge">Admin</span></div>
+            <div class="user-role">Daglig leder</div>
+          </div>
+        </div>
+
+        <div class="user-row">
+          <div class="user-avatar">KH</div>
+          <div class="user-info">
+            <div class="user-name">Kari Haugen</div>
+            <div class="user-role">Kontorleder</div>
+          </div>
+        </div>
+
+        <div class="user-row">
+          <div class="user-avatar">JN</div>
+          <div class="user-info">
+            <div class="user-name">Jon Nilsen</div>
+            <div class="user-role">Vaktmester</div>
+          </div>
+        </div>
+
+        <div class="invite-card">
+          <div class="invite-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          </div>
+          <div class="invite-text">
+            <div class="invite-title">Inviter flere fra bedriften</div>
+            <div class="invite-sub">Vaktmester, kontorleder, HR — alle kan få tilgang med ulike rettigheter.</div>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="showToast('Åpner invitasjon')">Send invitasjon</button>
+
+        <h2 class="section-title" style="margin-top:28px;">Innstillinger</h2>
+
+        <div class="settings-row" onclick="showToast('Åpner varslinger')">
+          <div class="settings-label">Varslinger</div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+        </div>
+        <div class="settings-row" onclick="showToast('Åpner faktura')">
+          <div class="settings-label">Fakturahistorikk</div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+        </div>
+        <div class="settings-row" onclick="showToast('Åpner språkvalg')">
+          <div class="settings-label">Språk — Norsk</div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+        </div>
+        <div class="settings-row logout" onclick="showToast('Logger ut...')">
+          <div class="settings-label">Logg ut</div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"></path></svg>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="toast" id="toast">Melding sendt</div>
+
+    <div class="tab-bar">
+      <button class="tab active" data-screen="home" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span class="tab-label">Hjem</span>
+      </button>
+      <button class="tab" data-screen="book" onclick="goTo('book')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span class="tab-label">Bestill</span>
+      </button>
+      <button class="tab" data-screen="log" onclick="goTo('log')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>
+        <span class="tab-label">Logg</span>
+      </button>
+      <button class="tab" data-screen="news" onclick="goTo('news')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6z"></path></svg>
+        <span class="tab-label">Nyheter</span>
+      </button>
+    </div>
+
+    <div class="home-indicator"></div>
+  </div>
+</div>
+
+<script>
+  function goTo(screen) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + screen).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    const tab = document.querySelector('.tab[data-screen="' + screen + '"]');
+    if (tab) tab.classList.add('active');
+    document.getElementById('appContent').scrollTop = 0;
+  }
+
+  function toggleChip(el) {
+    el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function toggleLike(btn) {
+    const countEl = btn.querySelector('.like-count');
+    const current = parseInt(countEl.textContent, 10);
+    if (btn.classList.contains('liked')) {
+      btn.classList.remove('liked');
+      countEl.textContent = current - 1;
+    } else {
+      btn.classList.add('liked');
+      countEl.textContent = current + 1;
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function submitReport() {
+    showToast('Avvik sendt — svar innen 15 min');
+    setTimeout(() => goTo('home'), 1200);
+  }
+</script>
+
+
+
+</body></html>
