@@ -18,7 +18,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
-  :root{--zoom:1.5}
+  :root{--zoom:1.25}
   body{font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow:hidden}
   .mono{font-family:'IBM Plex Mono',monospace;font-feature-settings:"tnum"}
   .app{display:grid;grid-template-rows:46px 1fr 22px;grid-template-columns:62px 1fr;width:calc(100vw / var(--zoom));height:calc(100vh / var(--zoom));transform:scale(var(--zoom));transform-origin:0 0}
@@ -598,7 +598,8 @@
   /* drag-to-assign: queue → cleaner row, and move existing blocks */
   let drag=null;
   function clearGhosts(){document.querySelectorAll('#sched-tl .gblk').forEach(g=>g.remove());}
-  function dropTime(e,track){const r=track.getBoundingClientRect();const t=DSTART+(e.clientX-r.left)/HOURW;return Math.max(DSTART,Math.min(DEND-drag.dur,Math.round(t*2)/2));}
+  const ZOOM=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--zoom'))||1;
+  function dropTime(e,track){const r=track.getBoundingClientRect();const t=DSTART+(e.clientX-r.left)/ZOOM/HOURW;return Math.max(DSTART,Math.min(DEND-drag.dur,Math.round(t*2)/2));}
   document.getElementById('sched-queue').addEventListener('dragstart',e=>{const u=e.target.closest('.uq');if(u){drag={k:'q',i:+u.dataset.i,dur:UNASSIGNED[+u.dataset.i].dur};e.dataTransfer.effectAllowed='move';}});
   const STL=document.getElementById('sched-tl');
   STL.addEventListener('dragstart',e=>{const b=e.target.closest('.sblock');if(b&&!b.classList.contains('gblk')){const j=SCHED[+b.dataset.i];drag={k:'b',i:+b.dataset.i,dur:j.e-j.s};e.dataTransfer.effectAllowed='move';}});
@@ -740,7 +741,7 @@
       const body=TAB[sec.active].body;const w=document.createElement('div');w.innerHTML=(typeof body==='function'?body():body);el.appendChild(w.firstElementChild);return el;}
     function zone(pos,isResizer,aboveEl){const z=document.createElement('div');z.className='dropzone'+(isResizer?' rsz':'');
       if(isResizer)z.addEventListener('mousedown',e=>{e.preventDefault();document.body.style.cursor='row-resize';document.body.style.userSelect='none';
-        const move=ev=>{const r=aboveEl.getBoundingClientRect();aboveEl.style.flex='0 0 '+Math.max(70,ev.clientY-r.top)+'px';};
+        const move=ev=>{const r=aboveEl.getBoundingClientRect();aboveEl.style.flex='0 0 '+Math.max(70,(ev.clientY-r.top)/ZOOM)+'px';};
         const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.body.style.cursor='';document.body.style.userSelect='';};
         document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);});
       z.addEventListener('dragover',e=>{if(dragId==null||!canCreate())return;e.preventDefault();z.classList.add('ins');});
@@ -790,7 +791,7 @@
 
   document.querySelectorAll('.rsz-x').forEach(rz=>{rz.addEventListener('mousedown',e=>{e.preventDefault();const panes=rz.closest('.panes');const target=rz.dataset.rz==='next'?rz.nextElementSibling:rz.previousElementSibling;const mode=rz.dataset.rz;
     document.body.style.cursor='col-resize';document.body.style.userSelect='none';
-    const move=ev=>{const pr=panes.getBoundingClientRect();const w=mode==='next'?Math.max(230,Math.min(560,pr.right-ev.clientX)):Math.max(180,Math.min(440,ev.clientX-pr.left));target.style.setProperty('--w',w+'px');target.style.width=w+'px';};
+    const move=ev=>{const pr=panes.getBoundingClientRect();const raw=mode==='next'?(pr.right-ev.clientX)/ZOOM:(ev.clientX-pr.left)/ZOOM;const w=mode==='next'?Math.max(230,Math.min(560,raw)):Math.max(180,Math.min(440,raw));target.style.setProperty('--w',w+'px');target.style.width=w+'px';};
     const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.body.style.cursor='';document.body.style.userSelect='';};
     document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);});});
 
