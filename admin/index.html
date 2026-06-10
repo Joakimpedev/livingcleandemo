@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LivingClean — Operations (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#eceef0; --rail:#ffffff; --rail-ic:#39414a; --rail-lb:#525a62;
+    --topbar:#dde0e4; --chrome:#f3f4f6; --panel:#ffffff; --panel-2:#f6f7f9; --hd:#eef0f2;
+    --line:#cbd0d6; --line-2:#dde1e5; --ink:#1a1e23; --muted:#5f666e; --faint:#8a919a;
+    --accent:#2d5d8c; --accent-bg:#e6edf4; --accent-d:#234b71;
+    --amber:#9a6a12; --amber-bg:#f6ecd6; --red:#a82820; --red-bg:#f5dedb;
+    --green:#226a3c; --green-bg:#dcebe1; --blue:#2a5379; --blue-bg:#dee7f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;color:var(--ink);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow:hidden}
+  .mono{font-family:'IBM Plex Mono',monospace;font-feature-settings:"tnum"}
+  .app{display:grid;grid-template-rows:46px 1fr 22px;grid-template-columns:62px 1fr;height:100vh}
+
+  .topbar{grid-column:1/3;display:flex;align-items:center;background:var(--topbar);border-bottom:1px solid var(--line);height:46px;padding-left:10px}
+  .search{width:330px;position:relative}
+  .search input{width:100%;height:28px;background:#fff;border:1px solid var(--line);padding:0 12px 0 30px;font-family:inherit;font-size:12px;color:var(--ink);outline:none;border-radius:14px}
+  .search input:focus{border-color:var(--accent)}
+  .search .si{position:absolute;left:9px;top:7px;color:var(--faint)}
+  .topbar .spacer{flex:1}
+  .ticon{width:40px;height:46px;display:grid;place-items:center;color:var(--muted);position:relative;cursor:pointer;border-left:1px solid var(--line)}
+  .ticon:hover{background:#d2d6da;color:var(--ink)}
+  .badge{position:absolute;top:9px;right:8px;background:var(--accent);color:#fff;font-family:'IBM Plex Mono';font-size:8px;min-width:13px;height:13px;display:grid;place-items:center;padding:0 2px;border-radius:7px}
+  .user{display:flex;align-items:center;gap:8px;padding:0 12px;border-left:1px solid var(--line);height:46px;cursor:pointer}
+  .user:hover{background:#d2d6da}
+  .av{width:25px;height:25px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:600;font-family:'IBM Plex Mono';border-radius:4px}
+  .user .un{line-height:1.15}.user .un b{font-size:11.5px;font-weight:600;display:block}.user .un span{font-size:9.5px;color:var(--muted)}
+
+  .rail{background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail .spring{flex:1}
+  .nav{height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--rail-ic);cursor:pointer;position:relative}
+  .nav span{font-size:8.5px;font-weight:500;color:var(--rail-lb)}
+  .nav:hover{background:#f2f3f5}
+  .nav.active{color:var(--accent)}.nav.active span{color:var(--accent);font-weight:600}
+  .nav svg{width:20px;height:20px}
+  .nav svg [fill="#2d5d8c"]{fill:color-mix(in srgb, currentColor 46%, #fff)}
+
+  .work{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--canvas)}
+  .screen{display:none;flex:1 1 auto;flex-direction:column;min-height:0;min-width:0}
+  .screen.on{display:flex}
+
+  .panes{flex:1;display:flex;min-height:0}
+  .rsz-x{flex:0 0 5px;cursor:col-resize;background:var(--canvas);position:relative}
+  .rsz-x::after{content:"";position:absolute;left:2px;top:0;bottom:0;width:1px;background:var(--line)}
+  .rsz-x:hover{background:var(--accent-bg)}
+
+  .listpane{width:var(--w,270px);flex:0 0 auto;display:flex;flex-direction:column;min-height:0;background:var(--panel)}
+  .convcol{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--panel)}
+  .rightcol{width:var(--w,300px);flex:0 0 auto;display:flex;flex-direction:column;min-width:0;background:var(--canvas)}
+  .sect{display:flex;flex-direction:column;min-height:0;background:var(--panel);overflow:hidden}
+
+  .phd{height:28px;flex:0 0 auto;display:flex;align-items:stretch;background:var(--hd);border-bottom:1px solid var(--line)}
+  .ptab{display:flex;align-items:center;gap:8px;padding:0 12px;margin-top:3px;background:var(--panel);border:1px solid var(--line);border-bottom:1px solid var(--panel);margin-bottom:-1px;font-size:11px;font-weight:600;color:var(--ink);white-space:nowrap;border-top-left-radius:7px;border-top-right-radius:7px;cursor:grab}
+  .ptab:active{cursor:grabbing}
+  .ptab.off{background:transparent;border-color:transparent;border-bottom:1px solid var(--line);color:var(--muted);margin-bottom:0;margin-top:4px;font-weight:500}
+  .ptab.off:hover{background:#e6e8ea;color:var(--ink)}
+  .ptab.dragging{opacity:.4}
+  .ptab .cx{color:var(--faint);font-size:14px;font-weight:400}.ptab .cx:hover{color:var(--ink)}
+  .padd{display:flex;align-items:center;padding:0 8px;margin:3px 2px 0;color:var(--faint);font-size:16px;cursor:pointer;border-radius:5px}
+  .padd:hover{background:var(--line-2);color:var(--ink)}
+  .phd .grow{flex:1}
+  .hcnt{display:flex;align-items:center;padding:0 9px;font-family:'IBM Plex Mono';font-size:10px;color:var(--faint)}
+  .hctl{display:flex;align-items:center;gap:9px;padding:0 11px;color:var(--faint);border-left:1px solid var(--line-2)}
+  .hctl svg{width:13px;height:13px;cursor:pointer}.hctl svg:hover{color:var(--ink)}
+  .pbd{flex:1;overflow:auto;min-height:0}
+  .fwrap{position:relative;display:flex;align-items:center;padding:0 8px 0 4px}
+  .fdrop{display:flex;align-items:center;gap:5px;height:22px;padding:0 6px 0 9px;border:1px solid var(--line);background:var(--chrome);border-radius:11px;font-family:inherit;font-size:11px;color:var(--ink);cursor:pointer}
+  .fdrop:hover{background:#e6e8ea}.fdrop .fval{font-weight:500}.fdrop svg{width:11px;height:11px;color:var(--faint)}
+  .fmenu{display:none;position:absolute;top:27px;right:8px;min-width:140px;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 22px rgba(0,0,0,.13);z-index:30;padding:4px}
+  .fmenu.show{display:block}
+  .fopt{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:6px 9px;font-size:11.5px;color:var(--ink);cursor:pointer;border-radius:4px}
+  .fopt:hover{background:var(--accent-bg)}.fopt .oc{font-family:'IBM Plex Mono';font-size:10px;color:var(--faint)}
+
+  .dropzone{flex:0 0 6px;position:relative}
+  .dropzone.rsz{cursor:row-resize}
+  .dropzone.rsz::after{content:"";position:absolute;top:2px;left:0;right:0;height:1px;background:var(--line)}
+  .dropzone.rsz:hover{background:var(--accent-bg)}
+  .dropzone.ins::before{content:"";position:absolute;left:0;right:0;top:1px;height:3px;background:var(--accent);z-index:9}
+  .ghost{flex:0 0 0;align-self:center;height:19px;border:1.5px dashed var(--accent);background:var(--accent-bg);border-radius:6px;box-sizing:border-box;transition:flex-basis .12s ease,margin .12s ease}
+
+  .pill{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.05em;text-transform:uppercase;padding:1px 6px;font-weight:500;white-space:nowrap;border-radius:9px}
+  .pill.open{color:var(--amber);background:var(--amber-bg)}.pill.urgent{color:var(--red);background:var(--red-bg)}
+  .pill.resolved{color:var(--green);background:var(--green-bg)}.pill.waiting{color:var(--blue);background:var(--blue-bg)}
+
+  .listfilter{height:27px;display:flex;align-items:center;padding:0 10px;border-bottom:1px solid var(--line-2);background:var(--panel-2);gap:7px;color:var(--faint)}
+  .listfilter input{border:none;background:none;outline:none;font-family:inherit;font-size:11.5px;flex:1;color:var(--ink)}
+  .trow{display:grid;grid-template-columns:8px 1fr auto;gap:8px;padding:9px 11px 9px 8px;border-bottom:1px solid var(--line-2);cursor:pointer;align-items:start}
+  .trow:hover{background:var(--panel-2)}.trow.sel{background:var(--accent-bg)}
+  .unread{width:7px;height:7px;background:var(--accent);border-radius:50%;margin-top:4px}.trow.read .unread{background:transparent}
+  .tmain .cust{font-size:12.5px;font-weight:600;line-height:1.2}
+  .tmain .subj{font-size:11.5px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+  .tright{display:flex;flex-direction:column;align-items:flex-end;gap:5px}.tright .tm{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint)}
+
+  .convhd{flex:0 0 auto;background:var(--panel);border-bottom:1px solid var(--line);padding:9px 14px}
+  .convhd .top{display:flex;align-items:center;gap:10px}
+  .convhd h2{font-size:14px;font-weight:600}
+  .convhd .tid{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint);margin-left:auto}
+  .convhd .subj{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .convhd .sub2{display:flex;gap:16px;margin-top:8px;font-size:10.5px;color:var(--faint);flex-wrap:wrap}.convhd .sub2 b{color:var(--muted);font-weight:600}
+  .thread{flex:1;overflow:auto;padding:15px 14px;background:var(--panel-2);display:flex;flex-direction:column;gap:13px}
+  .msg{max-width:72%;display:flex;flex-direction:column;gap:4px}.msg.out{align-self:flex-end;align-items:flex-end}
+  .mhd{display:flex;gap:8px;align-items:baseline;font-size:10.5px}.mhd b{font-weight:600}.mhd .t{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint)}
+  .bubble{background:#fff;border:1px solid var(--line);padding:9px 11px;font-size:12.5px;line-height:1.5;border-radius:3px}
+  .msg.out .bubble{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .sysline{align-self:center;font-family:'IBM Plex Mono';font-size:10px;color:var(--faint);border-top:1px solid var(--line-2);padding-top:11px;width:100%;text-align:center}
+  .composer{flex:0 0 auto;border-top:1px solid var(--line);background:var(--panel)}
+  .composer textarea{width:100%;height:52px;border:none;outline:none;resize:none;padding:10px 14px;font-family:inherit;font-size:12.5px;color:var(--ink)}
+  .cbar{display:flex;align-items:center;gap:6px;padding:6px 10px;border-top:1px solid var(--line-2)}
+  .cbtn{display:flex;align-items:center;gap:6px;height:26px;padding:0 12px;border:1px solid var(--line);background:var(--chrome);font-family:inherit;font-size:11.5px;color:var(--muted);cursor:pointer;border-radius:4px}
+  .cbtn:hover{color:var(--ink);border-color:var(--muted)}.cbtn svg{width:14px;height:14px}.cbar .spacer{flex:1}
+  .cbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;padding:0 18px}.cbtn.primary:hover{background:var(--accent-d)}
+
+  .kv{display:flex;border-bottom:1px solid var(--line-2);font-size:11.5px}.kv:last-child{border-bottom:none}
+  .kv .k{width:92px;flex:0 0 auto;padding:7px 11px;color:var(--faint);background:var(--panel-2);border-right:1px solid var(--line-2)}
+  .kv .v{padding:7px 11px;color:var(--ink)}.kv .v.mono{font-family:'IBM Plex Mono';font-size:11px}
+  .jrow{display:grid;grid-template-columns:1fr auto;gap:6px;padding:8px 11px;border-bottom:1px solid var(--line-2);font-size:11.5px;align-items:center}
+  .jrow:last-child{border-bottom:none}
+  .jrow .jt{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--muted)}.jrow .jp{color:var(--faint);font-size:10.5px;margin-top:2px}
+  .act{display:flex;gap:9px;padding:8px 11px;border-bottom:1px solid var(--line-2);font-size:11px}
+  .act .ad{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:4px;flex:0 0 auto}.act .ad.warn{background:var(--amber)}
+  .act .ax{flex:1;line-height:1.4}.act .ax .am{font-family:'IBM Plex Mono';font-size:9px;color:var(--faint);margin-top:3px}
+  .note{padding:10px 11px;font-size:11.5px;line-height:1.5;border-bottom:1px solid var(--line-2)}.note:last-child{border-bottom:none}
+  .note .nm{font-family:'IBM Plex Mono';font-size:9px;color:var(--faint);margin-top:6px;display:block}
+
+  .tstable{width:100%;border-collapse:collapse;font-size:11.5px}
+  .tstable th{text-align:left;font-weight:600;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:7px 10px;background:var(--panel-2);border-bottom:1px solid var(--line);position:sticky;top:0}
+  .tstable td{padding:7px 10px;border-bottom:1px solid var(--line-2);white-space:nowrap;color:var(--ink)}
+  .tstable tr:hover td{background:var(--panel-2)}
+  .tstable .num{font-family:'IBM Plex Mono';font-feature-settings:"tnum"}
+  .tstable .now{color:var(--green);font-family:'IBM Plex Mono';font-size:10.5px}
+  .tstable .ot{color:var(--amber);font-family:'IBM Plex Mono'}.tstable .muted{color:var(--faint)}
+  .approve{margin:11px;padding:0 15px;height:30px;background:var(--accent);color:#fff;border:none;border-radius:4px;font-family:inherit;font-weight:600;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .approve:hover{background:var(--accent-d)}
+
+  .statusbar{grid-column:1/3;display:flex;align-items:center;background:var(--topbar);border-top:1px solid var(--line);height:22px;font-family:'IBM Plex Mono';font-size:10px;color:var(--muted)}
+  .statusbar .sl{display:flex;align-items:center;gap:7px;padding:0 12px;border-right:1px solid var(--line)}
+  .statusbar .dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 0 2px var(--green-bg)}
+  .statusbar .seg{padding:0 12px;border-right:1px solid var(--line);color:var(--faint)}.statusbar .grow{flex:1}.statusbar .sr{padding:0 12px;border-left:1px solid var(--line);color:var(--faint)}
+  .ph-screen{flex:1;display:grid;place-items:center;background:var(--canvas);color:var(--faint)}
+  .ph-screen b{display:block;font-size:15px;color:var(--muted);font-weight:600;margin-bottom:5px;text-align:center}.ph-screen span{font-size:12px}
+  /* schedule timeline */
+  .sched-phd .dnav{display:flex;align-items:center;gap:9px;padding:0 12px;font-size:12px;font-weight:600;height:100%}
+  .sched-phd .arrow{width:19px;height:19px;display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;cursor:pointer;color:var(--muted);background:#fff}
+  .sched-phd .arrow:hover{background:#e6e8ea;color:var(--ink)}
+  .sched-phd .dwt{display:flex;height:100%;border-left:1px solid var(--line-2)}
+  .sched-phd .dwt .seg{display:flex;align-items:center;padding:0 13px;font-size:11.5px;color:var(--muted);cursor:pointer;border-right:1px solid var(--line-2)}
+  .sched-phd .dwt .seg.on{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+  .tl-scroll{flex:0 0 auto;height:14px;overflow-x:auto;overflow-y:hidden;background:var(--panel-2);border-bottom:1px solid var(--line-2)}
+  .tl-scroll-in{height:1px}
+  .tl{flex:1;overflow:auto;min-height:0}
+  .tl-head{display:flex;position:sticky;top:0;z-index:4;background:var(--panel-2);width:max-content}
+  .tl-corner{width:132px;flex:0 0 132px;position:sticky;left:0;z-index:6;background:var(--panel-2);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tl-axis{flex:0 0 auto;display:flex;border-bottom:1px solid var(--line)}
+  .tl-axis .hr{flex:0 0 104px;font-family:'IBM Plex Mono';font-size:9px;color:var(--faint);border-right:1px solid var(--line-2);padding:6px 0 6px 6px}
+  .srow{display:flex;border-bottom:1px solid var(--line-2);min-height:54px;width:max-content}
+  .sname{width:132px;flex:0 0 132px;position:sticky;left:0;z-index:3;background:var(--panel);border-right:1px solid var(--line);padding:0 11px;display:flex;flex-direction:column;justify-content:center}
+  .sname b{font-size:12px;font-weight:600}.sname span{font-size:9.5px;color:var(--faint);margin-top:2px}
+  .sname .sutil{font-family:'IBM Plex Mono';font-size:8.5px;color:var(--muted);margin-top:4px}
+  .strack{flex:0 0 auto;position:relative;background-image:linear-gradient(to right,var(--line-2) 1px,transparent 1px);background-size:104px 100%}
+  .sblock .bh{display:flex;align-items:center;gap:5px;min-width:0}
+  .sblock .bdot{width:6px;height:6px;border-radius:50%;flex:0 0 auto;background:currentColor;opacity:.65}
+  .sblock .bh b{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* week — per-person calendar (days = columns, time = rows) */
+  .wk{flex:1;overflow:auto;min-height:0}
+  .wk-head{display:flex;position:sticky;top:0;z-index:3;background:var(--panel-2)}
+  .wk-gh{width:54px;flex:0 0 54px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:sticky;left:0;z-index:4;background:var(--panel-2)}
+  .wk-dayh{flex:1;min-width:120px;border-right:1px solid var(--line-2);border-bottom:1px solid var(--line);padding:7px 9px;font-family:'IBM Plex Mono';font-size:10px;color:var(--faint)}
+  .wk-dayh.today{color:var(--accent);background:var(--accent-bg);font-weight:600}
+  .wk-body{display:flex}
+  .wk-gutter{width:54px;flex:0 0 54px;border-right:1px solid var(--line);position:sticky;left:0;z-index:2;background:var(--panel)}
+  .wk-gutter .gh{height:44px;border-bottom:1px solid var(--line-2);font-family:'IBM Plex Mono';font-size:8.5px;color:var(--faint);padding:2px 0 0 6px;box-sizing:border-box}
+  .wk-col{flex:1;min-width:120px;position:relative;border-right:1px solid var(--line-2);background-image:linear-gradient(to bottom,var(--line-2) 1px,transparent 1px);background-size:100% 44px}
+  .wk-col.today{background-color:var(--accent-bg)}
+  .wknow{position:absolute;left:0;right:0;height:2px;background:var(--red);z-index:2}
+  .wkblock{position:absolute;left:4px;right:4px;border:1px solid;border-radius:4px;padding:3px 7px;overflow:hidden;box-sizing:border-box;cursor:pointer}
+  .wkblock b{font-size:10.5px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wkblock .wm{font-family:'IBM Plex Mono';font-size:8.5px;opacity:.85;display:block;white-space:nowrap}
+  .wkblock.done{background:var(--panel-2);border-color:var(--line);color:var(--muted)}
+  .wkblock.now{background:#fff;border-color:var(--accent);color:var(--accent-d);box-shadow:inset 3px 0 0 var(--accent)}
+  .wkblock.planned{background:#fff;border-color:var(--line);color:var(--ink)}
+  /* cleaner picker */
+  .wkpick{position:relative;display:flex;align-items:center;padding:0 10px}
+  .wkpb{display:flex;align-items:center;gap:7px;height:25px;padding:0 10px;background:#fff;border:1px solid var(--line);border-radius:5px;font:inherit;font-size:11.5px;font-weight:600;color:var(--ink);cursor:pointer}
+  .wkpb svg{width:11px;height:11px;color:var(--muted)}
+  .wkmenu{position:absolute;top:30px;left:10px;min-width:170px;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.13);padding:4px;display:none;z-index:30}
+  .wkpick.open .wkmenu{display:block}
+  .wkopt{padding:6px 10px;font-size:11.5px;border-radius:4px;cursor:pointer}
+  .wkopt:hover{background:var(--panel-2)}.wkopt.on{color:var(--accent);font-weight:600}
+  .nowline{position:absolute;top:0;bottom:0;width:2px;background:var(--red);z-index:1}
+  .sblock{position:absolute;top:6px;bottom:6px;border:1px solid;border-radius:4px;padding:4px 7px;font-size:10px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+  .sblock b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sblock .bt{font-family:'IBM Plex Mono';font-size:8.5px;margin-top:2px;opacity:.85}
+  .sblock.done{background:var(--panel-2);border-color:var(--line);color:var(--muted)}
+  .sblock.now{background:var(--accent-bg);border-color:var(--accent);color:var(--accent-d)}
+  .sblock.planned{background:#fff;border-color:var(--line);color:var(--ink)}
+  .sblock.sel{box-shadow:0 0 0 2px var(--accent);z-index:2}
+  .sblock[draggable]{cursor:grab}.sblock[draggable]:active{cursor:grabbing}
+  .sblock.gblk{border-style:dashed;border-color:var(--accent);background:var(--accent-bg);color:var(--accent-d);opacity:.9;pointer-events:none;z-index:5}
+  .uq{padding:9px 11px;border-bottom:1px solid var(--line-2);cursor:grab}
+  .uq:hover{background:var(--panel-2)}
+  .uq .uc{font-size:12px;font-weight:600}.uq .un2{font-size:11px;color:var(--muted);margin-top:2px}
+  .uq .um{display:flex;align-items:center;gap:7px;margin-top:6px}.uq .ut{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint)}
+  /* employee profile */
+  .profile{padding:0}
+  .prof-head{display:flex;gap:14px;align-items:center;padding:16px;border-bottom:1px solid var(--line)}
+  .avatar{width:52px;height:52px;flex:0 0 52px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:600}
+  .prof-id .pn{font-size:16px;font-weight:600}
+  .prof-id .pr{font-size:12px;color:var(--muted);margin-top:2px}
+  .prof-id .pmeta{font-size:10.5px;color:var(--faint);margin-top:7px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono'}
+  .prof-sec{border-bottom:1px solid var(--line)}
+  .psh{font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:13px 16px 8px}
+  .prof-sec .kv{border-bottom:1px solid var(--line-2)}.prof-sec .kv:last-child{border-bottom:none}
+  .prof-sec .kv .k{width:104px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 16px 15px}
+  .chip{font-size:11px;padding:4px 11px;background:var(--panel-2);border:1px solid var(--line);border-radius:20px;color:var(--ink)}
+  /* jobs */
+  .segrow{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;font-size:12px;color:var(--ink);cursor:pointer;border-bottom:1px solid var(--line-2)}
+  .segrow:hover{background:var(--panel-2)}
+  .segrow.active{background:var(--accent-bg);color:var(--accent-d);font-weight:600;box-shadow:inset 3px 0 0 var(--accent)}
+  .segrow .sc{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--faint)}.segrow.active .sc{color:var(--accent-d)}
+  .newbtn{height:25px;padding:0 12px;background:var(--accent);color:#fff;border:none;border-radius:5px;font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;margin-right:11px}
+  .newbtn:hover{background:var(--accent-d)}
+  .jobtable .muted2{color:var(--faint);font-size:10.5px}
+  .jobtable .needs{color:var(--red);font-family:'IBM Plex Mono';font-size:10.5px}
+  .jrowt{cursor:pointer}.jrowt.sel td{background:var(--accent-bg)}
+  .subtle{font-size:10px;color:var(--faint);margin-top:3px}
+  .assignrow{display:flex;align-items:center;gap:9px;padding:9px 11px;border-bottom:1px solid var(--line-2);background:var(--accent-bg)}
+  .assignrow .k2{font-size:11px;color:var(--accent-d);font-weight:600;white-space:nowrap}
+  select.assignsel,.jform select,.jform input{height:28px;border:1px solid var(--line);border-radius:5px;background:#fff;font:inherit;font-size:11.5px;color:var(--ink);padding:0 8px}
+  select.assignsel{flex:1}.jform select,.jform input{flex:1;min-width:0}
+  .custref{padding:10px 11px;font-size:11px;color:var(--muted);line-height:1.5}
+  .lnk{color:var(--accent);cursor:pointer;font-weight:600}.lnk:hover{text-decoration:underline}
+  .jform{padding:15px 16px}
+  .frow{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+  .frow label{width:88px;flex:0 0 88px;font-size:11px;color:var(--muted);text-align:right}
+  .fbtns{display:flex;gap:9px;margin-top:4px;padding-left:100px}
+  .primarybtn{height:30px;padding:0 16px;background:var(--accent);color:#fff;border:none;border-radius:5px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+  .primarybtn:hover{background:var(--accent-d)}
+  .ghostbtn{height:30px;padding:0 14px;background:#fff;border:1px solid var(--line);border-radius:5px;font:inherit;font-size:12px;color:var(--muted);cursor:pointer}
+  .ghostbtn:hover{border-color:var(--muted);color:var(--ink)}
+  .rail .nav{position:relative}
+  .rbadge{position:absolute;top:5px;right:6px;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:8px;background:#d12b20;color:#fff !important;font-family:'IBM Plex Sans',sans-serif;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--panel)}
+  ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#bcc1c7;border:3px solid var(--panel)}::-webkit-scrollbar-thumb:hover{background:#a4abb2}::-webkit-scrollbar-track{background:transparent}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="search"><svg class="si" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Search customers, tickets, employees…"></div>
+    <div class="spacer"></div>
+    <div class="ticon" title="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15,17H9a1,1,0,0,0-1,1,4,4,0,0,0,8,0A1,1,0,0,0,15,17Z"/><path d="M20.09,13.67,19,12.59V9A7,7,0,0,0,5,9v3.59L3.91,13.67A3.13,3.13,0,0,0,6.12,19H17.88a3.13,3.13,0,0,0,2.21-5.33Z"/></svg><span class="badge">3</span></div>
+    <div class="user"><div class="av">LO</div><div class="un"><b>Lise Olsen</b><span>Operations lead</span></div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5f666e" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  </div>
+
+  <nav class="rail">
+    <div class="group" id="rail">
+      <div class="nav" data-mod="Timesheet"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18,14V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V20a2,2,0,0,0,2,2H14a1,1,0,0,0,1-1V17a2,2,0,0,1,2-2h0A1,1,0,0,0,18,14Z"/><path d="M13,15a1,1,0,0,1-1,1H6a1,1,0,0,1,0-2h6A1,1,0,0,1,13,15Zm1-5H6a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Zm0-8H6V4A2,2,0,0,0,8,6h4a2,2,0,0,0,2-2Zm7,16H20V17a1,1,0,0,0-2,0v1H17a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0V20h1a1,1,0,0,0,0-2Z" fill="#2d5d8c"/></svg><span>Timesheet</span></div>
+      <div class="nav active" data-mod="Customer Service"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22,20.73l-1-3.6A6.82,6.82,0,0,0,22,13.5a7.3,7.3,0,0,0-3.62-6.14,1,1,0,0,0-1.12,0,1,1,0,0,0-.38,1A4.44,4.44,0,0,1,17,9.5c0,3-2.92,5.5-6.5,5.5a7.55,7.55,0,0,1-3-.64,1,1,0,0,0-.81,0L6,14.63a1,1,0,0,0-.53,1.27,8.44,8.44,0,0,0,8,5.1A9.6,9.6,0,0,0,17,20.36l3.66,1.56A1,1,0,0,0,21,22a1,1,0,0,0,.66-.25A1,1,0,0,0,22,20.73Z" fill="#2d5d8c"/><path d="M18.82,8c-.8-3.46-4.3-6-8.32-6C5.81,2,2,5.36,2,9.5a6.82,6.82,0,0,0,1.06,3.63l-1,3.6a1,1,0,0,0,.3,1A1,1,0,0,0,3,18a1,1,0,0,0,.39-.08l3.66-1.56A9.6,9.6,0,0,0,10.5,17c4.69,0,8.5-3.36,8.5-7.5A6.27,6.27,0,0,0,18.82,8Z"/></svg><span>Service</span></div>
+      <div class="nav" data-mod="Scheduling"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="3" width="20" height="19" rx="2"/><path d="M20,3H4A2,2,0,0,0,2,5V8H22V5A2,2,0,0,0,20,3Z" fill="#2d5d8c"/><path d="M17,6a1,1,0,0,1-1-1V3a1,1,0,0,1,2,0V5A1,1,0,0,1,17,6ZM13,5V3a1,1,0,0,0-2,0V5a1,1,0,0,0,2,0ZM8,5V3A1,1,0,0,0,6,3V5A1,1,0,0,0,8,5Z"/></svg><span>Schedule</span></div>
+      <div class="nav" data-mod="Jobs"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20,7H16V5a2,2,0,0,0-2-2H10A2,2,0,0,0,8,5V7H4A2,2,0,0,0,2,9V19a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V9A2,2,0,0,0,20,7ZM10,5h4V7H10Z"/><path d="M22,9a2,2,0,0,0-2-2H4A2,2,0,0,0,2,9v3a20,20,0,0,0,20,0Z" fill="#2d5d8c"/></svg><span>Jobs</span></div>
+    </div>
+    <div class="spring"></div>
+    <div class="group bottom">
+      <div class="nav" data-mod="Customers"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,2H4A2,2,0,0,0,2,4V22H14V3A1,1,0,0,0,13,2ZM7,19H5V17H7Zm0-4H5V13H7Zm0-4H5V9H7Zm0-4H5V5H7Zm4,12H9V17h2Zm0-4H9V13h2Zm0-4H9V9h2Zm0-4H9V5h2Z"/><path d="M21,9H16a1,1,0,0,0-1,1V22h7V11A2,2,0,0,0,21,9ZM19,19H17V17h2Zm0-4H17V13h2Z" fill="#2d5d8c"/></svg><span>Customers</span></div>
+      <div class="nav" data-mod="Employees"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15,12H9a6,6,0,0,0-6,6v1a1,1,0,0,0,.29.71C3.53,19.94,5.77,22,12,22s8.47-2.06,8.71-2.29A1,1,0,0,0,21,19V18A6,6,0,0,0,15,12Z" fill="#2d5d8c"/><circle cx="12" cy="8" r="6"/></svg><span>Employees</span></div>
+      <div class="nav" data-mod="Settings"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.89,9.78h-.65a1.16,1.16,0,0,1-1-.74V9a1.13,1.13,0,0,1,.22-1.26l.46-.46a1.13,1.13,0,0,0,0-1.58L18.29,4.14a1.13,1.13,0,0,0-1.58,0l-.46.46A1.13,1.13,0,0,1,15,4.82h0a1.16,1.16,0,0,1-.74-1V3.11A1.11,1.11,0,0,0,13.11,2H10.89A1.11,1.11,0,0,0,9.78,3.11v.65a1.16,1.16,0,0,1-.74,1H9A1.13,1.13,0,0,1,7.75,4.6l-.46-.46a1.13,1.13,0,0,0-1.58,0L4.14,5.71a1.13,1.13,0,0,0,0,1.58l.46.46A1.13,1.13,0,0,1,4.82,9V9a1.16,1.16,0,0,1-1,.74H3.11A1.11,1.11,0,0,0,2,10.89v2.22a1.11,1.11,0,0,0,1.11,1.11h.65a1.16,1.16,0,0,1,1,.74v0a1.13,1.13,0,0,1-.22,1.26l-.46.46a1.13,1.13,0,0,0,0,1.58l1.57,1.57a1.13,1.13,0,0,0,1.58,0l.46-.46A1.13,1.13,0,0,1,9,19.18H9a1.16,1.16,0,0,1,.74,1v.65A1.11,1.11,0,0,0,10.89,22h2.22a1.11,1.11,0,0,0,1.11-1.11v-.65a1.16,1.16,0,0,1,.74-1h0a1.13,1.13,0,0,1,1.26.22l.46.46a1.13,1.13,0,0,0,1.58,0l1.57-1.57a1.13,1.13,0,0,0,0-1.58l-.46-.46A1.13,1.13,0,0,1,19.18,15v0a1.16,1.16,0,0,1,1-.74h.65A1.11,1.11,0,0,0,22,13.11V10.89A1.11,1.11,0,0,0,20.89,9.78Z"/><circle cx="12" cy="12" r="4" fill="#2d5d8c"/></svg><span>Settings</span></div>
+      <div class="nav" data-mod="Help"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12,17a1,1,0,0,1-1-1V12a1,1,0,0,1,2,0v4A1,1,0,0,1,12,17ZM12,6.5A1.5,1.5,0,1,0,13.5,8,1.5,1.5,0,0,0,12,6.5Z" fill="#2d5d8c"/></svg><span>Help</span></div>
+    </div>
+  </nav>
+
+  <section class="work" id="work">
+    <div class="screen on" data-screen="Customer Service">
+      <div class="panes">
+        <div class="listpane" style="--w:272px">
+          <div class="phd"><div class="ptab">Tickets <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>
+            <div class="fwrap"><button class="fdrop"><span class="fval">All</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289Z"/><path d="M7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929C5.90237 14.6834 5.90237 15.3166 6.29289 15.7071L11.2929 20.7071C11.6834 21.0976 12.3166 21.0976 12.7071 20.7071L17.7071 15.7071C18.0976 15.3166 18.0976 14.6834 17.7071 14.2929C17.3166 13.9024 16.6834 13.9024 16.2929 14.2929L12 18.5858L7.70711 14.2929Z"/></svg></button><div class="fmenu"><div class="fopt" data-f="all" data-label="All">All <span class="oc">7</span></div><div class="fopt" data-f="open" data-label="Open">Open <span class="oc">3</span></div><div class="fopt" data-f="urgent" data-label="Urgent">Urgent <span class="oc">1</span></div><div class="fopt" data-f="waiting" data-label="Waiting">Waiting <span class="oc">1</span></div><div class="fopt" data-f="resolved" data-label="Resolved">Resolved <span class="oc">2</span></div></div></div>
+          </div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Filter tickets…"></div>
+          <div class="pbd" id="cs-list"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="cs-conv"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="cs-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="Timesheet">
+      <div class="panes">
+        <div class="listpane" style="--w:238px">
+          <div class="phd"><div class="ptab">Employees <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>
+            <div class="fwrap"><button class="fdrop"><span class="fval">All</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289Z"/><path d="M7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929C5.90237 14.6834 5.90237 15.3166 6.29289 15.7071L11.2929 20.7071C11.6834 21.0976 12.3166 21.0976 12.7071 20.7071L17.7071 15.7071C18.0976 15.3166 18.0976 14.6834 17.7071 14.2929C17.3166 13.9024 16.6834 13.9024 16.2929 14.2929L12 18.5858L7.70711 14.2929Z"/></svg></button><div class="fmenu"><div class="fopt" data-f="all" data-label="All">All <span class="oc">9</span></div><div class="fopt" data-f="clocked" data-label="Clocked in">Clocked in <span class="oc">2</span></div><div class="fopt" data-f="idle" data-label="Idle">Idle <span class="oc">7</span></div></div></div>
+          </div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Filter employees…"></div>
+          <div class="pbd" id="ts-list"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="ts-conv"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="ts-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="Scheduling">
+      <div class="panes">
+        <div class="listpane" style="--w:228px">
+          <div class="phd"><div class="ptab">Unassigned <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>
+            <div class="fwrap"><button class="fdrop"><span class="fval">All</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289Z"/><path d="M7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929C5.90237 14.6834 5.90237 15.3166 6.29289 15.7071L11.2929 20.7071C11.6834 21.0976 12.3166 21.0976 12.7071 20.7071L17.7071 15.7071C18.0976 15.3166 18.0976 14.6834 17.7071 14.2929C17.3166 13.9024 16.6834 13.9024 16.2929 14.2929L12 18.5858L7.70711 14.2929Z"/></svg></button><div class="fmenu"><div class="fopt" data-f="all" data-label="All">All <span class="oc">3</span></div><div class="fopt" data-f="urgent" data-label="Urgent">Urgent <span class="oc">1</span></div><div class="fopt" data-f="new" data-label="New">New <span class="oc">1</span></div></div></div>
+          </div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Filter jobs…"></div>
+          <div class="pbd" id="sched-queue"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="sched-tl"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="sched-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="Employees">
+      <div class="panes">
+        <div class="listpane" style="--w:250px">
+          <div class="phd"><div class="ptab">Employees <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>
+            <div class="fwrap"><button class="fdrop"><span class="fval">All</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289Z"/><path d="M7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929C5.90237 14.6834 5.90237 15.3166 6.29289 15.7071L11.2929 20.7071C11.6834 21.0976 12.3166 21.0976 12.7071 20.7071L17.7071 15.7071C18.0976 15.3166 18.0976 14.6834 17.7071 14.2929C17.3166 13.9024 16.6834 13.9024 16.2929 14.2929L12 18.5858L7.70711 14.2929Z"/></svg></button><div class="fmenu"><div class="fopt" data-f="all" data-label="All">All <span class="oc">6</span></div><div class="fopt" data-f="active" data-label="On shift">On shift <span class="oc">2</span></div><div class="fopt" data-f="idle" data-label="Off">Off <span class="oc">4</span></div></div></div>
+          </div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Filter employees…"></div>
+          <div class="pbd" id="emp-list"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="emp-profile"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="emp-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="Jobs">
+      <div class="panes">
+        <div class="listpane" style="--w:188px">
+          <div class="phd"><div class="ptab">Jobs <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div></div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="job-search" list="custnames" placeholder="Filter by customer…"></div>
+          <datalist id="custnames"></datalist>
+          <div class="pbd" id="job-seg"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="job-table"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="job-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="Customers">
+      <div class="panes">
+        <div class="listpane" style="--w:252px">
+          <div class="phd"><div class="ptab">Customers <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>
+            <div class="fwrap"><button class="fdrop"><span class="fval">All</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289Z"/><path d="M7.70711 14.2929C7.31658 13.9024 6.68342 13.9024 6.29289 14.2929C5.90237 14.6834 5.90237 15.3166 6.29289 15.7071L11.2929 20.7071C11.6834 21.0976 12.3166 21.0976 12.7071 20.7071L17.7071 15.7071C18.0976 15.3166 18.0976 14.6834 17.7071 14.2929C17.3166 13.9024 16.6834 13.9024 16.2929 14.2929L12 18.5858L7.70711 14.2929Z"/></svg></button><div class="fmenu"><div class="fopt" data-f="all" data-label="All">All <span class="oc">7</span></div><div class="fopt" data-f="active" data-label="Active">Active <span class="oc">6</span></div><div class="fopt" data-f="paused" data-label="Paused">Paused <span class="oc">1</span></div></div></div>
+          </div>
+          <div class="listfilter"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Filter customers…"></div>
+          <div class="pbd" id="cust-list"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="cust-profile"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="cust-right"></div>
+      </div>
+    </div>
+
+    <div class="screen ph" data-screen="__ph"><div class="ph-screen"><div><b class="pht">Module</b><span>Screen — coming next</span></div></div></div>
+  </section>
+
+  <div class="statusbar">
+    <div class="sl"><span class="dot"></span> Normal operations</div>
+    <div class="seg">14 cleaners clocked in</div>
+    <div class="seg">7 open tickets · 1 urgent</div>
+    <div class="grow"></div>
+    <div class="sr">Drag panel borders · drag tabs · click a row</div>
+    <div class="sr">LivingClean Operations · v0.1 (mockup)</div>
+  </div>
+</div>
+
+<script>
+  const DOTS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>';
+  const esc=s=>s; // demo data is trusted
+  const pillLabel={open:'Open',urgent:'Urgent',waiting:'Waiting',resolved:'Resolved'};
+
+  /* ---------------- data ---------------- */
+  const TICKETS=[
+    {c:'Solvik Bygg',subj:'Manglende frukt på kjøkken 2. etg',st:'open',tm:'09:12',id:'#TS-1042',ch:'Customer app',loc:'Storgata 14, Bergen',opened:'09:12',
+     info:{Contact:'Mette Solvik',Email:'mette@solvik.no',Phone:'+47 55 12 34 56',Address:'Storgata 14, 5003 Bergen · 2nd floor',Plan:'Daily clean · Mon–Fri 06:00',Since:'Feb 2024'},
+     thread:[['in','Mette Solvik','09:12','Hei! Det var tomt for frukt på kjøkkenet i 2. etasje i dag tidlig. Kan dere fylle på til neste vask?'],['sys','','','Maria Hansen marked job complete · 08:40 · 3 photos'],['out','Lise Olsen','09:20','Hei Mette! Beklager det. Maria fyller på i morgen tidlig, og jeg har lagt frukt på fast levering hver mandag så det ikke skjer igjen.']],
+     acts:[['warn','Incident reported: Toalettpapir lavt — herretoalett 2. etg','Maria Hansen · today 08:38 · #AV-318'],['','Job completed — 3 photos','Maria Hansen · today 08:40'],['','Ticket opened via Customer app','Mette Solvik · today 09:12']],
+     jobs:[['Today · 06:15–08:40','Maria Hansen','resolved','Done'],['Yesterday · 06:10–08:30','Maria Hansen','resolved','Done'],['Thu · 06:00–08:25','Maria Hansen','resolved','Done']],
+     notes:[['Kunden foretrekker kontakt på e-post. Fruktabonnement aktivert 21. mai.','Lise Olsen · 3 days ago']]},
+    {c:'Nordvik Advokat',subj:'Mulig å bytte til kveldsvask?',st:'open',tm:'08:40',id:'#TS-1041',ch:'Email',loc:'Bryggen 8, Bergen',opened:'08:40',
+     info:{Contact:'Jon Nordvik',Email:'jon@nordvik.no',Phone:'+47 55 98 76 54',Address:'Bryggen 8, 5003 Bergen · 3rd floor',Plan:'Daily clean · Mon–Fri 07:00',Since:'Aug 2023'},
+     thread:[['in','Jon Nordvik','08:40','Hei, vi vurderer å gå over til kveldsvask. Er det mulig, og hva koster det?'],['out','Lise Olsen','08:58','Hei Jon! Vi kan tilby 17:00–18:00 fra mandag, samme pris. Passer det? Da setter jeg det opp.']],
+     acts:[['','Ticket opened via Email','Jon Nordvik · today 08:40'],['','Reply sent by Lise Olsen','today 08:58']],
+     jobs:[['Today · 07:05–08:30','Thomas Eide','resolved','Done'],['Yesterday · 07:00–08:25','Thomas Eide','resolved','Done']],
+     notes:[['Vurderer kveldsvask — avventer svar.','Lise Olsen · today']]},
+    {c:'Fjell Eiendom',subj:'Avvik: vindu i resepsjon ikke vasket',st:'urgent',tm:'07:55',id:'#TS-1040',ch:'Customer app',loc:'Allmenningen 22, Bergen',opened:'07:55',
+     info:{Contact:'Kari Fjell',Email:'kari@fjelleiendom.no',Phone:'+47 55 11 22 33',Address:'Allmenningen 22, 5012 Bergen · 1st floor',Plan:'Daily clean · Mon–Fri 06:30',Since:'Jan 2024'},
+     thread:[['in','Kari Fjell','07:55','Vinduet i resepsjonen ble ikke vasket i dag, og vi har visning kl 12. Kan noen komme?'],['out','Lise Olsen','08:05','Beklager dette, Kari! Thomas er hos dere innen 10:30 og retter det. Jeg gir beskjed når det er gjort.']],
+     acts:[['warn','Incident reported: vindu resepsjon ikke vasket','Kari Fjell · today 07:55 · #AV-319'],['','Thomas Eide assigned to fix','Lise Olsen · today 08:05']],
+     jobs:[['Today · 06:30–08:10','Nina Solberg','urgent','Avvik'],['Yesterday · 06:30–08:05','Nina Solberg','resolved','Done']],
+     notes:[['Visning kl 12 — haster. Thomas sendt.','Lise Olsen · today']]},
+    {c:'Bergen Tannlegesenter',subj:'Spørsmål om mai-faktura',st:'waiting',tm:'i går',id:'#TS-1036',ch:'Email',loc:'Kong Oscars gate 5, Bergen',opened:'i går 14:20',
+     info:{Contact:'Per Aas',Email:'post@bergentann.no',Phone:'+47 55 33 44 55',Address:'Kong Oscars gate 5, Bergen',Plan:'Mon/Wed/Fri · 18:00',Since:'Mar 2024'},
+     thread:[['in','Per Aas','i går 14:20','Hei, mai-fakturaen ser høyere ut enn vanlig. Kan dere sjekke?'],['out','Lise Olsen','i går 14:35','Hei Per! Jeg har sendt det videre til regnskap — de svarer i morgen.']],
+     acts:[['','Forwarded to accounting','Lise Olsen · i går 14:35']],
+     jobs:[['Wed · 18:00–19:10','Sara Lien','resolved','Done']],
+     notes:[['Venter på regnskap ang. mai-faktura.','Lise Olsen · i går']]},
+    {c:'Storsenteret Drift',subj:'Ekstra vask før visning fredag',st:'resolved',tm:'i går',id:'#TS-1034',ch:'Customer app',loc:'Strandgaten 10, Bergen',opened:'i går 11:00',
+     info:{Contact:'Ola Berg',Email:'ola@storsenteret.no',Phone:'+47 55 66 77 88',Address:'Strandgaten 10, Bergen',Plan:'Daily clean · 05:30',Since:'Nov 2023'},
+     thread:[['in','Ola Berg','i går 11:00','Kan vi få en ekstra grundig vask før visning på fredag?'],['out','Lise Olsen','i går 11:12','Selvsagt! Booket Maria fredag 14:00 for ekstra vask. Bekreftet.'],['in','Ola Berg','i går 11:15','Perfekt, takk!']],
+     acts:[['','Extra job booked Fri 14:00','Lise Olsen · i går 11:12'],['','Ticket resolved','Lise Olsen · i går 11:16']],
+     jobs:[['Today · 05:30–07:00','Paweł Nowak','resolved','Done']],
+     notes:[['Ekstra vask fredag 14:00 — booket.','Lise Olsen · i går']]},
+    {c:'Kystgården Hotell',subj:'Ny kontaktperson — Anders Vik',st:'open',tm:'man.',id:'#TS-1029',ch:'Email',loc:'Sjøgaten 2, Bergen',opened:'man. 09:30',
+     info:{Contact:'Anders Vik',Email:'anders@kystgaarden.no',Phone:'+47 55 12 99 00',Address:'Sjøgaten 2, Bergen',Plan:'Daily clean · 22:00',Since:'Sep 2023'},
+     thread:[['in','Anders Vik','man. 09:30','Hei, jeg er ny driftsleder her og blir deres kontaktperson framover.'],['out','Lise Olsen','man. 10:10','Velkommen, Anders! Oppdatert kontakten hos oss. Hyggelig å samarbeide.']],
+     acts:[['','Contact updated to Anders Vik','Lise Olsen · man. 10:10']],
+     jobs:[['Today · 22:00–23:30','Sara Lien','resolved','Done']],
+     notes:[['Ny kontakt: Anders Vik (driftsleder).','Lise Olsen · man.']]},
+    {c:'Lunde Regnskap',subj:'Takk for god jobb i april',st:'resolved',tm:'man.',id:'#TS-1025',ch:'Email',loc:'Vågsallmenningen 4, Bergen',opened:'man. 13:00',
+     info:{Contact:'Mari Lunde',Email:'mari@lunde.no',Phone:'+47 55 44 33 22',Address:'Vågsallmenningen 4, Bergen',Plan:'Tue/Thu · 17:00',Since:'Feb 2025'},
+     thread:[['in','Mari Lunde','man. 13:00','Bare en liten takk — kontoret har vært skinnende rent i hele april. Veldig fornøyd!'],['out','Lise Olsen','man. 13:20','Så hyggelig å høre, Mari! Sender det videre til teamet. Takk!']],
+     acts:[['','Positive feedback received','Mari Lunde · man. 13:00']],
+     jobs:[['Thu · 17:00–18:10','Nina Solberg','resolved','Done']],
+     notes:[['Fornøyd kunde — ros til teamet.','Lise Olsen · man.']]}
+  ];
+
+  const EMP=[
+    {n:'Maria Hansen',d:'Bergen sentrum',clk:true,wk:'28t 40m',mo:'112t 00m',ot:'3t 20m',pay:'15.06.2026',pend:'Tue 14 May · 8t 25m',
+     rows:[['Mon 21 May','06:15','— now','—','—','Solvik · Nordvik · Fjell','open','Open'],['Fri 17 May','','','','','Fri (helligdag) · no service','waiting','Holiday'],['Thu 16 May','06:00','14:30','8:30','0:30','Solvik · Nordvik · Tannlege','resolved','Approved'],['Wed 15 May','06:05','14:20','8:15','—','Solvik · Nordvik · Fjell','resolved','Approved'],['Tue 14 May','06:10','14:35','8:25','0:25','Solvik · Nordvik · Fjell','open','Pending'],['Mon 13 May','06:00','14:25','8:25','—','Solvik · Nordvik · Fjell','resolved','Approved']]},
+    {n:'Thomas Eide',d:'Bergen sentrum',clk:false,wk:'31t 10m',mo:'124t 30m',ot:'1t 10m',pay:'15.06.2026',pend:'—',
+     rows:[['Mon 21 May','07:00','15:10','8:10','0:10','Nordvik · Kystgården','resolved','Approved'],['Fri 17 May','','','','','Fri (helligdag)','waiting','Holiday'],['Thu 16 May','07:00','15:05','8:05','—','Nordvik · Fjell','resolved','Approved'],['Wed 15 May','07:05','15:00','7:55','—','Nordvik · Fjell','resolved','Approved'],['Tue 14 May','07:00','15:10','8:10','0:10','Nordvik · Fjell','resolved','Approved']]},
+    {n:'Anders Vik',d:'Bergen vest',clk:true,wk:'22t 05m',mo:'98t 10m',ot:'0t 40m',pay:'15.06.2026',pend:'Mon 21 May · 1t 40m',
+     rows:[['Mon 21 May','07:00','— now','—','—','Kystgården','open','Open'],['Thu 16 May','07:10','13:30','6:20','—','Kystgården','resolved','Approved'],['Wed 15 May','07:00','13:20','6:20','—','Kystgården','resolved','Approved'],['Tue 14 May','07:05','13:40','6:35','0:35','Kystgården','resolved','Approved']]},
+    {n:'Nina Solberg',d:'Bergen øst',clk:false,wk:'27t 30m',mo:'109t 00m',ot:'2t 00m',pay:'15.06.2026',pend:'Thu 16 May · 9t 00m',
+     rows:[['Mon 21 May','06:30','15:00','8:30','0:30','Fjell · Lunde','resolved','Approved'],['Fri 17 May','','','','','Fri (helligdag)','waiting','Holiday'],['Thu 16 May','06:30','15:30','9:00','1:00','Fjell · Lunde','open','Pending'],['Wed 15 May','06:30','14:30','8:00','—','Fjell','resolved','Approved']]},
+    {n:'Paweł Nowak',d:'Bergen sentrum',clk:false,wk:'30t 00m',mo:'120t 00m',ot:'0t 00m',pay:'15.06.2026',pend:'—',
+     rows:[['Mon 21 May','05:30','13:30','8:00','—','Storsenteret','resolved','Approved'],['Thu 16 May','05:30','13:30','8:00','—','Storsenteret','resolved','Approved'],['Wed 15 May','05:30','13:30','8:00','—','Storsenteret','resolved','Approved'],['Tue 14 May','05:30','13:30','8:00','—','Storsenteret','resolved','Approved']]},
+    {n:'Sara Lien',d:'Bergen vest',clk:false,wk:'24t 15m',mo:'97t 45m',ot:'0t 50m',pay:'15.06.2026',pend:'—',
+     rows:[['Mon 21 May','17:00','22:10','5:10','—','Tannlege · Kystgården','resolved','Approved'],['Thu 16 May','17:00','22:05','5:05','—','Tannlege','resolved','Approved'],['Wed 15 May','17:00','22:50','5:50','0:50','Tannlege · Lunde','resolved','Approved']]}
+  ];
+
+  const EMPX={
+    'Maria Hansen':{role:'Renholder · Team lead',phone:'+47 412 33 902',email:'maria.hansen@livingclean.no',addr:'Møllendalsveien 14, 5009 Bergen',start:'12.02.2024',type:'Fast · 100%',no:'EMP-014',skills:['Daglig renhold','Vindusvask','Førerkort B'],avail:'Man–fre · 05:00–14:00',sites:['Solvik Bygg','Nordvik Advokat','Fjell Eiendom']},
+    'Thomas Eide':{role:'Renholder',phone:'+47 905 11 240',email:'thomas.eide@livingclean.no',addr:'Fjøsangerveien 50, 5054 Bergen',start:'03.09.2024',type:'Fast · 100%',no:'EMP-021',skills:['Daglig renhold','Gulvbehandling'],avail:'Man–fre · 06:00–15:00',sites:['Kystgården Hotell','Bergen Tannlegesenter']},
+    'Anders Vik':{role:'Renholder',phone:'+47 488 27 015',email:'anders.vik@livingclean.no',addr:'Loddefjordvegen 8, 5171 Loddefjord',start:'21.01.2025',type:'Deltid · 60%',no:'EMP-028',skills:['Hovedrengjøring','Hotell'],avail:'Man–fre · 07:00–13:00',sites:['Kystgården Hotell']},
+    'Nina Solberg':{role:'Renholder',phone:'+47 932 04 778',email:'nina.solberg@livingclean.no',addr:'Åsane Senter 32, 5116 Ulset',start:'15.05.2024',type:'Fast · 100%',no:'EMP-018',skills:['Daglig renhold','Vindusvask'],avail:'Man–fre · 06:00–15:00',sites:['Fjell Eiendom','Lunde Regnskap']},
+    'Paweł Nowak':{role:'Renholder',phone:'+47 467 90 113',email:'pawel.nowak@livingclean.no',addr:'Damsgårdsveien 121, 5160 Laksevåg',start:'08.04.2024',type:'Fast · 100%',no:'EMP-016',skills:['Daglig renhold','Senter/fellesareal'],avail:'Man–fre · 05:30–13:30',sites:['Storsenteret Drift']},
+    'Sara Lien':{role:'Renholder · Kveld',phone:'+47 401 55 367',email:'sara.lien@livingclean.no',addr:'Sandviksveien 90, 5035 Bergen',start:'19.08.2024',type:'Deltid · 50%',no:'EMP-024',skills:['Kveldsrenhold','Behandlingsrom'],avail:'Man–fre · 17:00–22:00',sites:['Bergen Tannlegesenter','Kystgården Hotell']}
+  };
+  let empCur=EMP[0];
+
+  const CUSTOMERS={
+    'Solvik Bygg':{org:'912 345 678',since:'Feb 2024',status:'active',value:'18 400',sites:[{a:'Storgata 14, 5003 Bergen · 2nd',acc:'Code 4417',sz:'620 m²'}],agr:{rule:'Daglig · man–fre 06:00',scope:'Kontorer, sanitær, kjøkken',price:'18 400 kr/mnd',start:'01.02.2024',renew:'01.02.2026'},contact:'Mette Solvik · 55 12 34 56',email:'mette@solvik.no',billing:'Faktura · netto 14',tickets:1},
+    'Nordvik Advokat':{org:'998 112 233',since:'Mar 2024',status:'active',value:'12 900',sites:[{a:'Bryggen 8, 5003 Bergen · 3rd',acc:'Dørtelefon "Nordvik"',sz:'410 m²'}],agr:{rule:'Daglig · man–fre 10:30',scope:'Resepsjon, møterom, sanitær',price:'12 900 kr/mnd',start:'15.03.2024',renew:'15.03.2026'},contact:'Jon Nordvik · 55 98 76 54',email:'post@nordvikadvokat.no',billing:'Faktura · netto 14',tickets:1},
+    'Fjell Eiendom':{org:'915 667 001',since:'Jan 2024',status:'active',value:'9 600',sites:[{a:'Allmenningen 22, 5011 Bergen',acc:'Nøkkelboks · kode i app',sz:'350 m²'}],agr:{rule:'3× uke + vindus mnd',scope:'Kontorer, vindus (innv.)',price:'9 600 kr/mnd',start:'08.01.2024',renew:'08.01.2026'},contact:'Kari Fjell · 55 11 22 33',email:'kari@fjelleiendom.no',billing:'Faktura · netto 30',tickets:1},
+    'Bergen Tannlegesenter':{org:'981 220 540',since:'Sep 2023',status:'active',value:'14 200',sites:[{a:'Kong Oscars gate 5, 5017 Bergen',acc:'Kode 2031',sz:'280 m²'}],agr:{rule:'Daglig kveld · man–fre 18:00',scope:'Behandlingsrom, sanitær',price:'14 200 kr/mnd',start:'01.09.2023',renew:'01.09.2025'},contact:'Per Aas · 55 33 44 55',email:'resepsjon@btsenter.no',billing:'Faktura · netto 14',tickets:1},
+    'Storsenteret Drift':{org:'976 884 120',since:'Nov 2023',status:'active',value:'31 500',sites:[{a:'Strandgaten 10, 5013 Bergen',acc:'Vaktmester slipper inn',sz:'1 240 m²'}],agr:{rule:'Daglig · man–lør 05:30',scope:'Fellesareal, sanitær, inngang',price:'31 500 kr/mnd',start:'20.11.2023',renew:'20.11.2025'},contact:'Ola Berg · 55 66 77 88',email:'drift@storsenteret.no',billing:'Faktura · netto 30',tickets:1},
+    'Kystgården Hotell':{org:'994 005 671',since:'Jun 2024',status:'active',value:'27 800',sites:[{a:'Sjøgaten 2, 5004 Bergen',acc:'Resepsjon',sz:'2 100 m²'}],agr:{rule:'Daglig · man–søn 07:00',scope:'Lobby, korridorer, rom, frokostsal',price:'27 800 kr/mnd',start:'03.06.2024',renew:'03.06.2026'},contact:'Ingrid Moen · 55 12 99 00',email:'drift@kystgarden.no',billing:'Faktura · netto 14',tickets:1},
+    'Lunde Regnskap':{org:'913 442 880',since:'Apr 2025',status:'paused',value:'0',sites:[{a:'Vågsallmenningen 4, 5014 Bergen',acc:'Kode 1180',sz:'190 m²'}],agr:{rule:'På pause (fra 01.06.2026)',scope:'Kontorer, kjøkken',price:'6 200 kr/mnd',start:'10.04.2025',renew:'—'},contact:'Mari Lunde · 55 44 33 22',email:'mari@lunderegnskap.no',billing:'Faktura · netto 30',tickets:0}
+  };
+  const CUSTLIST=Object.keys(CUSTOMERS);
+  let custCur=CUSTLIST[0];
+  const JOBS=[
+    {id:'J-2052',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'today',date:'I dag',s:null,e:null,type:'Window',cl:null,st:'unassigned'},
+    {id:'J-2051',cust:'Storsenteret Drift',site:'Strandgaten 10',when:'today',date:'I dag',s:14,e:15.5,type:'Extra',cl:null,st:'unassigned'},
+    {id:'J-2048',cust:'Solvik Bygg',site:'Storgata 14',when:'tomorrow',date:'I morgen',s:6,e:6.5,type:'Daily',cl:null,st:'unassigned'},
+    {id:'J-2040',cust:'Solvik Bygg',site:'Storgata 14',when:'today',date:'I dag',s:6,e:8.5,type:'Daily',cl:'Maria Hansen',st:'done'},
+    {id:'J-2041',cust:'Nordvik Advokat',site:'Bryggen 8',when:'today',date:'I dag',s:10.5,e:12,type:'Daily',cl:'Maria Hansen',st:'now'},
+    {id:'J-2042',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'today',date:'I dag',s:13,e:15,type:'Window',cl:'Maria Hansen',st:'planned'},
+    {id:'J-2043',cust:'Kystgården Hotell',site:'Sjøgaten 2',when:'today',date:'I dag',s:7,e:13,type:'Deep clean',cl:'Anders Vik',st:'now'},
+    {id:'J-2044',cust:'Storsenteret Drift',site:'Strandgaten 10',when:'today',date:'I dag',s:5.5,e:7.5,type:'Daily',cl:'Paweł Nowak',st:'done'},
+    {id:'J-2045',cust:'Bergen Tannlegesenter',site:'Kong Oscars gate 5',when:'today',date:'I dag',s:18,e:19.5,type:'Evening',cl:'Sara Lien',st:'planned'},
+    {id:'J-2046',cust:'Lunde Regnskap',site:'Vågsallmenningen 4',when:'today',date:'I dag',s:17,e:18,type:'Evening',cl:'Nina Solberg',st:'planned'},
+    {id:'J-2056',cust:'Nordvik Advokat',site:'Bryggen 8',when:'week',date:'Ons 22',s:10.5,e:12,type:'Daily',cl:'Maria Hansen',st:'planned'},
+    {id:'J-2055',cust:'Kystgården Hotell',site:'Sjøgaten 2',when:'week',date:'Ons 22',s:7,e:9,type:'Daily',cl:'Thomas Eide',st:'planned'},
+    {id:'J-2031',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'past',date:'I går',s:6.5,e:8,type:'Daily',cl:'Nina Solberg',st:'done'},
+    {id:'J-2030',cust:'Bergen Tannlegesenter',site:'Kong Oscars gate 5',when:'past',date:'I går',s:18,e:19,type:'Evening',cl:'Sara Lien',st:'done'}
+  ];
+  let jobCur=JOBS[0], jobFilter='unassigned', jobQuery='', jobSeq=2060;
+
+  const DSTART=5,DEND=22,NOW=11.3,CLEANERS=['Maria Hansen','Thomas Eide','Anders Vik','Nina Solberg','Paweł Nowak','Sara Lien'];
+  const HOURW=104, TIMEW=(DEND-DSTART)*HOURW, NAMEW=132, HRH=44, xpos=h=>(h-DSTART)*HOURW, hhmm=h=>String(Math.floor(h)).padStart(2,'0')+':'+(h%1?'30':'00');
+  const SCHED=[
+    {cl:'Maria Hansen',cust:'Solvik Bygg',s:6,e:8.5,st:'done',type:'Daily',addr:'Storgata 14, Bergen · 2nd',access:'Code 4417',travel:'—',contact:'Mette Solvik · 55 12 34 56',tasks:['Kontorer','Sanitær','Kjøkken','Søppel']},
+    {cl:'Maria Hansen',cust:'Nordvik Advokat',s:10.5,e:12,st:'now',type:'Daily',addr:'Bryggen 8, Bergen · 3rd',access:'Dørtelefon "Nordvik"',travel:'14 min · 5,2 km',contact:'Jon Nordvik · 55 98 76 54',tasks:['Resepsjon','Møterom','Sanitær']},
+    {cl:'Maria Hansen',cust:'Fjell Eiendom',s:13,e:15,st:'planned',type:'Window',addr:'Allmenningen 22, Bergen',access:'Nøkkelboks · kode i app',travel:'9 min · 3,1 km',contact:'Kari Fjell · 55 11 22 33',tasks:['Kontorer','Vindus (innv.)','Kjøkken']},
+    {cl:'Thomas Eide',cust:'Kystgården Hotell',s:7,e:9,st:'done',type:'Daily',addr:'Sjøgaten 2, Bergen',access:'Resepsjon',travel:'—',contact:'Anders Vik · 55 12 99 00',tasks:['Lobby','Korridorer']},
+    {cl:'Thomas Eide',cust:'Bergen Tannlegesenter',s:18,e:19,st:'planned',type:'Evening',addr:'Kong Oscars gate 5',access:'Kode 2031',travel:'18 min',contact:'Per Aas · 55 33 44 55',tasks:['Behandlingsrom','Sanitær']},
+    {cl:'Anders Vik',cust:'Kystgården Hotell',s:7,e:13,st:'now',type:'Deep clean',addr:'Sjøgaten 2, Bergen',access:'Resepsjon',travel:'—',contact:'Anders Vik · 55 12 99 00',tasks:['Rom 2. etg','Frokostsal','Korridorer']},
+    {cl:'Nina Solberg',cust:'Fjell Eiendom',s:6.5,e:8,st:'done',type:'Daily',addr:'Allmenningen 22, Bergen',access:'Nøkkelboks · kode i app',travel:'—',contact:'Kari Fjell · 55 11 22 33',tasks:['Resepsjon','Vindus']},
+    {cl:'Nina Solberg',cust:'Lunde Regnskap',s:17,e:18,st:'planned',type:'Evening',addr:'Vågsallmenningen 4',access:'Kode 1180',travel:'11 min',contact:'Mari Lunde · 55 44 33 22',tasks:['Kontorer','Kjøkken']},
+    {cl:'Paweł Nowak',cust:'Storsenteret Drift',s:5.5,e:7.5,st:'done',type:'Daily',addr:'Strandgaten 10',access:'Vaktmester slipper inn',travel:'—',contact:'Ola Berg · 55 66 77 88',tasks:['Fellesareal','Sanitær']},
+    {cl:'Sara Lien',cust:'Bergen Tannlegesenter',s:18,e:19.5,st:'planned',type:'Evening',addr:'Kong Oscars gate 5',access:'Kode 2031',travel:'—',contact:'Per Aas · 55 33 44 55',tasks:['Behandlingsrom']}
+  ];
+  const DAYS=['Mon 20','Tue 21','Wed 22','Thu 23','Fri 24','Sat 25','Sun 26'];
+  let schedView='day', schedCur=SCHED[1], weekCl=CLEANERS[0];
+  function weekFor(ci){return DAYS.map((d,di)=>{if(di===6)return{jobs:0,h:0};if(di===5)return ci<2?{jobs:1,h:3}:{jobs:0,h:0};return{jobs:2+((ci+di)%2),h:7+((ci+di)%3)};});}
+  const UNASSIGNED=[
+    {cust:'Storsenteret Drift',time:'14:00–15:30',note:'Ekstra vask før visning',tag:'new',dur:1.5,type:'Extra',addr:'Strandgaten 10',access:'Vaktmester slipper inn',travel:'—',contact:'Ola Berg · 55 66 77 88',tasks:['Fellesareal','Sanitær']},
+    {cust:'Fjell Eiendom',time:'ASAP',note:'Avvik: vindu resepsjon',tag:'urgent',dur:1,type:'Window',addr:'Allmenningen 22, Bergen',access:'Nøkkelboks · kode i app',travel:'—',contact:'Kari Fjell · 55 11 22 33',tasks:['Vindus resepsjon']},
+    {cust:'Solvik Bygg',time:'i morgen 06:00',note:'Frukt-etterfyll',tag:'planned',dur:0.5,type:'Daily',addr:'Storgata 14, Bergen · 2nd',access:'Code 4417',travel:'—',contact:'Mette Solvik · 55 12 34 56',tasks:['Frukt-etterfyll']}
+  ];
+
+  /* ---------------- builders ---------------- */
+  function kvHtml(o){return '<div class="pbd">'+Object.keys(o).map(k=>'<div class="kv"><div class="k">'+k+'</div><div class="v'+(/@|\+47/.test(o[k])?' mono':'')+'">'+o[k]+'</div></div>').join('')+'</div>';}
+  function actsHtml(a){return '<div class="pbd">'+a.map(r=>'<div class="act"><div class="ad'+(r[0]==='warn'?' warn':'')+'"></div><div class="ax">'+r[1]+'<div class="am">'+r[2]+'</div></div></div>').join('')+'</div>';}
+  function jobsHtml(j){return '<div class="pbd">'+j.map(r=>'<div class="jrow"><div><div class="jt">'+r[0]+'</div><div class="jp">'+r[1]+'</div></div><span class="pill '+r[2]+'">'+r[3]+'</span></div>').join('')+'</div>';}
+  function notesHtml(n){return '<div class="pbd">'+n.map(r=>'<div class="note">'+r[0]+'<span class="nm">— '+r[1]+'</span></div>').join('')+'</div>';}
+
+  /* ----- Customer Service ----- */
+  let csCur=TICKETS[0];
+  function renderTicketList(){document.getElementById('cs-list').innerHTML=TICKETS.map((t,i)=>
+    '<div class="trow'+(t===csCur?' sel':'')+(i>2?' read':'')+'" data-i="'+i+'" data-status="'+t.st+'"><div class="unread"></div><div class="tmain"><div class="cust">'+t.c+'</div><div class="subj">'+t.subj+'</div></div><div class="tright"><span class="pill '+t.st+'">'+pillLabel[t.st]+'</span><span class="tm">'+t.tm+'</span></div></div>').join('');}
+  function renderConv(t){document.getElementById('cs-conv').innerHTML=
+    '<div class="phd"><div class="ptab">Conversation <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hcnt">'+t.id+'</div><div class="hctl">'+DOTS+'</div></div>'+
+    '<div class="convhd"><div class="top"><h2>'+t.c+'</h2><span class="pill '+t.st+'">'+pillLabel[t.st]+'</span><span class="tid">opened '+t.opened+'</span></div><div class="subj">'+t.subj+'</div><div class="sub2"><span>Assignee <b>Lise Olsen</b></span><span>Location <b>'+t.loc+'</b></span><span>Channel <b>'+t.ch+'</b></span></div></div>'+
+    '<div class="thread">'+t.thread.map(m=>m[0]==='sys'?'<div class="sysline">'+m[3]+'</div>':'<div class="msg '+(m[0]==='out'?'out':'in')+'"><div class="mhd">'+(m[0]==='out'?'<span class="t">'+m[2]+'</span><b>'+m[1]+'</b>':'<b>'+m[1]+'</b><span class="t">'+m[2]+'</span>')+'</div><div class="bubble">'+m[3]+'</div></div>').join('')+'</div>'+
+    '<div class="composer"><textarea placeholder="Write a reply to '+t.c+'…"></textarea><div class="cbar"><button class="cbtn">Attach</button><button class="cbtn">Note</button><div class="spacer"></div><button class="cbtn">Resolve</button><button class="cbtn primary">Reply<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.88,4.73,16.2,20.65A2,2,0,0,1,14.3,22h0a2,2,0,0,1-1.9-1.31l-2.13-5.52-.38-1-1-.4L3.31,11.63a2,2,0,0,1,0-3.83h0L19.27,2.12a2,2,0,0,1,2.61,2.61Z"/><path d="M14.28,11.14l-4,4-.38-1-1-.4,4-4a1,1,0,1,1,1.42,1.42Z"/></svg></button></div></div>';}
+  function selectTicket(t){csCur=t;renderTicketList();renderConv(t);csDock();}
+  document.getElementById('cs-list').addEventListener('click',e=>{const r=e.target.closest('.trow');if(r)selectTicket(TICKETS[+r.dataset.i]);});
+
+  /* ----- Timesheet ----- */
+  let tsCur=EMP[0];
+  function renderEmpList(){document.getElementById('ts-list').innerHTML=EMP.map((p,i)=>
+    '<div class="trow'+(p===tsCur?' sel':'')+(i>0?' read':'')+'" data-i="'+i+'" data-status="'+(p.clk?'clocked':'idle')+'"><div class="unread"'+(p.clk?' style="background:var(--green)"':'')+'></div><div class="tmain"><div class="cust">'+p.n+'</div><div class="subj">'+p.d+(p.clk?' · clocked in':'')+'</div></div><div class="tright"><span class="mono" style="font-size:11px">'+p.wk+'</span></div></div>').join('');}
+  function renderTs(p){document.getElementById('ts-conv').innerHTML=
+    '<div class="phd"><div class="ptab">Time entries — '+p.n+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hcnt">this week</div><div class="hctl">'+DOTS+'</div></div>'+
+    '<div class="pbd"><table class="tstable"><thead><tr><th>Date</th><th>In</th><th>Out</th><th>Hours</th><th>OT</th><th>Jobs</th><th>Status</th></tr></thead><tbody>'+
+    p.rows.map(r=>r[1]===''? '<tr><td>'+r[0]+'</td><td colspan="4" class="muted">'+r[5]+'</td><td>—</td><td><span class="pill '+r[6]+'">'+r[7]+'</span></td></tr>'
+      :'<tr><td>'+r[0]+'</td><td class="num">'+r[1]+'</td><td class="'+(r[2]==='— now'?'now':'num')+'">'+r[2]+'</td><td class="'+(r[3]==='—'?'muted':'num')+'">'+r[3]+'</td><td class="'+(r[4]==='—'?'muted':'ot')+'">'+r[4]+'</td><td>'+r[5]+'</td><td><span class="pill '+r[6]+'">'+r[7]+'</span></td></tr>').join('')+
+    '</tbody></table></div>';}
+  function selectEmp(p){tsCur=p;renderEmpList();renderTs(p);tsDock();}
+  document.getElementById('ts-list').addEventListener('click',e=>{const r=e.target.closest('.trow');if(r)selectEmp(EMP[+r.dataset.i]);});
+
+  /* ----- Schedule ----- */
+  const utag={new:['open','New'],urgent:['urgent','Urgent'],planned:['waiting','Planned']};
+  function renderQueue(){document.getElementById('sched-queue').innerHTML=UNASSIGNED.map((u,i)=>'<div class="uq" data-i="'+i+'" data-status="'+u.tag+'" draggable="true"><div class="uc">'+u.cust+'</div><div class="un2">'+u.note+'</div><div class="um"><span class="pill '+utag[u.tag][0]+'">'+utag[u.tag][1]+'</span><span class="ut">'+u.time+'</span></div></div>').join('');}
+  function dayStats(cl){const js=SCHED.filter(j=>j.cl===cl);return {h:js.reduce((a,j)=>a+(j.e-j.s),0),n:js.length};}
+  function renderDay(){
+    let hrs='';for(let h=DSTART;h<DEND;h++)hrs+='<div class="hr">'+String(h).padStart(2,'0')+':00</div>';
+    const rows=CLEANERS.map(cl=>{const st=dayStats(cl);const dist=(EMP.find(e=>e.n===cl)||{}).d||'';
+      const blocks=SCHED.map((j,i)=>j.cl!==cl?'':'<div class="sblock '+j.st+(j===schedCur?' sel':'')+'" draggable="true" data-i="'+i+'" title="'+j.cust+' · '+hhmm(j.s)+'–'+hhmm(j.e)+' · '+j.type+'  ('+j.cl+')" style="left:'+xpos(j.s)+'px;width:'+((j.e-j.s)*HOURW)+'px"><div class="bh"><span class="bdot"></span><b>'+j.cust+'</b></div><span class="bt">'+hhmm(j.s)+'–'+hhmm(j.e)+' · '+j.type+'</span></div>').join('');
+      const util=(st.h%1?st.h.toFixed(1):st.h)+'h · '+st.n+' jobs';
+      return '<div class="srow"><div class="sname"><b>'+cl+'</b><span>'+dist+'</span><span class="sutil">'+util+'</span></div><div class="strack" data-cl="'+cl+'" style="width:'+TIMEW+'px"><div class="nowline" style="left:'+xpos(NOW)+'px"></div>'+blocks+'</div></div>';
+    }).join('');
+    return '<div class="tl-scroll" id="tl-scroll"><div class="tl-scroll-in" style="width:'+(NAMEW+TIMEW)+'px"></div></div>'+
+      '<div class="tl" id="tl-body"><div class="tl-head"><div class="tl-corner"></div><div class="tl-axis" style="width:'+TIMEW+'px">'+hrs+'</div></div>'+rows+'</div>';
+  }
+  function weekJobsFor(cl){const route=SCHED.filter(j=>j.cl===cl);const out=[];
+    for(let di=0;di<7;di++){if(di===6)continue;const set=di===5?route.slice(0,1):route;
+      set.forEach(j=>out.push({di:di,s:j.s,e:j.e,cust:j.cust,type:j.type,st:di<1?'done':di===1?j.st:'planned'}));}
+    return out;}
+  function renderWeek(){
+    let gut='';for(let h=DSTART;h<DEND;h++)gut+='<div class="gh">'+String(h).padStart(2,'0')+':00</div>';
+    const dayh=DAYS.map(d=>'<div class="wk-dayh'+(d==='Tue 21'?' today':'')+'">'+d+'</div>').join('');
+    const jobs=weekJobsFor(weekCl);
+    const cols=DAYS.map((d,di)=>'<div class="wk-col'+(d==='Tue 21'?' today':'')+'" style="height:'+((DEND-DSTART)*HRH)+'px">'+
+      jobs.filter(j=>j.di===di).map(j=>'<div class="wkblock '+j.st+'" title="'+j.cust+' · '+hhmm(j.s)+'–'+hhmm(j.e)+' · '+j.type+'" style="top:'+((j.s-DSTART)*HRH)+'px;height:'+((j.e-j.s)*HRH)+'px"><b>'+j.cust+'</b><span class="wm">'+hhmm(j.s)+'–'+hhmm(j.e)+'</span><span class="wm">'+j.type+'</span></div>').join('')+
+      (d==='Tue 21'?'<div class="wknow" style="top:'+((NOW-DSTART)*HRH)+'px"></div>':'')+'</div>').join('');
+    return '<div class="wk"><div class="wk-head"><div class="wk-gh"></div>'+dayh+'</div><div class="wk-body"><div class="wk-gutter">'+gut+'</div>'+cols+'</div></div>';
+  }
+  const CHEV='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.7 3.3a1 1 0 0 0-1.4 0l-5 5a1 1 0 0 0 1.4 1.4L12 5.4l4.3 4.3a1 1 0 0 0 1.4-1.4z"/><path d="M7.7 14.3a1 1 0 0 0-1.4 1.4l5 5a1 1 0 0 0 1.4 0l5-5a1 1 0 0 0-1.4-1.4L12 18.6z"/></svg>';
+  function renderSchedule(){
+    const isWk=schedView==='week';
+    const total=SCHED.reduce((a,j)=>a+(j.e-j.s),0);
+    const wkH=isWk?weekJobsFor(weekCl).reduce((a,j)=>a+(j.e-j.s),0):0;
+    const pick=isWk?'<div class="wkpick"><button class="wkpb">'+weekCl+' '+CHEV+'</button><div class="wkmenu">'+CLEANERS.map(c=>'<div class="wkopt'+(c===weekCl?' on':'')+'" data-cl="'+c+'">'+c+'</div>').join('')+'</div></div>':'';
+    const summary=isWk?(wkH%1?wkH.toFixed(1):wkH)+'h · '+weekCl.split(' ')[0]+'’s week':SCHED.length+' jobs · '+UNASSIGNED.length+' unassigned · '+(total%1?total.toFixed(1):total)+'h planned';
+    document.getElementById('sched-tl').innerHTML=
+      '<div class="phd sched-phd"><div class="dnav"><button class="arrow">‹</button> '+(isWk?'Week 21 · 20–26 May':'Tue 21 May')+' <button class="arrow">›</button></div><div class="dwt"><div class="seg'+(!isWk?' on':'')+'" data-v="day">Day</div><div class="seg'+(isWk?' on':'')+'" data-v="week">Week</div></div><div class="grow"></div>'+pick+'<div class="hcnt">'+summary+'</div></div>'+
+      (isWk?renderWeek():renderDay());
+    if(!isWk){const sb=document.getElementById('tl-scroll'),tb=document.getElementById('tl-body');if(sb&&tb){let lk=false;sb.onscroll=()=>{if(lk)return;lk=true;tb.scrollLeft=sb.scrollLeft;lk=false;};tb.onscroll=()=>{if(lk)return;lk=true;sb.scrollLeft=tb.scrollLeft;lk=false;};}}
+  }
+  const sst={done:['resolved','Completed'],now:['open','In progress'],planned:['waiting','Planned']};
+  function jobDetailHtml(j){const r=(k,v,m)=>'<div class="kv"><div class="k">'+k+'</div><div class="v'+(m?' mono':'')+'">'+v+'</div></div>';
+    return '<div class="pbd">'+r('Customer',j.cust)+r('Type',j.type)+r('Address',j.addr)+r('Time',hhmm(j.s)+'–'+hhmm(j.e),1)+r('Travel in',j.travel,1)+r('Access',j.access)+r('Cleaner',j.cl)+r('Contact',j.contact,1)+'<div class="kv"><div class="k">Status</div><div class="v"><span class="pill '+sst[j.st][0]+'">'+sst[j.st][1]+'</span></div></div></div>';}
+  function tasksHtml2(j){return '<div class="pbd">'+j.tasks.map(t=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+t+'</div><span class="pill '+(j.st==='done'?'resolved':'waiting')+'">'+(j.st==='done'?'Done':'Todo')+'</span></div>').join('')+'</div>';}
+  function selectJob(j){schedCur=j;renderSchedule();schedDock();}
+  document.getElementById('sched-tl').addEventListener('click',e=>{
+    const seg=e.target.closest('.seg[data-v]');if(seg){schedView=seg.dataset.v;renderSchedule();return;}
+    const pb=e.target.closest('.wkpb');if(pb){pb.closest('.wkpick').classList.toggle('open');return;}
+    const wo=e.target.closest('.wkopt');if(wo){weekCl=wo.dataset.cl;renderSchedule();return;}
+    const b=e.target.closest('.sblock');if(b)selectJob(SCHED[+b.dataset.i]);});
+  /* drag-to-assign: queue → cleaner row, and move existing blocks */
+  let drag=null;
+  function clearGhosts(){document.querySelectorAll('#sched-tl .gblk').forEach(g=>g.remove());}
+  function dropTime(e,track){const r=track.getBoundingClientRect();const t=DSTART+(e.clientX-r.left)/HOURW;return Math.max(DSTART,Math.min(DEND-drag.dur,Math.round(t*2)/2));}
+  document.getElementById('sched-queue').addEventListener('dragstart',e=>{const u=e.target.closest('.uq');if(u){drag={k:'q',i:+u.dataset.i,dur:UNASSIGNED[+u.dataset.i].dur};e.dataTransfer.effectAllowed='move';}});
+  const STL=document.getElementById('sched-tl');
+  STL.addEventListener('dragstart',e=>{const b=e.target.closest('.sblock');if(b&&!b.classList.contains('gblk')){const j=SCHED[+b.dataset.i];drag={k:'b',i:+b.dataset.i,dur:j.e-j.s};e.dataTransfer.effectAllowed='move';}});
+  STL.addEventListener('dragover',e=>{if(!drag)return;const track=e.target.closest('.strack');if(!track)return;e.preventDefault();const t=dropTime(e,track);
+    document.querySelectorAll('#sched-tl .gblk').forEach(g=>{if(g.parentElement!==track)g.remove();});
+    let g=track.querySelector('.gblk');if(!g){g=document.createElement('div');g.className='sblock planned gblk';track.appendChild(g);}
+    const cust=drag.k==='q'?UNASSIGNED[drag.i].cust:SCHED[drag.i].cust;
+    g.style.left=xpos(t)+'px';g.style.width=(drag.dur*HOURW)+'px';
+    g.innerHTML='<div class="bh"><b>'+cust+'</b></div><span class="bt">'+hhmm(t)+'–'+hhmm(t+drag.dur)+'</span>';});
+  STL.addEventListener('drop',e=>{if(!drag)return;const track=e.target.closest('.strack');if(!track){drag=null;clearGhosts();return;}e.preventDefault();
+    const t=dropTime(e,track),cl=track.dataset.cl;
+    if(drag.k==='q'){const u=UNASSIGNED[drag.i];SCHED.push({cl:cl,cust:u.cust,s:t,e:t+u.dur,st:'planned',type:u.type,addr:u.addr,access:u.access,travel:u.travel,contact:u.contact,tasks:u.tasks});UNASSIGNED.splice(drag.i,1);}
+    else{const j=SCHED[drag.i];j.cl=cl;j.s=t;j.e=t+drag.dur;}
+    drag=null;clearGhosts();renderQueue();renderSchedule();});
+  STL.addEventListener('dragend',()=>{drag=null;clearGhosts();});
+
+  /* ----- Employees ----- */
+  const initials=n=>n.split(' ').map(x=>x[0]).join('').slice(0,2);
+  function kvr2(k,v,m){return '<div class="kv"><div class="k">'+k+'</div><div class="v'+(m?' mono':'')+'">'+v+'</div></div>';}
+  function renderEmpDir(){document.getElementById('emp-list').innerHTML=EMP.map((p,i)=>{const x=EMPX[p.n];
+    return '<div class="trow'+(p===empCur?' sel':'')+'" data-i="'+i+'" data-status="'+(p.clk?'active':'idle')+'"><div class="unread"'+(p.clk?' style="background:var(--green)"':'')+'></div><div class="tmain"><div class="cust">'+p.n+'</div><div class="subj">'+x.role+'</div></div></div>';}).join('');}
+  function renderProfile(p){const x=EMPX[p.n];
+    document.getElementById('emp-profile').innerHTML=
+      '<div class="phd"><div class="ptab">Profile — '+p.n+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hctl">'+DOTS+'</div></div>'+
+      '<div class="pbd profile">'+
+        '<div class="prof-head"><div class="avatar">'+initials(p.n)+'</div><div class="prof-id"><div class="pn">'+p.n+'</div><div class="pr">'+x.role+'</div><div class="pmeta"><span class="pill '+(p.clk?'resolved':'waiting')+'">'+(p.clk?'On shift':'Off')+'</span> · '+p.d+' · '+x.no+'</div></div></div>'+
+        '<div class="prof-sec"><div class="psh">Contact</div>'+kvr2('Phone',x.phone,1)+kvr2('Email',x.email,1)+kvr2('Address',x.addr)+'</div>'+
+        '<div class="prof-sec"><div class="psh">Employment</div>'+kvr2('Start date',x.start,1)+kvr2('Type',x.type)+kvr2('Employee no',x.no,1)+kvr2('Availability',x.avail)+'</div>'+
+        '<div class="prof-sec"><div class="psh">Skills &amp; areas</div><div class="chips">'+x.skills.map(s=>'<span class="chip">'+s+'</span>').join('')+'</div></div>'+
+      '</div>';}
+  function empWeekBody(){const p=empCur;return '<div class="pbd">'+kvr2('This week',p.wk,1)+kvr2('This month',p.mo,1)+kvr2('Overtime',p.ot,1)+kvr2('Next pay',p.pay,1)+(p.pend!=='—'?'<div class="kv"><div class="k">Pending</div><div class="v"><span class="pill open">'+p.pend+'</span></div></div>':'')+'</div>';}
+  function empSitesBody(){return '<div class="pbd">'+EMPX[empCur.n].sites.map(s=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+s+'</div><span class="pill resolved">Active</span></div>').join('')+'</div>';}
+  function empDocsBody(){return '<div class="pbd">'+['Arbeidskontrakt.pdf','HMS-kvittering.pdf','Taushetserklæring.pdf'].map(d=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+d+'</div><span class="pill waiting">Locked</span></div>').join('')+'</div>';}
+  function empNotesBody(){return notesHtml([['Foretrekker tidlige vakter. Sertifisert for vindusvask juni 2025.','Lise Olsen']]);}
+  function selectEmpP(p){empCur=p;renderEmpDir();renderProfile(p);empDock();}
+  document.getElementById('emp-list').addEventListener('click',e=>{const r=e.target.closest('.trow');if(r)selectEmpP(EMP[+r.dataset.i]);});
+
+  /* ----- Jobs ----- */
+  const jst={unassigned:['urgent','Unassigned'],now:['open','In progress'],planned:['waiting','Planned'],done:['resolved','Done']};
+  const JOBSEG=[['unassigned','Unassigned'],['today','Today'],['week','This week'],['done','Completed'],['all','All jobs']];
+  function jobMatch(j,f){const seg=f==='all'||(f==='unassigned'&&j.st==='unassigned')||(f==='today'&&j.when==='today')||(f==='week'&&(j.when==='today'||j.when==='tomorrow'||j.when==='week'))||(f==='done'&&j.st==='done');return seg&&(jobQuery===''||j.cust.toLowerCase().indexOf(jobQuery.toLowerCase())>-1);}
+  function renderJobSeg(){document.getElementById('job-seg').innerHTML=JOBSEG.map(s=>'<div class="segrow'+(jobFilter===s[0]?' active':'')+'" data-f="'+s[0]+'">'+s[1]+'<span class="sc">'+JOBS.filter(j=>jobMatch(j,s[0])).length+'</span></div>').join('');}
+  function renderJobTable(){const list=JOBS.filter(j=>jobMatch(j,jobFilter));
+    document.getElementById('job-table').innerHTML=
+      '<div class="phd"><div class="ptab">'+JOBSEG.find(s=>s[0]===jobFilter)[1]+' <span class="cx">×</span></div><div class="grow"></div><button class="newbtn">+ New job</button><div class="hcnt">'+list.length+' jobs</div></div>'+
+      '<div class="pbd"><table class="tstable jobtable"><thead><tr><th>Status</th><th>Job</th><th>Customer</th><th>Site</th><th>When</th><th>Type</th><th>Cleaner</th></tr></thead><tbody>'+
+      list.map(j=>'<tr class="jrowt'+(j===jobCur?' sel':'')+'" data-id="'+j.id+'"><td><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></td><td class="num">'+j.id+'</td><td><b>'+j.cust+'</b></td><td class="muted2">'+j.site+'</td><td class="num">'+j.date+(j.s!=null?' · '+hhmm(j.s):'')+'</td><td>'+j.type+'</td><td>'+(j.cl||'<span class="needs">— assign</span>')+'</td></tr>').join('')+
+      '</tbody></table></div>';}
+  function jobDetailBody(){const j=jobCur,c=CUSTOMERS[j.cust];
+    const opts=['Unassigned'].concat(CLEANERS).map(n=>'<option'+((j.cl||'Unassigned')===n?' selected':'')+'>'+n+'</option>').join('');
+    return '<div class="pbd">'+kvr2('Job ID',j.id,1)+kvr2('Customer',j.cust)+kvr2('Site',j.site)+kvr2('When',j.date+(j.s!=null?' · '+hhmm(j.s)+'–'+hhmm(j.e):''),1)+kvr2('Type',j.type)+
+      '<div class="kv"><div class="k">Status</div><div class="v"><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></div></div>'+
+      '<div class="assignrow"><div class="k2">Assign cleaner</div><select class="assignsel">'+opts+'</select></div>'+
+      (c?'<div class="custref">'+j.cust+' · '+c.contact+'<div class="subtle">Tilgang: '+c.sites[0].acc+' · <a class="lnk" data-cust="'+j.cust+'">Åpne kunde →</a></div></div>':'')+
+      '</div>';}
+  function assignCleaner(j,cl){if(cl==='Unassigned'){j.cl=null;j.st='unassigned';}else{j.cl=cl;if(j.st==='unassigned')j.st='planned';}}
+  function timeOpts(sel){let o='';for(let h=DSTART;h<DEND;h+=0.5)o+='<option value="'+h+'"'+(h===sel?' selected':'')+'>'+hhmm(h)+'</option>';return o;}
+  function renderNewJob(){const c0=CUSTOMERS[CUSTLIST[0]];
+    document.getElementById('job-table').innerHTML=
+      '<div class="phd"><div class="ptab">New job <span class="cx">×</span></div><div class="grow"></div></div>'+
+      '<div class="pbd jform">'+
+        '<div class="frow"><label>Customer</label><select id="nf-cust">'+CUSTLIST.map(n=>'<option>'+n+'</option>').join('')+'</select></div>'+
+        '<div class="frow"><label>Site</label><input id="nf-site" value="'+c0.sites[0].a+'"></div>'+
+        '<div class="frow"><label>Type</label><select id="nf-type"><option>Daily</option><option>Window</option><option>Evening</option><option>Extra</option><option>Deep clean</option></select></div>'+
+        '<div class="frow"><label>Date</label><select id="nf-date"><option>I dag</option><option>I morgen</option><option>Ons 22</option><option>Tor 23</option><option>Fre 24</option></select></div>'+
+        '<div class="frow"><label>Start</label><select id="nf-start">'+timeOpts(6)+'</select></div>'+
+        '<div class="frow"><label>Duration</label><select id="nf-dur"><option value="0.5">0.5 t</option><option value="1">1 t</option><option value="1.5">1.5 t</option><option value="2" selected>2 t</option><option value="2.5">2.5 t</option><option value="3">3 t</option><option value="4">4 t</option><option value="6">6 t</option></select></div>'+
+        '<div class="frow"><label>Cleaner</label><select id="nf-cl"><option>Unassigned</option>'+CLEANERS.map(n=>'<option>'+n+'</option>').join('')+'</select></div>'+
+        '<div class="fbtns"><button class="primarybtn" id="nf-create">Create job</button><button class="ghostbtn" id="nf-cancel">Cancel</button></div>'+
+      '</div>';}
+  function createJob(){const g=id=>document.getElementById(id).value;
+    const cust=g('nf-cust'),site=g('nf-site'),type=g('nf-type'),date=g('nf-date'),s=parseFloat(g('nf-start')),dur=parseFloat(g('nf-dur')),cl=g('nf-cl');
+    const when=date==='I dag'?'today':date==='I morgen'?'tomorrow':'week';
+    JOBS.unshift({id:'J-'+(jobSeq++),cust:cust,site:site,when:when,date:date,s:s,e:s+dur,type:type,cl:cl==='Unassigned'?null:cl,st:cl==='Unassigned'?'unassigned':'planned'});
+    jobCur=JOBS[0];jobFilter=cl==='Unassigned'?'unassigned':'today';renderJobSeg();renderJobTable();jobDock();renderRailBadges();}
+  function jobCustBody(){const j=jobCur,c=CUSTOMERS[j.cust];if(!c)return '<div class="pbd"></div>';
+    return '<div class="pbd">'+kvr2('Customer',j.cust)+kvr2('Value',c.value+' kr/mnd',1)+kvr2('Agreement',c.agr.rule)+kvr2('Contact',c.contact,1)+kvr2('Access',c.sites[0].acc)+'<div class="kv"><div class="k">Open tickets</div><div class="v">'+(c.tickets?'<span class="pill urgent">'+c.tickets+' open</span>':'<span class="pill resolved">None</span>')+'</div></div></div>';}
+  function jobTasksBody(){const j=jobCur,c=CUSTOMERS[j.cust],ts=c?c.agr.scope.split(', '):['—'];
+    return '<div class="pbd">'+ts.map(t=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+t+'</div><span class="pill '+(j.st==='done'?'resolved':'waiting')+'">'+(j.st==='done'?'Done':'Todo')+'</span></div>').join('')+'</div>';}
+  function selectJobRow(j){jobCur=j;renderJobTable();jobDock();}
+  document.getElementById('job-seg').addEventListener('click',e=>{const s=e.target.closest('.segrow');if(s){jobFilter=s.dataset.f;renderJobSeg();renderJobTable();}});
+  document.getElementById('job-table').addEventListener('click',e=>{
+    if(e.target.closest('#nf-create')){createJob();return;}
+    if(e.target.closest('#nf-cancel')){renderJobTable();return;}
+    if(e.target.closest('.newbtn')){renderNewJob();return;}
+    const r=e.target.closest('.jrowt');if(r){const j=JOBS.find(x=>x.id===r.dataset.id);if(j)selectJobRow(j);}});
+  document.getElementById('job-table').addEventListener('change',e=>{if(e.target.id==='nf-cust'){document.getElementById('nf-site').value=CUSTOMERS[e.target.value].sites[0].a;}});
+  document.getElementById('job-right').addEventListener('change',e=>{if(e.target.classList.contains('assignsel')){assignCleaner(jobCur,e.target.value);renderJobTable();jobDock();renderRailBadges();}});
+  document.getElementById('job-right').addEventListener('click',e=>{const lk=e.target.closest('.lnk[data-cust]');if(lk){act(document.querySelector('.rail .nav[data-mod="Customers"]'));selectCust(lk.dataset.cust);}});
+  document.getElementById('job-search').addEventListener('input',e=>{jobQuery=e.target.value;renderJobSeg();renderJobTable();});
+  document.getElementById('custnames').innerHTML=CUSTLIST.map(n=>'<option value="'+n+'">').join('');
+
+  /* ----- Customers ----- */
+  function renderCustList(){document.getElementById('cust-list').innerHTML=CUSTLIST.map(nm=>{const c=CUSTOMERS[nm];
+    return '<div class="trow'+(nm===custCur?' sel':'')+'" data-nm="'+nm+'" data-status="'+c.status+'"><div class="unread" style="background:'+(c.status==='active'?'var(--green)':'var(--amber)')+'"></div><div class="tmain"><div class="cust">'+nm+'</div><div class="subj">'+c.sites.length+' bygg · '+c.value+' kr/mnd</div></div></div>';}).join('');}
+  function renderCustProfile(nm){const c=CUSTOMERS[nm],jobs=JOBS.filter(j=>j.cust===nm);
+    document.getElementById('cust-profile').innerHTML=
+      '<div class="phd"><div class="ptab">'+nm+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hctl">'+DOTS+'</div></div>'+
+      '<div class="pbd profile">'+
+        '<div class="prof-head"><div class="avatar">'+initials(nm)+'</div><div class="prof-id"><div class="pn">'+nm+'</div><div class="pr">Org '+c.org+' · kunde siden '+c.since+'</div><div class="pmeta"><span class="pill '+(c.status==='active'?'resolved':'open')+'">'+(c.status==='active'?'Active':'Paused')+'</span> · '+c.value+' kr/mnd</div></div></div>'+
+        '<div class="prof-sec"><div class="psh">Service agreement</div>'+kvr2('Routine',c.agr.rule)+kvr2('Scope',c.agr.scope)+kvr2('Price',c.agr.price,1)+kvr2('Start',c.agr.start,1)+kvr2('Renewal',c.agr.renew,1)+'</div>'+
+        '<div class="prof-sec"><div class="psh">Sites</div>'+c.sites.map(s=>'<div class="kv"><div class="k">'+s.sz+'</div><div class="v">'+s.a+'<div class="subtle">Tilgang: '+s.acc+'</div></div></div>').join('')+'</div>'+
+        '<div class="prof-sec"><div class="psh">Contacts</div>'+kvr2('Primary',c.contact,1)+kvr2('Email',c.email,1)+kvr2('Billing',c.billing)+'</div>'+
+        '<div class="prof-sec"><div class="psh">Jobs ('+jobs.length+')</div>'+jobs.map(j=>'<div class="jrow"><div><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+j.id+' · '+j.type+'</div><div class="jp">'+j.date+(j.s!=null?' · '+hhmm(j.s):'')+' · '+(j.cl||'Unassigned')+'</div></div><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></div>').join('')+'</div>'+
+      '</div>';}
+  function selectCust(nm){custCur=nm;renderCustList();renderCustProfile(nm);custDock();}
+  document.getElementById('cust-list').addEventListener('click',e=>{const r=e.target.closest('.trow');if(r)selectCust(r.dataset.nm);});
+
+  /* ---------------- reusable dockable right column ---------------- */
+  function makeDock(rightcol,sections,TAB){
+    let dragId=null,ghost=null,pending=null;
+    function findSec(id){return sections.find(s=>s.tabs.indexOf(id)>=0);}
+    function removeTab(id){const s=findSec(id);if(!s)return;s.tabs.splice(s.tabs.indexOf(id),1);if(s.active===id)s.active=s.tabs[0];if(s.tabs.length===0)sections.splice(sections.indexOf(s),1);}
+    function canCreate(){const s=findSec(dragId);return sections.length<3||(s&&s.tabs.length===1);}
+    function placeGhost(phd,beforeEl){if(!ghost){ghost=document.createElement('div');ghost.className='ghost';}
+      if(ghost.parentNode!==phd||ghost.nextSibling!==beforeEl){phd.insertBefore(ghost,beforeEl);ghost.style.flexBasis='0';ghost.style.margin='0';requestAnimationFrame(()=>{ghost.style.flexBasis='36px';ghost.style.margin='3px 4px 0';});}}
+    function removeGhost(){if(ghost&&ghost.parentNode)ghost.parentNode.removeChild(ghost);}
+    function insertAt(sec,index,id){const src=findSec(id);if(src===sec){const cur=sec.tabs.indexOf(id);sec.tabs.splice(cur,1);let i=index;if(cur<index)i--;sec.tabs.splice(i,0,id);}else{removeTab(id);sec.tabs.splice(index,0,id);}sec.active=id;pending=null;render();}
+    function createAt(pos,id){const after=sections[pos]||null;removeTab(id);let idx=after?sections.indexOf(after):sections.length;if(idx<0)idx=sections.length;sections.splice(idx,0,{tabs:[id],active:id});render();}
+    function tabEl(sec,id){const t=document.createElement('div');t.className='ptab'+(id===sec.active?'':' off');t.draggable=true;
+      t.innerHTML=TAB[id].label+(id===sec.active?' <span class="cx">×</span>':'');
+      t.addEventListener('click',()=>{sec.active=id;render();});
+      t.addEventListener('dragstart',e=>{dragId=id;t.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);});
+      t.addEventListener('dragend',()=>{dragId=null;pending=null;removeGhost();render();});return t;}
+    function sectionEl(sec){const el=document.createElement('div');el.className='sect';
+      const phd=document.createElement('div');phd.className='phd';
+      sec.tabs.forEach(id=>phd.appendChild(tabEl(sec,id)));
+      const padd=document.createElement('div');padd.className='padd';padd.textContent='+';phd.appendChild(padd);
+      const grow=document.createElement('div');grow.className='grow';phd.appendChild(grow);
+      const hctl=document.createElement('div');hctl.className='hctl';hctl.innerHTML=DOTS;phd.appendChild(hctl);
+      phd.addEventListener('dragover',e=>{if(dragId==null)return;e.preventDefault();
+        const tabs=[].slice.call(phd.querySelectorAll('.ptab'));let idx=tabs.length;
+        for(let i=0;i<tabs.length;i++){const r=tabs[i].getBoundingClientRect();if(e.clientX<r.left+r.width/2){idx=i;break;}}
+        const cur=sec.tabs.indexOf(dragId);if(cur>=0&&(idx===cur||idx===cur+1)){removeGhost();pending=null;return;}
+        placeGhost(phd,tabs[idx]||phd.querySelector('.padd'));pending={sec:sec,index:idx};});
+      phd.addEventListener('dragleave',e=>{if(!phd.contains(e.relatedTarget))removeGhost();});
+      phd.addEventListener('drop',e=>{e.preventDefault();const p=pending;removeGhost();if(dragId!=null&&p&&p.sec===sec)insertAt(p.sec,p.index,dragId);});
+      el.appendChild(phd);
+      const body=TAB[sec.active].body;const w=document.createElement('div');w.innerHTML=(typeof body==='function'?body():body);el.appendChild(w.firstElementChild);return el;}
+    function zone(pos,isResizer,aboveEl){const z=document.createElement('div');z.className='dropzone'+(isResizer?' rsz':'');
+      if(isResizer)z.addEventListener('mousedown',e=>{e.preventDefault();document.body.style.cursor='row-resize';document.body.style.userSelect='none';
+        const move=ev=>{const r=aboveEl.getBoundingClientRect();aboveEl.style.flex='0 0 '+Math.max(70,ev.clientY-r.top)+'px';};
+        const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.body.style.cursor='';document.body.style.userSelect='';};
+        document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);});
+      z.addEventListener('dragover',e=>{if(dragId==null||!canCreate())return;e.preventDefault();z.classList.add('ins');});
+      z.addEventListener('dragleave',()=>z.classList.remove('ins'));
+      z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('ins');if(dragId!=null&&canCreate())createAt(pos,dragId);});return z;}
+    function render(){rightcol.innerHTML='';rightcol.appendChild(zone(0,false));const els=[];
+      sections.forEach((sec,i)=>{const e=sectionEl(sec);els.push(e);rightcol.appendChild(e);if(i<sections.length-1)rightcol.appendChild(zone(i+1,true,e));});
+      rightcol.appendChild(zone(sections.length,false));els.forEach(e=>e.style.flex='1 1 0');}
+    render();return render;
+  }
+
+  const csDock=makeDock(document.getElementById('cs-right'),
+    [{tabs:['customer'],active:'customer'},{tabs:['activities','notes'],active:'notes'},{tabs:['jobs'],active:'jobs'}],
+    {customer:{label:'Customer',body:()=>kvHtml(csCur.info)},activities:{label:'Activities',body:()=>actsHtml(csCur.acts)},notes:{label:'Notes',body:()=>notesHtml(csCur.notes)},jobs:{label:'Recent jobs',body:()=>jobsHtml(csCur.jobs)}});
+
+  const clockedBody=()=>'<div class="pbd">'+EMP.filter(p=>p.clk).map(p=>'<div class="jrow"><div><div class="jt" style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block"></span>'+p.n+'</div><div class="jp">'+(p.n==='Maria Hansen'?'Solvik Bygg · since 06:15':'Kystgården · since 07:00')+'</div></div><span class="pill open">'+(p.n==='Maria Hansen'?'2t 25m':'1t 40m')+'</span></div>').join('')+'</div>';
+  const tsDock=makeDock(document.getElementById('ts-right'),
+    [{tabs:['period'],active:'period'},{tabs:['approval'],active:'approval'},{tabs:['clocked'],active:'clocked'}],
+    {period:{label:'This period',body:()=>'<div class="pbd"><div class="kv"><div class="k">This week</div><div class="v mono">'+tsCur.wk+'</div></div><div class="kv"><div class="k">This month</div><div class="v mono">'+tsCur.mo+'</div></div><div class="kv"><div class="k">Overtime</div><div class="v mono" style="color:var(--amber)">'+tsCur.ot+'</div></div><div class="kv"><div class="k">Next payroll</div><div class="v">'+tsCur.pay+'</div></div></div>'},
+     approval:{label:'Approval',body:()=>'<div class="pbd"><div style="padding:10px 11px;font-size:11.5px;color:var(--muted);line-height:1.5">'+(tsCur.pend==='—'?'No entries awaiting approval for <b style="color:var(--ink)">'+tsCur.n+'</b>.':'1 entry awaiting approval: <b style="color:var(--ink)">'+tsCur.pend+'</b>.')+'</div>'+(tsCur.pend==='—'?'':'<button class="approve"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Approve hours</button>')+'</div>'},
+     clocked:{label:'Clocked in now',body:clockedBody}});
+
+  const schedDock=makeDock(document.getElementById('sched-right'),
+    [{tabs:['job'],active:'job'},{tabs:['tasks'],active:'tasks'}],
+    {job:{label:'Job',body:()=>jobDetailHtml(schedCur)},tasks:{label:'Tasks',body:()=>tasksHtml2(schedCur)}});
+
+  const empDock=makeDock(document.getElementById('emp-right'),
+    [{tabs:['week'],active:'week'},{tabs:['sites'],active:'sites'},{tabs:['docs','notes'],active:'docs'}],
+    {week:{label:'This week',body:empWeekBody},sites:{label:'Sites',body:empSitesBody},docs:{label:'Documents',body:empDocsBody},notes:{label:'Notes',body:empNotesBody}});
+
+  const jobDock=makeDock(document.getElementById('job-right'),
+    [{tabs:['detail'],active:'detail'},{tabs:['tasks'],active:'tasks'}],
+    {detail:{label:'Job',body:jobDetailBody},tasks:{label:'Tasks',body:jobTasksBody}});
+
+  function custBillBody(){const c=CUSTOMERS[custCur];return '<div class="pbd">'+kvr2('Monthly',c.value+' kr',1)+kvr2('Terms',c.billing)+kvr2('Status',c.status==='active'?'Invoiced':'Paused')+kvr2('Next invoice',c.status==='active'?'01.07.2026':'—',1)+'</div>';}
+  function custDocBody(){return '<div class="pbd">'+['Avtale_2024.pdf','SLA.pdf','Prisliste.pdf'].map(d=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+d+'</div><span class="pill resolved">Open</span></div>').join('')+'</div>';}
+  function custNotesBody(){return notesHtml([['Foretrekker faktura på e-post. Kontakt ved avvik samme dag.','Lise Olsen']]);}
+  const custDock=makeDock(document.getElementById('cust-right'),
+    [{tabs:['billing'],active:'billing'},{tabs:['docs','notes'],active:'docs'}],
+    {billing:{label:'Billing',body:custBillBody},docs:{label:'Documents',body:custDocBody},notes:{label:'Notes',body:custNotesBody}});
+
+  /* ---------------- shared mechanisms ---------------- */
+  function showScreen(mod){let m=null;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.screen').forEach(s=>{if(s.dataset.screen===mod)m=s;});
+    if(m){m.classList.add('on');}else{const ph=document.querySelector('.screen.ph');if(ph){ph.querySelector('.pht').textContent=mod;ph.classList.add('on');}}}
+  function act(el){document.querySelectorAll('.rail .nav').forEach(n=>n.classList.remove('active'));el.classList.add('active');showScreen(el.dataset.mod);}
+  document.querySelectorAll('.rail .nav').forEach(n=>n.addEventListener('click',()=>act(n)));
+
+  document.querySelectorAll('.rsz-x').forEach(rz=>{rz.addEventListener('mousedown',e=>{e.preventDefault();const panes=rz.closest('.panes');const target=rz.dataset.rz==='next'?rz.nextElementSibling:rz.previousElementSibling;const mode=rz.dataset.rz;
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    const move=ev=>{const pr=panes.getBoundingClientRect();const w=mode==='next'?Math.max(230,Math.min(560,pr.right-ev.clientX)):Math.max(180,Math.min(440,ev.clientX-pr.left));target.style.setProperty('--w',w+'px');target.style.width=w+'px';};
+    const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.body.style.cursor='';document.body.style.userSelect='';};
+    document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);});});
+
+  document.querySelectorAll('.fwrap').forEach(wrap=>{const drop=wrap.querySelector('.fdrop'),menu=wrap.querySelector('.fmenu'),val=drop.querySelector('.fval'),list=wrap.closest('.listpane').querySelector('.pbd');
+    drop.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.fmenu.show').forEach(m=>{if(m!==menu)m.classList.remove('show');});menu.classList.toggle('show');});
+    menu.querySelectorAll('.fopt').forEach(o=>o.addEventListener('click',()=>{val.textContent=o.dataset.label;const f=o.dataset.f;
+      list.querySelectorAll('[data-status]').forEach(r=>{r.style.display=(f==='all'||r.dataset.status===f)?'':'none';});menu.classList.remove('show');}));});
+  document.addEventListener('click',()=>document.querySelectorAll('.fmenu.show').forEach(m=>m.classList.remove('show')));
+
+  /* init */
+  function railBadge(mod,n){const nav=document.querySelector('.rail .nav[data-mod="'+mod+'"]');if(!nav)return;let b=nav.querySelector('.rbadge');if(n>0){if(!b){b=document.createElement('span');b.className='rbadge';nav.appendChild(b);}b.textContent=n;}else if(b){b.remove();}}
+  function renderRailBadges(){railBadge('Customer Service',TICKETS.filter(t=>t.st!=='resolved').length);railBadge('Jobs',JOBS.filter(j=>j.st==='unassigned').length);railBadge('Timesheet',EMP.filter(p=>p.pend!=='—').length);}
+
+  renderTicketList();renderConv(csCur);
+  renderEmpList();renderTs(tsCur);
+  renderQueue();renderSchedule();
+  renderEmpDir();renderProfile(empCur);
+  renderJobSeg();renderJobTable();
+  renderCustList();renderCustProfile(custCur);
+  renderRailBadges();
+</script>
+</body>
+</html>
