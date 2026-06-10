@@ -213,7 +213,13 @@
   /* employee profile */
   .profile{padding:0}
   .prof-head{display:flex;gap:14px;align-items:center;padding:16px;border-bottom:1px solid var(--line)}
-  .avatar{width:52px;height:52px;flex:0 0 52px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:600}
+  .avatar{width:52px;height:52px;flex:0 0 52px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:600;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .trow.emp{grid-template-columns:34px 1fr auto;align-items:center}
+  .eavatar{position:relative;width:30px;height:30px}
+  .eavatar img{width:30px;height:30px;border-radius:50%;object-fit:cover;display:block}
+  .eavatar .edot{position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;border:2px solid var(--panel);background:var(--faint)}
+  .eavatar .edot.on{background:var(--green)}
   .prof-id .pn{font-size:16px;font-weight:600}
   .prof-id .pr{font-size:12px;color:var(--muted);margin-top:2px}
   .prof-id .pmeta{font-size:10.5px;color:var(--faint);margin-top:7px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono'}
@@ -250,6 +256,20 @@
   .ghostbtn:hover{border-color:var(--muted);color:var(--ink)}
   .rail .nav{position:relative}
   .rbadge{position:absolute;top:5px;right:6px;min-width:16px;height:16px;padding:0 4px;box-sizing:border-box;border-radius:8px;background:#d12b20;color:#fff !important;font-family:'IBM Plex Sans',sans-serif;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--panel)}
+  .proof{padding:11px;border-top:1px solid var(--line-2)}
+  .psh3{font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+  .ptiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .ptile{aspect-ratio:1;background:var(--panel-2);border:1px solid var(--line);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--faint)}
+  .ptile svg{width:18px;height:18px}.ptile span{font-size:8.5px;font-family:'IBM Plex Mono'}
+  .pmeta2{font-size:9.5px;color:var(--faint);font-family:'IBM Plex Mono';margin-top:8px}
+  .avbox{margin:11px;padding:10px;border:1px solid var(--line);background:var(--panel-2);border-radius:6px}
+  .avbox.open{border-color:var(--red);background:var(--red-bg)}
+  .avh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .avstat{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint)}.avstat.open{color:var(--red)}
+  .avtext{font-size:11.5px;color:var(--ink);line-height:1.4}
+  .avmeta2{font-size:9.5px;color:var(--faint);font-family:'IBM Plex Mono';margin-top:6px}
+  .avaction{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.4}.avaction b{color:var(--ink)}
+  .avmark{font-size:8px;font-weight:700;color:#fff;background:var(--red);padding:1px 5px;border-radius:8px;letter-spacing:.03em;vertical-align:middle}
   ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#bcc1c7;border:3px solid var(--panel)}::-webkit-scrollbar-thumb:hover{background:#a4abb2}::-webkit-scrollbar-track{background:transparent}
 </style>
 </head>
@@ -454,12 +474,12 @@
   ];
 
   const EMPX={
-    'Maria Hansen':{role:'Renholder · Team lead',phone:'+47 412 33 902',email:'maria.hansen@livingclean.no',addr:'Møllendalsveien 14, 5009 Bergen',start:'12.02.2024',type:'Fast · 100%',no:'EMP-014',skills:['Daglig renhold','Vindusvask','Førerkort B'],avail:'Man–fre · 05:00–14:00',sites:['Solvik Bygg','Nordvik Advokat','Fjell Eiendom']},
-    'Thomas Eide':{role:'Renholder',phone:'+47 905 11 240',email:'thomas.eide@livingclean.no',addr:'Fjøsangerveien 50, 5054 Bergen',start:'03.09.2024',type:'Fast · 100%',no:'EMP-021',skills:['Daglig renhold','Gulvbehandling'],avail:'Man–fre · 06:00–15:00',sites:['Kystgården Hotell','Bergen Tannlegesenter']},
-    'Anders Vik':{role:'Renholder',phone:'+47 488 27 015',email:'anders.vik@livingclean.no',addr:'Loddefjordvegen 8, 5171 Loddefjord',start:'21.01.2025',type:'Deltid · 60%',no:'EMP-028',skills:['Hovedrengjøring','Hotell'],avail:'Man–fre · 07:00–13:00',sites:['Kystgården Hotell']},
-    'Nina Solberg':{role:'Renholder',phone:'+47 932 04 778',email:'nina.solberg@livingclean.no',addr:'Åsane Senter 32, 5116 Ulset',start:'15.05.2024',type:'Fast · 100%',no:'EMP-018',skills:['Daglig renhold','Vindusvask'],avail:'Man–fre · 06:00–15:00',sites:['Fjell Eiendom','Lunde Regnskap']},
-    'Paweł Nowak':{role:'Renholder',phone:'+47 467 90 113',email:'pawel.nowak@livingclean.no',addr:'Damsgårdsveien 121, 5160 Laksevåg',start:'08.04.2024',type:'Fast · 100%',no:'EMP-016',skills:['Daglig renhold','Senter/fellesareal'],avail:'Man–fre · 05:30–13:30',sites:['Storsenteret Drift']},
-    'Sara Lien':{role:'Renholder · Kveld',phone:'+47 401 55 367',email:'sara.lien@livingclean.no',addr:'Sandviksveien 90, 5035 Bergen',start:'19.08.2024',type:'Deltid · 50%',no:'EMP-024',skills:['Kveldsrenhold','Behandlingsrom'],avail:'Man–fre · 17:00–22:00',sites:['Bergen Tannlegesenter','Kystgården Hotell']}
+    'Maria Hansen':{role:'Renholder · Team lead',phone:'+47 412 33 902',email:'maria.hansen@livingclean.no',addr:'Møllendalsveien 14, 5009 Bergen',start:'12.02.2024',type:'Fast · 100%',no:'EMP-014',photo:'img/maria.png',skills:['Daglig renhold','Vindusvask','Førerkort B'],avail:'Man–fre · 05:00–14:00',sites:['Solvik Bygg','Nordvik Advokat','Fjell Eiendom']},
+    'Thomas Eide':{role:'Renholder',phone:'+47 905 11 240',email:'thomas.eide@livingclean.no',addr:'Fjøsangerveien 50, 5054 Bergen',start:'03.09.2024',type:'Fast · 100%',no:'EMP-021',photo:'img/thomas.png',skills:['Daglig renhold','Gulvbehandling'],avail:'Man–fre · 06:00–15:00',sites:['Kystgården Hotell','Bergen Tannlegesenter']},
+    'Anders Vik':{role:'Renholder',phone:'+47 488 27 015',email:'anders.vik@livingclean.no',addr:'Loddefjordvegen 8, 5171 Loddefjord',start:'21.01.2025',type:'Deltid · 60%',no:'EMP-028',photo:'img/anders.png',skills:['Hovedrengjøring','Hotell'],avail:'Man–fre · 07:00–13:00',sites:['Kystgården Hotell']},
+    'Nina Solberg':{role:'Renholder',phone:'+47 932 04 778',email:'nina.solberg@livingclean.no',addr:'Åsane Senter 32, 5116 Ulset',start:'15.05.2024',type:'Fast · 100%',no:'EMP-018',photo:'img/nina.png',skills:['Daglig renhold','Vindusvask'],avail:'Man–fre · 06:00–15:00',sites:['Fjell Eiendom','Lunde Regnskap']},
+    'Paweł Nowak':{role:'Renholder',phone:'+47 467 90 113',email:'pawel.nowak@livingclean.no',addr:'Damsgårdsveien 121, 5160 Laksevåg',start:'08.04.2024',type:'Fast · 100%',no:'EMP-016',photo:'img/pawel.png',skills:['Daglig renhold','Senter/fellesareal'],avail:'Man–fre · 05:30–13:30',sites:['Storsenteret Drift']},
+    'Sara Lien':{role:'Renholder · Kveld',phone:'+47 401 55 367',email:'sara.lien@livingclean.no',addr:'Sandviksveien 90, 5035 Bergen',start:'19.08.2024',type:'Deltid · 50%',no:'EMP-024',photo:'img/sara.png',skills:['Kveldsrenhold','Behandlingsrom'],avail:'Man–fre · 17:00–22:00',sites:['Bergen Tannlegesenter','Kystgården Hotell']}
   };
   let empCur=EMP[0];
 
@@ -482,12 +502,12 @@
     {id:'J-2041',cust:'Nordvik Advokat',site:'Bryggen 8',when:'today',date:'I dag',s:10.5,e:12,type:'Daily',cl:'Maria Hansen',st:'now'},
     {id:'J-2042',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'today',date:'I dag',s:13,e:15,type:'Window',cl:'Maria Hansen',st:'planned'},
     {id:'J-2043',cust:'Kystgården Hotell',site:'Sjøgaten 2',when:'today',date:'I dag',s:7,e:13,type:'Deep clean',cl:'Anders Vik',st:'now'},
-    {id:'J-2044',cust:'Storsenteret Drift',site:'Strandgaten 10',when:'today',date:'I dag',s:5.5,e:7.5,type:'Daily',cl:'Paweł Nowak',st:'done'},
+    {id:'J-2044',cust:'Storsenteret Drift',site:'Strandgaten 10',when:'today',date:'I dag',s:5.5,e:7.5,type:'Daily',cl:'Paweł Nowak',st:'done',avvik:{sev:'low',text:'Søl i trappeoppgang ikke tørket opp.',status:'closed',by:'Paweł Nowak',action:'Rettet ved neste besøk, dokumentert med bilde.'}},
     {id:'J-2045',cust:'Bergen Tannlegesenter',site:'Kong Oscars gate 5',when:'today',date:'I dag',s:18,e:19.5,type:'Evening',cl:'Sara Lien',st:'planned'},
     {id:'J-2046',cust:'Lunde Regnskap',site:'Vågsallmenningen 4',when:'today',date:'I dag',s:17,e:18,type:'Evening',cl:'Nina Solberg',st:'planned'},
     {id:'J-2056',cust:'Nordvik Advokat',site:'Bryggen 8',when:'week',date:'Ons 22',s:10.5,e:12,type:'Daily',cl:'Maria Hansen',st:'planned'},
     {id:'J-2055',cust:'Kystgården Hotell',site:'Sjøgaten 2',when:'week',date:'Ons 22',s:7,e:9,type:'Daily',cl:'Thomas Eide',st:'planned'},
-    {id:'J-2031',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'past',date:'I går',s:6.5,e:8,type:'Daily',cl:'Nina Solberg',st:'done'},
+    {id:'J-2031',cust:'Fjell Eiendom',site:'Allmenningen 22',when:'past',date:'I går',s:6.5,e:8,type:'Daily',cl:'Nina Solberg',st:'done',avvik:{sev:'high',text:'Vindu i resepsjon ikke vasket — kunde meldte avvik.',status:'open',by:'Kari Fjell (kunde)',action:'Ny Window-jobb opprettet (J-2052), ikke tildelt.'}},
     {id:'J-2030',cust:'Bergen Tannlegesenter',site:'Kong Oscars gate 5',when:'past',date:'I går',s:18,e:19,type:'Evening',cl:'Sara Lien',st:'done'}
   ];
   let jobCur=JOBS[0], jobFilter='unassigned', jobQuery='', jobSeq=2060;
@@ -620,12 +640,12 @@
   const initials=n=>n.split(' ').map(x=>x[0]).join('').slice(0,2);
   function kvr2(k,v,m){return '<div class="kv"><div class="k">'+k+'</div><div class="v'+(m?' mono':'')+'">'+v+'</div></div>';}
   function renderEmpDir(){document.getElementById('emp-list').innerHTML=EMP.map((p,i)=>{const x=EMPX[p.n];
-    return '<div class="trow'+(p===empCur?' sel':'')+'" data-i="'+i+'" data-status="'+(p.clk?'active':'idle')+'"><div class="unread"'+(p.clk?' style="background:var(--green)"':'')+'></div><div class="tmain"><div class="cust">'+p.n+'</div><div class="subj">'+x.role+'</div></div></div>';}).join('');}
+    return '<div class="trow emp'+(p===empCur?' sel':'')+'" data-i="'+i+'" data-status="'+(p.clk?'active':'idle')+'"><div class="eavatar"><img src="'+x.photo+'" alt=""><span class="edot'+(p.clk?' on':'')+'"></span></div><div class="tmain"><div class="cust">'+p.n+'</div><div class="subj">'+x.role+'</div></div></div>';}).join('');}
   function renderProfile(p){const x=EMPX[p.n];
     document.getElementById('emp-profile').innerHTML=
       '<div class="phd"><div class="ptab">Profile — '+p.n+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hctl">'+DOTS+'</div></div>'+
       '<div class="pbd profile">'+
-        '<div class="prof-head"><div class="avatar">'+initials(p.n)+'</div><div class="prof-id"><div class="pn">'+p.n+'</div><div class="pr">'+x.role+'</div><div class="pmeta"><span class="pill '+(p.clk?'resolved':'waiting')+'">'+(p.clk?'On shift':'Off')+'</span> · '+p.d+' · '+x.no+'</div></div></div>'+
+        '<div class="prof-head"><div class="avatar">'+(x.photo?'<img src="'+x.photo+'" alt="">':initials(p.n))+'</div><div class="prof-id"><div class="pn">'+p.n+'</div><div class="pr">'+x.role+'</div><div class="pmeta"><span class="pill '+(p.clk?'resolved':'waiting')+'">'+(p.clk?'On shift':'Off')+'</span> · '+p.d+' · '+x.no+'</div></div></div>'+
         '<div class="prof-sec"><div class="psh">Contact</div>'+kvr2('Phone',x.phone,1)+kvr2('Email',x.email,1)+kvr2('Address',x.addr)+'</div>'+
         '<div class="prof-sec"><div class="psh">Employment</div>'+kvr2('Start date',x.start,1)+kvr2('Type',x.type)+kvr2('Employee no',x.no,1)+kvr2('Availability',x.avail)+'</div>'+
         '<div class="prof-sec"><div class="psh">Skills &amp; areas</div><div class="chips">'+x.skills.map(s=>'<span class="chip">'+s+'</span>').join('')+'</div></div>'+
@@ -639,14 +659,17 @@
 
   /* ----- Jobs ----- */
   const jst={unassigned:['urgent','Unassigned'],now:['open','In progress'],planned:['waiting','Planned'],done:['resolved','Done']};
-  const JOBSEG=[['unassigned','Unassigned'],['today','Today'],['week','This week'],['done','Completed'],['all','All jobs']];
-  function jobMatch(j,f){const seg=f==='all'||(f==='unassigned'&&j.st==='unassigned')||(f==='today'&&j.when==='today')||(f==='week'&&(j.when==='today'||j.when==='tomorrow'||j.when==='week'))||(f==='done'&&j.st==='done');return seg&&(jobQuery===''||j.cust.toLowerCase().indexOf(jobQuery.toLowerCase())>-1);}
+  const JOBSEG=[['unassigned','Unassigned'],['today','Today'],['week','This week'],['done','Completed'],['avvik','Avvik'],['all','All jobs']];
+  function jobMatch(j,f){const seg=f==='all'||(f==='unassigned'&&j.st==='unassigned')||(f==='today'&&j.when==='today')||(f==='week'&&(j.when==='today'||j.when==='tomorrow'||j.when==='week'))||(f==='done'&&j.st==='done')||(f==='avvik'&&!!j.avvik);return seg&&(jobQuery===''||j.cust.toLowerCase().indexOf(jobQuery.toLowerCase())>-1);}
+  const sevp={high:['urgent','Høy'],med:['open','Middels'],low:['waiting','Lav']};
+  function proofHtml(j){const c=CUSTOMERS[j.cust];const n=c?c.agr.scope.split(', ').length:0;const tiles=['Før','Etter','Kjøkken','Sanitær'];return '<div class="proof"><div class="psh3">Bevis på utført arbeid</div><div class="ptiles">'+tiles.map(t=>'<div class="ptile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.2"/></svg><span>'+t+'</span></div>').join('')+'</div><div class="pmeta2">'+n+' punkter avhuket · innstemplet '+(j.s!=null?hhmm(j.s):'—')+' (GPS) · '+(j.cl||'—')+'</div></div>';}
+  function avvikHtml(a){return '<div class="avbox'+(a.status==='open'?' open':'')+'"><div class="avh"><span class="pill '+sevp[a.sev][0]+'">Avvik · '+sevp[a.sev][1]+'</span><span class="avstat'+(a.status==='open'?' open':'')+'">'+(a.status==='open'?'Åpen':'Lukket')+'</span></div><div class="avtext">'+a.text+'</div><div class="avmeta2">Meldt av '+a.by+'</div><div class="avaction"><b>Tiltak:</b> '+a.action+'</div></div>';}
   function renderJobSeg(){document.getElementById('job-seg').innerHTML=JOBSEG.map(s=>'<div class="segrow'+(jobFilter===s[0]?' active':'')+'" data-f="'+s[0]+'">'+s[1]+'<span class="sc">'+JOBS.filter(j=>jobMatch(j,s[0])).length+'</span></div>').join('');}
   function renderJobTable(){const list=JOBS.filter(j=>jobMatch(j,jobFilter));
     document.getElementById('job-table').innerHTML=
       '<div class="phd"><div class="ptab">'+JOBSEG.find(s=>s[0]===jobFilter)[1]+' <span class="cx">×</span></div><div class="grow"></div><button class="newbtn">+ New job</button><div class="hcnt">'+list.length+' jobs</div></div>'+
       '<div class="pbd"><table class="tstable jobtable"><thead><tr><th>Status</th><th>Job</th><th>Customer</th><th>Site</th><th>When</th><th>Type</th><th>Cleaner</th></tr></thead><tbody>'+
-      list.map(j=>'<tr class="jrowt'+(j===jobCur?' sel':'')+'" data-id="'+j.id+'"><td><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></td><td class="num">'+j.id+'</td><td><b>'+j.cust+'</b></td><td class="muted2">'+j.site+'</td><td class="num">'+j.date+(j.s!=null?' · '+hhmm(j.s):'')+'</td><td>'+j.type+'</td><td>'+(j.cl||'<span class="needs">— assign</span>')+'</td></tr>').join('')+
+      list.map(j=>'<tr class="jrowt'+(j===jobCur?' sel':'')+'" data-id="'+j.id+'"><td><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span>'+(j.avvik?' <span class="avmark">avvik</span>':'')+'</td><td class="num">'+j.id+'</td><td><b>'+j.cust+'</b></td><td class="muted2">'+j.site+'</td><td class="num">'+j.date+(j.s!=null?' · '+hhmm(j.s):'')+'</td><td>'+j.type+'</td><td>'+(j.cl||'<span class="needs">— assign</span>')+'</td></tr>').join('')+
       '</tbody></table></div>';}
   function jobDetailBody(){const j=jobCur,c=CUSTOMERS[j.cust];
     const opts=['Unassigned'].concat(CLEANERS).map(n=>'<option'+((j.cl||'Unassigned')===n?' selected':'')+'>'+n+'</option>').join('');
@@ -654,6 +677,8 @@
       '<div class="kv"><div class="k">Status</div><div class="v"><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></div></div>'+
       '<div class="assignrow"><div class="k2">Assign cleaner</div><select class="assignsel">'+opts+'</select></div>'+
       (c?'<div class="custref">'+j.cust+' · '+c.contact+'<div class="subtle">Tilgang: '+c.sites[0].acc+' · <a class="lnk" data-cust="'+j.cust+'">Åpne kunde →</a></div></div>':'')+
+      (j.st==='done'?proofHtml(j):'')+
+      (j.avvik?avvikHtml(j.avvik):'')+
       '</div>';}
   function assignCleaner(j,cl){if(cl==='Unassigned'){j.cl=null;j.st='unassigned';}else{j.cl=cl;if(j.st==='unassigned')j.st='planned';}}
   function timeOpts(sel){let o='';for(let h=DSTART;h<DEND;h+=0.5)o+='<option value="'+h+'"'+(h===sel?' selected':'')+'>'+hhmm(h)+'</option>';return o;}
