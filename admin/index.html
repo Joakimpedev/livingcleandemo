@@ -677,8 +677,6 @@
       '<div class="kv"><div class="k">Status</div><div class="v"><span class="pill '+jst[j.st][0]+'">'+jst[j.st][1]+'</span></div></div>'+
       '<div class="assignrow"><div class="k2">Assign cleaner</div><select class="assignsel">'+opts+'</select></div>'+
       (c?'<div class="custref">'+j.cust+' · '+c.contact+'<div class="subtle">Tilgang: '+c.sites[0].acc+' · <a class="lnk" data-cust="'+j.cust+'">Åpne kunde →</a></div></div>':'')+
-      (j.st==='done'?proofHtml(j):'')+
-      (j.avvik?avvikHtml(j.avvik):'')+
       '</div>';}
   function assignCleaner(j,cl){if(cl==='Unassigned'){j.cl=null;j.st='unassigned';}else{j.cl=cl;if(j.st==='unassigned')j.st='planned';}}
   function timeOpts(sel){let o='';for(let h=DSTART;h<DEND;h+=0.5)o+='<option value="'+h+'"'+(h===sel?' selected':'')+'>'+hhmm(h)+'</option>';return o;}
@@ -699,12 +697,12 @@
     const cust=g('nf-cust'),site=g('nf-site'),type=g('nf-type'),date=g('nf-date'),s=parseFloat(g('nf-start')),dur=parseFloat(g('nf-dur')),cl=g('nf-cl');
     const when=date==='I dag'?'today':date==='I morgen'?'tomorrow':'week';
     JOBS.unshift({id:'J-'+(jobSeq++),cust:cust,site:site,when:when,date:date,s:s,e:s+dur,type:type,cl:cl==='Unassigned'?null:cl,st:cl==='Unassigned'?'unassigned':'planned'});
-    jobCur=JOBS[0];jobFilter=cl==='Unassigned'?'unassigned':'today';renderJobSeg();renderJobTable();jobDock();renderRailBadges();}
+    jobCur=JOBS[0];jobFilter=cl==='Unassigned'?'unassigned':'today';renderJobSeg();renderJobTable();setAvvikTab(jobCur);jobDock();renderRailBadges();}
   function jobCustBody(){const j=jobCur,c=CUSTOMERS[j.cust];if(!c)return '<div class="pbd"></div>';
     return '<div class="pbd">'+kvr2('Customer',j.cust)+kvr2('Value',c.value+' kr/mnd',1)+kvr2('Agreement',c.agr.rule)+kvr2('Contact',c.contact,1)+kvr2('Access',c.sites[0].acc)+'<div class="kv"><div class="k">Open tickets</div><div class="v">'+(c.tickets?'<span class="pill urgent">'+c.tickets+' open</span>':'<span class="pill resolved">None</span>')+'</div></div></div>';}
   function jobTasksBody(){const j=jobCur,c=CUSTOMERS[j.cust],ts=c?c.agr.scope.split(', '):['—'];
-    return '<div class="pbd">'+ts.map(t=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+t+'</div><span class="pill '+(j.st==='done'?'resolved':'waiting')+'">'+(j.st==='done'?'Done':'Todo')+'</span></div>').join('')+'</div>';}
-  function selectJobRow(j){jobCur=j;renderJobTable();jobDock();}
+    return '<div class="pbd">'+ts.map(t=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+t+'</div><span class="pill '+(j.st==='done'?'resolved':'waiting')+'">'+(j.st==='done'?'Done':'Todo')+'</span></div>').join('')+(j.st==='done'?proofHtml(j):'')+'</div>';}
+  function selectJobRow(j){jobCur=j;setAvvikTab(j);renderJobTable();jobDock();}
   document.getElementById('job-seg').addEventListener('click',e=>{const s=e.target.closest('.segrow');if(s){jobFilter=s.dataset.f;renderJobSeg();renderJobTable();}});
   document.getElementById('job-table').addEventListener('click',e=>{
     if(e.target.closest('#nf-create')){createJob();return;}
@@ -797,9 +795,10 @@
     [{tabs:['week'],active:'week'},{tabs:['sites'],active:'sites'},{tabs:['docs','notes'],active:'docs'}],
     {week:{label:'This week',body:empWeekBody},sites:{label:'Sites',body:empSitesBody},docs:{label:'Documents',body:empDocsBody},notes:{label:'Notes',body:empNotesBody}});
 
-  const jobDock=makeDock(document.getElementById('job-right'),
-    [{tabs:['detail'],active:'detail'},{tabs:['tasks'],active:'tasks'}],
-    {detail:{label:'Job',body:jobDetailBody},tasks:{label:'Tasks',body:jobTasksBody}});
+  const jobSections=[{tabs:['detail'],active:'detail'},{tabs:['tasks'],active:'tasks'}];
+  const jobDock=makeDock(document.getElementById('job-right'),jobSections,
+    {detail:{label:'Job',body:jobDetailBody},tasks:{label:'Tasks',body:jobTasksBody},avvik:{label:'Avvik',body:()=>'<div class="pbd">'+(jobCur.avvik?avvikHtml(jobCur.avvik):'')+'</div>'}});
+  function setAvvikTab(j){jobSections.forEach(s=>{const i=s.tabs.indexOf('avvik');if(i>-1){s.tabs.splice(i,1);if(s.active==='avvik')s.active=s.tabs[0];}});if(j.avvik){const s=jobSections.find(x=>x.tabs.indexOf('tasks')>-1)||jobSections[0];s.tabs.push('avvik');s.active='avvik';}}
 
   function custBillBody(){const c=CUSTOMERS[custCur];return '<div class="pbd">'+kvr2('Monthly',c.value+' kr',1)+kvr2('Terms',c.billing)+kvr2('Status',c.status==='active'?'Invoiced':'Paused')+kvr2('Next invoice',c.status==='active'?'01.07.2026':'—',1)+'</div>';}
   function custDocBody(){return '<div class="pbd">'+['Avtale_2024.pdf','SLA.pdf','Prisliste.pdf'].map(d=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+d+'</div><span class="pill resolved">Open</span></div>').join('')+'</div>';}
