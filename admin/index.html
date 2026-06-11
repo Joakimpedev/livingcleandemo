@@ -68,6 +68,7 @@
   .ptab.off{background:transparent;border-color:transparent;border-bottom:1px solid var(--line);color:var(--muted);margin-bottom:0;margin-top:4px;font-weight:500}
   .ptab.off:hover{background:#e6e8ea;color:var(--ink)}
   .ptab.dragging{opacity:.4}
+  .ptab[data-empt]{cursor:pointer}
   .ptab .cx{color:var(--faint);font-size:14px;font-weight:400}.ptab .cx:hover{color:var(--ink)}
   .padd{display:flex;align-items:center;padding:0 8px;margin:3px 2px 0;color:var(--faint);font-size:16px;cursor:pointer;border-radius:5px}
   .padd:hover{background:var(--line-2);color:var(--ink)}
@@ -519,7 +520,10 @@
     'ts.noApprovalB':{en:'.',no:'.'},
     'ts.oneApprovalA':{en:'1 entry awaiting approval: ',no:'1 oppføring venter på godkjenning: '},
     'ts.oneApprovalB':{en:'.',no:'.'},
-    'jobs.openWord':{en:'open',no:'åpne'}
+    'jobs.openWord':{en:'open',no:'åpne'},
+    'tab.messages':{en:'Messages',no:'Meldinger'},
+    'btn.send':{en:'Send',no:'Send'},
+    'emp.msgPlaceholder':{en:'Message ',no:'Send melding til '}
   };
   function t(k){const e=DICT[k];return e?(e[LOCALE]||e.en):k;}
   const t_=t; // alias for use inside functions whose loop/param var is named `t`
@@ -612,6 +616,34 @@
     'Sara Lien':{role:{en:'Cleaner · Evening',no:'Renholder · Kveld'},phone:'+47 401 55 367',email:'sara.lien@livingclean.no',addr:'Sandviksveien 90, 5035 Bergen',start:'19.08.2024',type:{en:'Part-time · 50%',no:'Deltid · 50%'},no:'EMP-024',photo:'img/sara.png',skills:[SK.evening,SK.treatment],avail:{en:'Mon–Fri · 17:00–22:00',no:'Man–fre · 17:00–22:00'},sites:['Bergen Tannlegesenter','Kystgården Hotell']}
   };
   let empCur=EMP[0];
+  let empTab='messages'; // employee center pane: 'messages' (default) | 'profile'
+  /* direct-message threads between operations/admin and each cleaner (English source) */
+  const EMPMSGS={
+    'Maria Hansen':[
+      ['out','Lise Olsen','Mon 07:15',{en:'Remember to give meeting room Fjord an extra check at Solvik — they have visitors this afternoon. Thanks! 🙏',no:'Husk å sjekke møterom Fjord ekstra hos Solvik — de har besøk i ettermiddag. Takk! 🙏'}],
+      ['in','Maria','Mon 07:22',{en:'Got it, will do 👍',no:'Skal bli 👍'}],
+      ['out','Lise Olsen','Mon 11:40',{en:'Great. Also, can you take Fjell at 13:00 today? Nina is off sick.',no:'Flott. Kan du forresten ta Fjell kl. 13:00 i dag? Nina er syk.'}],
+      ['in','Maria','Mon 11:43',{en:'Yes, that works.',no:'Ja, det går fint.'}]
+    ],
+    'Thomas Eide':[
+      ['out','Lise Olsen','Fri 14:02',{en:'Nice work at Kystgården this week — the customer was very happy.',no:'Bra jobba på Kystgården denne uka — kunden var veldig fornøyd.'}],
+      ['in','Thomas','Fri 14:20',{en:'Thanks! 🙌',no:'Takk! 🙌'}]
+    ],
+    'Anders Vik':[
+      ['out','Lise Olsen','Mon 09:30',{en:'Welcome to the team, Anders! Reach out here any time you have questions.',no:'Velkommen til teamet, Anders! Ta kontakt her når som helst hvis du lurer på noe.'}]
+    ],
+    'Nina Solberg':[
+      ['in','Nina','Thu 15:30',{en:'I went 1 hour over at Fjell today — added it to my hours.',no:'Jeg gikk 1 time over på Fjell i dag — la det til på timene mine.'}],
+      ['out','Lise Olsen','Thu 15:45',{en:'Thanks for flagging — approved.',no:'Takk for beskjed — godkjent.'}]
+    ],
+    'Paweł Nowak':[
+      ['out','Lise Olsen','Mon 13:10',{en:'Storsenteret asked for extra focus on the entrance area. Can you fit it in?',no:'Storsenteret ba om ekstra fokus på inngangspartiet. Får du det til?'}],
+      ['in','Paweł','Mon 13:18',{en:'Sure, no problem.',no:'Klart, ikke noe problem.'}]
+    ],
+    'Sara Lien':[
+      ['out','Lise Olsen','Yesterday 16:50',{en:'Reminder: evening clean at the dental clinic starts at 18:00 today.',no:'Påminnelse: kveldsvask hos tannlegesenteret starter kl. 18:00 i dag.'}]
+    ]
+  };
 
   const CUSTOMERS={
     'Solvik Bygg':{org:'912 345 678',since:'Feb 2024',status:'active',value:'18 400',sites:[{a:'Storgata 14, 5003 Bergen · 2nd',acc:{en:'Code 4417',no:'Kode 4417'},sz:'620 m²'}],agr:{rule:{en:'Daily · Mon–Fri 06:00',no:'Daglig · man–fre 06:00'},scope:{en:'Offices, sanitary, kitchen',no:'Kontorer, sanitær, kjøkken'},price:{en:'18 400 kr/mo',no:'18 400 kr/mnd'},start:'01.02.2024',renew:'01.02.2026'},contact:'Mette Solvik · 55 12 34 56',email:'mette@solvik.no',billing:{en:'Invoice · net 14',no:'Faktura · netto 14'},tickets:1},
@@ -773,21 +805,29 @@
   function kvr2(k,v,m){return '<div class="kv"><div class="k">'+t_('kv.'+k)+'</div><div class="v'+(m?' mono':'')+'">'+L(v)+'</div></div>';}
   function renderEmpDir(){document.getElementById('emp-list').innerHTML=EMP.map((p,i)=>{const x=EMPX[p.n];
     return '<div class="trow emp'+(p===empCur?' sel':'')+'" data-i="'+i+'" data-status="'+(p.clk?'active':'idle')+'"><div class="eavatar"><img src="'+x.photo+'" alt=""><span class="edot'+(p.clk?' on':'')+'"></span></div><div class="tmain"><div class="cust">'+p.n+'</div><div class="subj">'+L(x.role)+'</div></div></div>';}).join('');}
+  function empHeader(p,x){return '<div class="prof-head"><div class="avatar">'+(x.photo?'<img src="'+x.photo+'" alt="">':initials(p.n))+'</div><div class="prof-id"><div class="pn">'+p.n+'</div><div class="pr">'+L(x.role)+'</div><div class="pmeta"><span class="pill '+(p.clk?'resolved':'waiting')+'">'+t_(p.clk?'emp.onShift':'emp.off')+'</span> · '+p.d+' · '+x.no+'</div></div></div>';}
+  const SENDICON='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.88,4.73,16.2,20.65A2,2,0,0,1,14.3,22h0a2,2,0,0,1-1.9-1.31l-2.13-5.52-.38-1-1-.4L3.31,11.63a2,2,0,0,1,0-3.83h0L19.27,2.12a2,2,0,0,1,2.61,2.61Z"/><path d="M14.28,11.14l-4,4-.38-1-1-.4,4-4a1,1,0,1,1,1.42,1.42Z"/></svg>';
+  function empMessagesHtml(p){const th=EMPMSGS[p.n]||[];
+    return '<div class="thread">'+th.map(m=>'<div class="msg '+(m[0]==='out'?'out':'in')+'"><div class="mhd">'+(m[0]==='out'?'<span class="t">'+dz(m[2])+'</span><b>'+m[1]+'</b>':'<b>'+m[1]+'</b><span class="t">'+dz(m[2])+'</span>')+'</div><div class="bubble">'+L(m[3])+'</div></div>').join('')+'</div>'+
+      '<div class="composer"><textarea placeholder="'+t_('emp.msgPlaceholder')+p.n+'…"></textarea><div class="cbar"><button class="cbtn">'+t_('btn.attach')+'</button><div class="spacer"></div><button class="cbtn primary">'+t_('btn.send')+SENDICON+'</button></div></div>';}
+  function empProfileHtml(p,x){return '<div class="pbd profile">'+
+    '<div class="prof-sec"><div class="psh">'+t_('sec.contact')+'</div>'+kvr2('Phone',x.phone,1)+kvr2('Email',x.email,1)+kvr2('Address',x.addr)+'</div>'+
+    '<div class="prof-sec"><div class="psh">'+t_('sec.employment')+'</div>'+kvr2('Start date',x.start,1)+kvr2('Type',x.type)+kvr2('Employee no',x.no,1)+kvr2('Availability',x.avail)+'</div>'+
+    '<div class="prof-sec"><div class="psh">'+t_('sec.skills')+'</div><div class="chips">'+x.skills.map(s=>'<span class="chip">'+L(s)+'</span>').join('')+'</div></div>'+
+    '</div>';}
   function renderProfile(p){const x=EMPX[p.n];
+    const tab=(k)=>'<div class="ptab'+(empTab===k?'':' off')+'" data-empt="'+k+'">'+t_('tab.'+k)+'</div>';
     document.getElementById('emp-profile').innerHTML=
-      '<div class="phd"><div class="ptab">Profile — '+p.n+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hctl">'+DOTS+'</div></div>'+
-      '<div class="pbd profile">'+
-        '<div class="prof-head"><div class="avatar">'+(x.photo?'<img src="'+x.photo+'" alt="">':initials(p.n))+'</div><div class="prof-id"><div class="pn">'+p.n+'</div><div class="pr">'+L(x.role)+'</div><div class="pmeta"><span class="pill '+(p.clk?'resolved':'waiting')+'">'+t_(p.clk?'emp.onShift':'emp.off')+'</span> · '+p.d+' · '+x.no+'</div></div></div>'+
-        '<div class="prof-sec"><div class="psh">'+t_('sec.contact')+'</div>'+kvr2('Phone',x.phone,1)+kvr2('Email',x.email,1)+kvr2('Address',x.addr)+'</div>'+
-        '<div class="prof-sec"><div class="psh">'+t_('sec.employment')+'</div>'+kvr2('Start date',x.start,1)+kvr2('Type',x.type)+kvr2('Employee no',x.no,1)+kvr2('Availability',x.avail)+'</div>'+
-        '<div class="prof-sec"><div class="psh">'+t_('sec.skills')+'</div><div class="chips">'+x.skills.map(s=>'<span class="chip">'+L(s)+'</span>').join('')+'</div></div>'+
-      '</div>';}
+      '<div class="phd">'+tab('messages')+tab('profile')+'<div class="padd">+</div><div class="grow"></div><div class="hctl">'+DOTS+'</div></div>'+
+      empHeader(p,x)+
+      (empTab==='messages'?empMessagesHtml(p):empProfileHtml(p,x));}
   function empWeekBody(){const p=empCur;return '<div class="pbd">'+kvr2('This week',hrs(p.wk),1)+kvr2('This month',hrs(p.mo),1)+kvr2('Overtime',hrs(p.ot),1)+kvr2('Next pay',p.pay,1)+(p.pend!=='—'?'<div class="kv"><div class="k">'+t_('kv.Pending')+'</div><div class="v"><span class="pill open">'+hrs(dz(p.pend))+'</span></div></div>':'')+'</div>';}
   function empSitesBody(){return '<div class="pbd">'+EMPX[empCur.n].sites.map(s=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+s+'</div><span class="pill resolved">'+t_('emp.active')+'</span></div>').join('')+'</div>';}
   function empDocsBody(){return '<div class="pbd">'+[t_('doc.contract'),t_('doc.hse'),t_('doc.nda')].map(d=>'<div class="jrow"><div class="jt" style="font-family:inherit;font-size:11.5px;color:var(--ink)">'+d+'</div><span class="pill waiting">'+t_('emp.locked')+'</span></div>').join('')+'</div>';}
   function empNotesBody(){return notesHtml([[t_('emp.note1'),'Lise Olsen']]);}
-  function selectEmpP(p){empCur=p;renderEmpDir();renderProfile(p);empDock();}
+  function selectEmpP(p){empCur=p;empTab='messages';renderEmpDir();renderProfile(p);empDock();}
   document.getElementById('emp-list').addEventListener('click',e=>{const r=e.target.closest('.trow');if(r)selectEmpP(EMP[+r.dataset.i]);});
+  document.getElementById('emp-profile').addEventListener('click',e=>{const tb=e.target.closest('.ptab[data-empt]');if(tb){empTab=tb.dataset.empt;renderProfile(empCur);}});
 
   /* ----- Jobs ----- */
   const jst={unassigned:'urgent',now:'open',planned:'waiting',done:'resolved'};
