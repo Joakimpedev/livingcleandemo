@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -280,7 +280,7 @@
   <div class="topbar">
     <div class="search"><svg class="si" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input data-i18n-ph="topbar.search" placeholder="Search customers, tickets, employees…"></div>
     <div class="spacer"></div>
-    <div class="ticon lang" id="langToggle" title="Language / Språk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span class="langcode" id="langCode">EN</span></div>
+    <div class="ticon lang" id="langToggle" title="Language / Språk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span class="langcode" id="langCode">NO</span></div>
     <div class="ticon" title="Notifications" data-i18n-title="topbar.notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15,17H9a1,1,0,0,0-1,1,4,4,0,0,0,8,0A1,1,0,0,0,15,17Z"/><path d="M20.09,13.67,19,12.59V9A7,7,0,0,0,5,9v3.59L3.91,13.67A3.13,3.13,0,0,0,6.12,19H17.88a3.13,3.13,0,0,0,2.21-5.33Z"/></svg><span class="badge">3</span></div>
     <div class="user"><div class="av">LO</div><div class="un"><b>Lise Olsen</b><span data-i18n="role.operationsLead">Operations lead</span></div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5f666e" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
   </div>
@@ -412,7 +412,7 @@
 
 <script>
   /* ================= i18n (English source → localized) ================= */
-  let LOCALE='en';
+  let LOCALE='no'; // Norwegian is the default on load; English is the source language
   const DICT={
     /* topbar / nav / roles */
     'topbar.search':{en:'Search customers, tickets, employees…',no:'Søk kunder, saker, ansatte…'},
@@ -990,6 +990,7 @@
   }
   function setLocale(l){LOCALE=l;document.documentElement.setAttribute('lang',l);const lc=document.getElementById('langCode');if(lc)lc.textContent=l.toUpperCase();renderAll();}
   document.getElementById('langToggle').addEventListener('click',()=>setLocale(LOCALE==='en'?'no':'en'));
+  setLocale('no'); // default the whole UI to Norwegian on first load
 </script>
 </body>
 </html>
