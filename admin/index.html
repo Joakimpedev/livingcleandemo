@@ -23,7 +23,8 @@
   .mono{font-family:'IBM Plex Mono',monospace;font-feature-settings:"tnum"}
   .app{display:grid;grid-template-rows:46px 1fr 22px;grid-template-columns:62px 1fr;width:calc(100vw / var(--zoom));height:calc(100vh / var(--zoom));transform:scale(var(--zoom));transform-origin:0 0}
 
-  .topbar{grid-column:1/3;display:flex;align-items:center;background:var(--topbar);border-bottom:1px solid var(--line);height:46px;padding-left:10px}
+  .topbar{grid-column:1/3;display:flex;align-items:center;background:var(--topbar);border-bottom:1px solid var(--line);height:46px;padding-left:10px;position:relative}
+  .brandlogo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:19px;pointer-events:none;user-select:none}
   .search{width:330px;position:relative}
   .search input{width:100%;height:28px;background:#fff;border:1px solid var(--line);padding:0 12px 0 30px;font-family:inherit;font-size:12px;color:var(--ink);outline:none;border-radius:14px}
   .search input:focus{border-color:var(--accent)}
@@ -47,6 +48,7 @@
   .nav.active{color:var(--accent)}.nav.active span{color:var(--accent);font-weight:600}
   .nav svg{width:20px;height:20px}
   .nav svg [fill="#2d5d8c"]{fill:color-mix(in srgb, currentColor 46%, #fff)}
+  .nav svg [stroke="#2d5d8c"]{stroke:color-mix(in srgb, currentColor 46%, #fff)}
 
   .work{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--canvas)}
   .screen{display:none;flex:1 1 auto;flex-direction:column;min-height:0;min-width:0}
@@ -334,6 +336,7 @@
 <body>
 <div class="app">
   <div class="topbar">
+    <img class="brandlogo" src="img/logo.svg" alt="LivingClean">
     <div class="search"><svg class="si" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input data-i18n-ph="topbar.search" placeholder="Search customers, tickets, employees…"></div>
     <div class="spacer"></div>
     <div class="ticon lang" id="langToggle" title="Language / Språk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span class="langcode" id="langCode">NO</span></div>
@@ -343,7 +346,7 @@
 
   <nav class="rail">
     <div class="group" id="rail">
-      <div class="nav" data-mod="Timesheet"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18,14V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V20a2,2,0,0,0,2,2H14a1,1,0,0,0,1-1V17a2,2,0,0,1,2-2h0A1,1,0,0,0,18,14Z"/><path d="M13,15a1,1,0,0,1-1,1H6a1,1,0,0,1,0-2h6A1,1,0,0,1,13,15Zm1-5H6a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Zm0-8H6V4A2,2,0,0,0,8,6h4a2,2,0,0,0,2-2Zm7,16H20V17a1,1,0,0,0-2,0v1H17a1,1,0,0,0,0,2h1v1a1,1,0,0,0,2,0V20h1a1,1,0,0,0,0-2Z" fill="#2d5d8c"/></svg><span data-i18n="nav.timesheet">Timesheet</span></div>
+      <div class="nav" data-mod="Timesheet"><svg viewBox="0 0 24 24" fill="currentColor"><mask id="navClk"><rect width="24" height="24" fill="#fff"/><circle cx="19" cy="19" r="4.5" fill="#000"/></mask><circle cx="10" cy="10" r="9.6" mask="url(#navClk)"/><path d="M10 4.4v5.6l3.4 2.2" fill="none" stroke="#2d5d8c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 16.7v4.6M16.7 19h4.6" stroke="#2d5d8c" stroke-width="1.9" stroke-linecap="round"/></svg><span data-i18n="nav.timesheet">Timesheet</span></div>
       <div class="nav active" data-mod="Customer Service"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22,20.73l-1-3.6A6.82,6.82,0,0,0,22,13.5a7.3,7.3,0,0,0-3.62-6.14,1,1,0,0,0-1.12,0,1,1,0,0,0-.38,1A4.44,4.44,0,0,1,17,9.5c0,3-2.92,5.5-6.5,5.5a7.55,7.55,0,0,1-3-.64,1,1,0,0,0-.81,0L6,14.63a1,1,0,0,0-.53,1.27,8.44,8.44,0,0,0,8,5.1A9.6,9.6,0,0,0,17,20.36l3.66,1.56A1,1,0,0,0,21,22a1,1,0,0,0,.66-.25A1,1,0,0,0,22,20.73Z" fill="#2d5d8c"/><path d="M18.82,8c-.8-3.46-4.3-6-8.32-6C5.81,2,2,5.36,2,9.5a6.82,6.82,0,0,0,1.06,3.63l-1,3.6a1,1,0,0,0,.3,1A1,1,0,0,0,3,18a1,1,0,0,0,.39-.08l3.66-1.56A9.6,9.6,0,0,0,10.5,17c4.69,0,8.5-3.36,8.5-7.5A6.27,6.27,0,0,0,18.82,8Z"/></svg><span data-i18n="nav.service">Service</span></div>
       <div class="nav" data-mod="Scheduling"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="3" width="20" height="19" rx="2"/><path d="M20,3H4A2,2,0,0,0,2,5V8H22V5A2,2,0,0,0,20,3Z" fill="#2d5d8c"/><path d="M17,6a1,1,0,0,1-1-1V3a1,1,0,0,1,2,0V5A1,1,0,0,1,17,6ZM13,5V3a1,1,0,0,0-2,0V5a1,1,0,0,0,2,0ZM8,5V3A1,1,0,0,0,6,3V5A1,1,0,0,0,8,5Z"/></svg><span data-i18n="nav.schedule">Schedule</span></div>
       <div class="nav" data-mod="Jobs"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20,7H16V5a2,2,0,0,0-2-2H10A2,2,0,0,0,8,5V7H4A2,2,0,0,0,2,9V19a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V9A2,2,0,0,0,20,7ZM10,5h4V7H10Z"/><path d="M22,9a2,2,0,0,0-2-2H4A2,2,0,0,0,2,9v3a20,20,0,0,0,20,0Z" fill="#2d5d8c"/></svg><span data-i18n="nav.jobs">Jobs</span></div>
