@@ -657,6 +657,7 @@
     'sys.p2hd2':{en:'example: approving hours',no:'eksempel: godkjenning av timer'},
     'sys.runOk':{en:'Run — authorized role',no:'Kjør — godkjent rolle'},
     'sys.runDeny':{en:'Run — missing role',no:'Kjør — uten rettighet'},
+    'sys.simReq':{en:'Simulate request',no:'Simuler forespørsel'},
     'sys.s0t':{en:'Client',no:'Klient'},
     'sys.s0c':{en:'customer app · employee app · admin',no:'kundeapp · ansattapp · admin'},
     'sys.s0d':{en:'same endpoints for every client',no:'samme endepunkter for alle klienter'},
@@ -1260,7 +1261,7 @@
     if(sysCur==='p1'){m.innerHTML=sysPhd(t_('sys.p1hd'),'',t_('sys.p1hd2'))+
       '<div class="sys-body"><div class="sys-card"><div class="sys-cbd sys-fig">'+sysArch()+'</div></div></div>';}
     else if(sysCur==='p2'){m.innerHTML=sysPhd(t_('sys.p2hd'),
-      '<button class="sys-hbtn" data-sysrun="ok">▶ '+t_('sys.runOk')+'</button><button class="sys-hbtn" data-sysrun="deny">▶ '+t_('sys.runDeny')+'</button>','')+
+      '<button class="sys-hbtn" data-sysrun="req">▶ '+t_('sys.simReq')+'</button>','')+
       '<div class="sys-body"><div class="sys-pipewrap">'+sysPipe()+'</div></div>';}
     else{m.innerHTML=sysPhd(t_('sys.p3t'),
       '<button class="sys-hbtn" data-sysrun="oops">▶ '+t_('sys.simOops')+'</button>','TLS · AES-256 · EU · PITR')+
@@ -1273,7 +1274,11 @@
   document.getElementById('sys-list').addEventListener('click',e=>{const r=e.target.closest('.sys-row');if(r){sysCur=r.dataset.k;renderSysList();renderSysMain();renderSysBad();}});
   document.getElementById('sys-main').addEventListener('click',e=>{const b=e.target.closest('[data-sysrun]');if(!b)return;const mode=b.dataset.sysrun;
     if(mode==='oops'){['sys-flow3','sys-flow3b'].forEach(id=>{const p=document.getElementById(id);if(p){p.classList.remove('run');void p.offsetWidth;p.classList.add('run');}});return;}
-    ['sys-pipe','sys-pipeb'].forEach(id=>{const p=document.getElementById(id);if(p){p.classList.remove('run-ok','run-deny');void p.offsetWidth;p.classList.add(mode==='ok'?'run-ok':'run-deny');}});});
+    if(mode==='req'){
+      const g=document.getElementById('sys-pipe');if(g){g.classList.remove('run-ok','run-deny');void g.offsetWidth;g.classList.add('run-deny');}
+      const bd=document.getElementById('sys-pipeb');if(bd){bd.classList.remove('run-ok','run-deny');void bd.offsetWidth;bd.classList.add('run-ok');}
+      return;}
+  });
 
   /* ---------------- shared mechanisms ---------------- */
   const NAVKEY={'Timesheet':'nav.timesheet','Customer Service':'nav.service','Scheduling':'nav.schedule','Jobs':'nav.jobs','Customers':'nav.customers','Employees':'nav.employees','System':'nav.system','Settings':'nav.settings','Help':'nav.help'};
