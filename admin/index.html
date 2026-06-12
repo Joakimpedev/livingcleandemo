@@ -1233,14 +1233,14 @@
     return '<div class="sys-pipe sys-anim" id="sys-flow3b">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
   function sysPipe(){
     const steps=[
-      ['pre',SYSI.screen,'sys.s0t',t_('sys.s0c'),'sys.s0d'],
+      ['pre',SYSI.screen,'sys.s0t',t_('sys.s0c'),''],
       ['pre',SYSI.lock,'sys.s1t','HTTPS / TLS',''],
       ['pre',SYSI.route,'sys.s2t','POST /api/v1/timesheet/approve',''],
-      ['pre',SYSI.key,'sys.s3t',t_('sys.s3c'),'sys.s3d'],
-      ['gate',SYSI.shield,'sys.s4t',t_('sys.s4c'),'sys.s4d'],
+      ['pre',SYSI.key,'sys.s3t',t_('sys.s3c'),''],
+      ['gate',SYSI.shield,'sys.s4t',t_('sys.s4c'),''],
       ['post',SYSI.cog,'sys.s5t',t_('sys.s5c'),''],
-      ['post',SYSI.book,'sys.s6t',t_('sys.s6c'),'sys.s6d'],
-      ['post',SYSI.bolt,'sys.s7t','"HoursApproved"','sys.s7d'],
+      ['post',SYSI.book,'sys.s6t',t_('sys.s6c'),''],
+      ['post',SYSI.bolt,'sys.s7t','"HoursApproved"',''],
       ['post',SYSI.check,'sys.s8t','200 OK → JSON','']
     ];
     return '<div class="sys-pipe" id="sys-pipe" style="--gi:4">'+steps.map((st,i)=>
