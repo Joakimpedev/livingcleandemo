@@ -283,23 +283,11 @@
   .sys-row .rt{font-size:12.5px;font-weight:600;line-height:1.25}
   .sys-row .rs{font-family:'IBM Plex Mono';font-size:9.8px;color:var(--muted);margin-top:4px;line-height:1.45}
   .sys-card{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
-  .sys-chd{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:1px solid var(--line-2);background:var(--hd);font-size:11.5px;font-weight:600;color:var(--ink)}
-  .sys-chd .mono2{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint);font-weight:400;margin-left:auto}
   .sys-cbd{padding:13px}
-  .sys-split{display:flex;gap:12px;align-items:stretch;min-height:0}
-  .sys-split>.sys-card{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
-  .sys-split>.sys-card.bad{flex:0 0 36%}
-  .sys-split .sys-cbd{flex:1;display:flex;flex-direction:column;justify-content:center}
   .sys-fig{display:flex;justify-content:center}
   .sys-fig svg{width:100%;max-width:680px;height:auto;display:block}
-  .sys-fig.sm svg{max-width:640px}
-  .sys-card.bad{border-color:#dcb6b1}
-  .sys-card.bad .sys-chd{color:var(--red);background:var(--red-bg);border-bottom-color:#ecd5d2}
-  .sys-badcol{display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0}
-  .sys-bnode{border:1px solid #c98f88;border-radius:7px;background:#fff;padding:7px 12px;font-size:11px;font-weight:600;color:var(--ink);min-width:150px;text-align:center}
-  .sys-barrow{font-family:'IBM Plex Mono';font-size:9px;color:var(--red)}
-  .sys-missv{margin-top:14px;display:flex;flex-direction:column;gap:6px;font-size:10.5px;color:var(--red);align-items:flex-start}
-  .sys-missv b{font-weight:600}
+  .sys-hbtn{height:22px;margin:3px 6px 0 0;padding:0 10px;border:1px solid var(--line);background:#fff;border-radius:5px;font:inherit;font-size:10.5px;font-weight:500;color:var(--ink);cursor:pointer;white-space:nowrap}
+  .sys-hbtn:hover{border-color:var(--accent);color:var(--accent-d)}
   .sys-note{font-size:10.3px;color:var(--faint);line-height:1.45;display:flex;gap:7px;align-items:flex-start;padding:0 2px}
   .sys-note svg{width:13px;height:13px;flex:0 0 auto;margin-top:1px}
   /* request pipeline (panel 2) */
@@ -316,6 +304,10 @@
   .sys-step .sc{font-family:'IBM Plex Mono';font-size:10px;color:var(--blue);margin-top:3px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .sys-step .sd{font-size:10.3px;color:var(--muted);margin-top:2px;line-height:1.4}
   .sys-step.gate{border-color:var(--accent);background:var(--accent-bg)}
+  .sys-step.miss{border-style:dashed;border-color:#d9a59f;background:#fdf8f7}
+  .sys-step.miss .st,.sys-step.miss .sc,.sys-step.miss .ic{color:var(--red)}
+  .sys-step.inc .ic{color:var(--amber)}
+  .sys-step.lost .ic{color:var(--red)}
   .sys-conn{width:2px;height:8px;background:var(--line);margin-left:28px;flex:0 0 auto}
   .sys-deny2{overflow:hidden;max-height:0;opacity:0}
   .sys-deny2 .dt2{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--red);display:block}
@@ -331,14 +323,11 @@
   .sys-pipe.run-deny .sys-step.gate{animation:sysGateRed .45s ease both;animation-delay:calc(var(--gi)*.22s)}
   .sys-pipe.run-deny .sys-step.post{animation:sysDim .4s ease both;animation-delay:calc(var(--gi)*.22s + .35s)}
   .sys-pipe.run-deny .sys-deny2{animation:sysDenyOpen .45s ease both;animation-delay:calc(var(--gi)*.22s + .25s)}
-  /* data protection (panel 3) */
-  .sys-cols{display:flex;gap:12px}
-  .sys-col{flex:1;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
-  .sys-colhd{display:flex;align-items:center;gap:8px;padding:8px 11px;border-bottom:1px solid var(--line-2);background:var(--hd);font-size:11px;font-weight:600;color:var(--ink)}
-  .sys-colhd svg{width:14px;height:14px;color:var(--accent);flex:0 0 auto}
-  .sys-li{display:flex;gap:8px;padding:8px 11px;border-bottom:1px solid var(--line-2);font-size:10.8px;color:var(--ink);line-height:1.45;align-items:flex-start}
-  .sys-li:last-child{border-bottom:none}
-  .sys-li .b{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:0 0 auto;margin-top:4px}
+  .sys-pipeb.run-ok .sys-step:not(.miss){animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.22s)}
+  .sys-pipeb.run-deny .sys-step:not(.miss){animation:sysGateRed .45s ease both;animation-delay:calc(var(--i)*.22s)}
+  .sys-anim.run .sys-step{animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.3s)}
+  .sys-anim.run .sys-step.miss{animation:none}
+  .sys-anim.run .sys-step.inc,.sys-anim.run .sys-step.lost{animation-name:sysGateRed}
   ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#bcc1c7;border:3px solid var(--panel)}::-webkit-scrollbar-thumb:hover{background:#a4abb2}::-webkit-scrollbar-track{background:transparent}
 </style>
 </head>
@@ -473,6 +462,8 @@
         </div>
         <div class="rsz-x" data-rz="prev"></div>
         <div class="convcol" id="sys-main"></div>
+        <div class="rsz-x" data-rz="next"></div>
+        <div class="rightcol" id="sys-bad" style="--w:380px"></div>
       </div>
     </div>
 
@@ -630,13 +621,28 @@
     'sys.db1':{en:'PostgreSQL — one database (EU)',no:'PostgreSQL — én database (EU)'},
     'sys.badHd':{en:'Typical setup without this structure',no:'Typisk oppsett uten denne strukturen'},
     'sys.badLogic':{en:'logic duplicated per client',no:'logikk duplisert per klient'},
-    'sys.badEp':{en:'ad-hoc endpoints — unversioned',no:'ad-hoc endepunkter — uversjonert'},
+    'sys.badEp':{en:'ad-hoc — unversioned',no:'ad-hoc — uversjonert'},
+    'sys.badEpT':{en:'Endpoint',no:'Endepunkt'},
+    'sys.badEpBox':{en:'ad-hoc endpoints — unversioned',no:'ad-hoc endepunkter — uversjonert'},
     'sys.dbWord':{en:'Database',no:'Database'},
-    'sys.badEp2':{en:'endpoint',no:'endepunkt'},
-    'sys.badMissing':{en:'missing:',no:'mangler:'},
-    'sys.badNoAuth':{en:'authentication',no:'autentisering'},
-    'sys.badNoRbac':{en:'role check (RBAC)',no:'rollesjekk (RBAC)'},
-    'sys.badNoAudit':{en:'audit log',no:'audit-logg'},
+    'sys.missing':{en:'missing',no:'mangler'},
+    'sys.audit':{en:'Audit log',no:'Audit-logg'},
+    'sys.bTrans':{en:'Unencrypted transport',no:'Ukryptert transport'},
+    'sys.bDbc':{en:'direct SQL from the client',no:'direkte SQL fra klienten'},
+    'sys.simOops':{en:'Simulate incident',no:'Simuler uhell'},
+    'sys.stor':{en:'Storage',no:'Lagring'},
+    'sys.g3c1':{en:'PostgreSQL — EU region · AES-256 at rest',no:'PostgreSQL — EU-region · AES-256 at rest'},
+    'sys.b3c1':{en:'unknown region — unencrypted',no:'ukjent region — ukryptert'},
+    'sys.snap':{en:'Snapshot',no:'Snapshot'},
+    'sys.snapC':{en:'automatic — every night 02:00',no:'automatisk — hver natt 02:00'},
+    'sys.wal':{en:'Transaction log (WAL)',no:'Transaksjonslogg (WAL)'},
+    'sys.walC':{en:'every change archived continuously',no:'hver endring arkiveres fortløpende'},
+    'sys.oops':{en:'Incident',no:'Uhell'},
+    'sys.pitr2':{en:'Point-in-time recovery',no:'Point-in-time recovery'},
+    'sys.pitr2c':{en:'snapshot 02:00 + WAL up to 14:36',no:'snapshot 02:00 + WAL frem til 14:36'},
+    'sys.pitr2d':{en:'restored to the minute before the incident',no:'gjenopprettet til minuttet før uhellet'},
+    'sys.rec':{en:'Recovery',no:'Gjenoppretting'},
+    'sys.recX':{en:'not possible — data lost',no:'ikke mulig — data tapt'},
     'sys.p2hd':{en:'One request, end to end',no:'Én forespørsel, ende til ende'},
     'sys.p2hd2':{en:'example: approving hours',no:'eksempel: godkjenning av timer'},
     'sys.runOk':{en:'Run — authorized role',no:'Kjør — godkjent rolle'},
@@ -661,22 +667,6 @@
     'sys.s7t':{en:'Event published',no:'Hendelse publiseres'},
     'sys.s7d':{en:'other modules subscribe — the sender knows nothing about them',no:'andre moduler abonnerer — avsenderen vet ingenting om dem'},
     'sys.s8t':{en:'Response',no:'Svar'},
-    'sys.p3c1':{en:'Transport',no:'Transport'},
-    'sys.p3c1a':{en:'TLS between client and server — encrypted in transit',no:'TLS mellom klient og server — kryptert under sending'},
-    'sys.p3c1b':{en:'no direct database access — everything passes the API and the RBAC gate',no:'ingen direkte databasetilgang — alt går via API-et og RBAC-sjekken'},
-    'sys.p3c2':{en:'Storage',no:'Lagring'},
-    'sys.p3c2a':{en:'managed PostgreSQL — EU region',no:'managed PostgreSQL — EU-region'},
-    'sys.p3c2b':{en:'AES-256 encryption at rest',no:'AES-256-kryptering at rest'},
-    'sys.p3c2c':{en:'audit and event logs are append-only',no:'audit- og hendelseslogg er append-only'},
-    'sys.p3c3':{en:'Recovery',no:'Gjenoppretting'},
-    'sys.p3c3a':{en:'automatic nightly snapshot',no:'automatisk nattlig snapshot'},
-    'sys.p3c3b':{en:'continuous WAL archive (transaction log)',no:'kontinuerlig WAL-arkiv (transaksjonslogg)'},
-    'sys.p3c3c':{en:'restores are tested — an untested backup does not count',no:'gjenoppretting testes — en utestet backup teller ikke'},
-    'sys.pitrHd':{en:'Point-in-time recovery (PITR)',no:'Point-in-time recovery (PITR)'},
-    'sys.pitrWal':{en:'WAL — every transaction archived continuously',no:'WAL — hver transaksjon arkiveres fortløpende'},
-    'sys.pitrSnap':{en:'snapshot 02:00',no:'snapshot 02:00'},
-    'sys.pitrErr':{en:'incident 14:37',no:'uhell 14:37'},
-    'sys.pitrRes':{en:'restore to 14:36 — the minute before',no:'gjenopprett til 14:36 — minuttet før'},
     'sys.p3note':{en:'Production checklist: region, backups and restore tests are configured and verified before any real personal data is moved in.',no:'Produksjonssjekkliste: region, backups og gjenopprettingstester konfigureres og verifiseres før ekte persondata flyttes inn.'}
   };
   function t(k){const e=DICT[k];return e?(e[LOCALE]||e.en):k;}
@@ -1150,7 +1140,10 @@
     key:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4.5"/><path d="M11.5 11.5 20 3M16 7l3 3"/></svg>',
     cog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>',
     bolt:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>',
-    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 12.5 5 5L20 6.5"/></svg>'
+    check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 12.5 5 5L20 6.5"/></svg>',
+    warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 2.5 20h19z"/><path d="M12 9.5V14M12 16.8v.2"/></svg>',
+    copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    xmark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>'
   };
   function renderSysList(){document.getElementById('sys-list').innerHTML=SYSP.map((k,i)=>
     '<div class="sys-row'+(k===sysCur?' sel':'')+'" data-k="'+k+'"><div class="sys-num">'+(i+1)+'</div><div><div class="rt">'+t_('sys.'+k+'t')+'</div><div class="rs">'+t_('sys.'+k+'s')+'</div></div></div>').join('');}
@@ -1190,19 +1183,48 @@
     s+=sysTx(62,381,t_('sys.db1'),'#1a1e23',10,null,600);
     return s+'</svg>';}
   function sysArchBad(){
-    const B=[['c1',20,18,150,t_('sys.cl1')],['c2',205,18,150,t_('sys.cl2')],['c3',390,18,150,t_('sys.cl3')],['lg',45,104,185,t_('sys.badLogic')],['ep',300,104,215,t_('sys.badEp')],['db',205,182,150,t_('sys.dbWord')]];
-    const C={};B.forEach(b=>{C[b[0]]=[b[1]+b[3]/2,b[2]+17];});
+    const B=[['c1',12,18,108,t_('sys.cl1')],['c2',126,18,108,t_('sys.cl2')],['c3',240,18,108,t_('sys.cl3')],['lg',12,180,160,t_('sys.badLogic')],['ep',188,180,160,t_('sys.badEpBox')],['db',100,350,160,t_('sys.dbWord')]];
+    const C={};B.forEach(b=>{C[b[0]]=[b[1]+b[3]/2,b[2]+21];});
     const P=[['c1','lg',0],['c1','ep',0],['c1','db',1],['c2','lg',0],['c2','ep',0],['c2','db',1],['c3','lg',0],['c3','ep',0],['c3','db',1],['c1','c2',0],['c2','c3',0],['lg','db',0],['ep','db',0],['lg','ep',0]];
     const lines=P.map(p=>'<line x1="'+C[p[0]][0]+'" y1="'+C[p[0]][1]+'" x2="'+C[p[1]][0]+'" y2="'+C[p[1]][1]+'" stroke="#a82820" stroke-opacity=".4" stroke-width="1.3"'+(p[2]?' stroke-dasharray="5 3"':'')+'/>').join('');
-    const boxes=B.map(b=>'<g><rect x="'+b[1]+'" y="'+b[2]+'" width="'+b[3]+'" height="34" rx="7" fill="#fff" stroke="#c98f88"/><text x="'+(b[1]+b[3]/2)+'" y="'+(b[2]+21)+'" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#1a1e23">'+b[4]+'</text></g>').join('');
-    return '<svg viewBox="0 0 560 236">'+lines+boxes+'</svg>';}
+    const boxes=B.map(b=>'<g><rect x="'+b[1]+'" y="'+b[2]+'" width="'+b[3]+'" height="42" rx="7" fill="#fff" stroke="#cbd0d6"/><text x="'+(b[1]+b[3]/2)+'" y="'+(b[2]+25)+'" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="'+(b[3]<120?8.6:9.3)+'" font-weight="600" fill="#1a1e23">'+b[4]+'</text></g>').join('');
+    return '<svg viewBox="0 0 360 412">'+lines+boxes+'</svg>';}
+  function sysStepHtml(cls,i,icon,title,code,desc){return '<div class="sys-step'+(cls?' '+cls:'')+'" style="--i:'+i+'">'+
+    '<span class="ic">'+icon+'</span><div class="sb"><div class="st">'+title+'</div>'+(code?'<span class="sc">'+code+'</span>':'')+(desc?'<div class="sd">'+desc+'</div>':'')+'</div></div>';}
   function sysPipeBad(){
-    return '<div class="sys-badcol">'+
-      '<div class="sys-bnode">'+t_('sys.s0t')+'</div><span class="sys-barrow">HTTP ↓</span>'+
-      '<div class="sys-bnode">'+t_('sys.badEp2')+'</div><span class="sys-barrow">SQL ↓</span>'+
-      '<div class="sys-bnode">'+t_('sys.dbWord')+'</div>'+
-      '<div class="sys-missv"><b>'+t_('sys.badMissing')+'</b><span>✕ '+t_('sys.badNoAuth')+'</span><span>✕ '+t_('sys.badNoRbac')+'</span><span>✕ '+t_('sys.badNoAudit')+'</span></div>'+
-      '</div>';}
+    const X=SYSI.xmark, M='✕ '+t_('sys.missing');
+    const st=[
+      ['',SYSI.screen,t_('sys.s0t'),t_('sys.badLogic'),''],
+      ['',SYSI.lock,t_('sys.bTrans'),'HTTP',''],
+      ['',SYSI.route,t_('sys.badEpT'),t_('sys.badEp'),''],
+      ['miss',X,t_('sys.s3t'),M,''],
+      ['miss',X,t_('sys.s4t'),M,''],
+      ['',SYSI.db,t_('sys.dbWord'),t_('sys.bDbc'),''],
+      ['miss',X,t_('sys.audit'),M,''],
+      ['',SYSI.check,t_('sys.s8t'),'200 OK','']
+    ];
+    return '<div class="sys-pipe sys-pipeb" id="sys-pipeb">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
+  function sysFlow3(){
+    const st=[
+      ['',SYSI.lock,t_('sys.s1t'),'HTTPS / TLS',''],
+      ['',SYSI.db,t_('sys.stor'),t_('sys.g3c1'),''],
+      ['',SYSI.copy,t_('sys.snap'),t_('sys.snapC'),''],
+      ['',SYSI.book,t_('sys.wal'),t_('sys.walC'),''],
+      ['inc',SYSI.warn,t_('sys.oops'),'14:37',''],
+      ['res',SYSI.restore,t_('sys.pitr2'),t_('sys.pitr2c'),t_('sys.pitr2d')]
+    ];
+    return '<div class="sys-pipe sys-anim" id="sys-flow3">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
+  function sysFlow3Bad(){
+    const X=SYSI.xmark, M='✕ '+t_('sys.missing');
+    const st=[
+      ['',SYSI.lock,t_('sys.bTrans'),'HTTP',''],
+      ['',SYSI.db,t_('sys.stor'),t_('sys.b3c1'),''],
+      ['miss',X,t_('sys.snap'),M,''],
+      ['miss',X,t_('sys.wal'),M,''],
+      ['inc',SYSI.warn,t_('sys.oops'),'14:37',''],
+      ['lost',X,t_('sys.rec'),t_('sys.recX'),'']
+    ];
+    return '<div class="sys-pipe sys-anim" id="sys-flow3b">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
   function sysPipe(){
     const steps=[
       ['pre',SYSI.screen,'sys.s0t',t_('sys.s0c'),'sys.s0d'],
@@ -1220,43 +1242,25 @@
         '<span class="ic">'+st[1]+'</span><div class="sb"><div class="st">'+t_(st[2])+'</div><span class="sc">'+st[3]+'</span>'+(st[4]?'<div class="sd">'+t_(st[4])+'</div>':'')+
         (st[0]==='gate'?'<div class="sys-deny2"><span class="dt2">403 Forbidden</span><span class="dd2">'+t_('sys.s4xd')+'</span></div>':'')+'</div></div>'
     ).join('<div class="sys-conn"></div>')+'</div>';}
-  function sysPitr(){
-    const X=h=>30+700*(h/24);
-    let s='<svg viewBox="0 0 760 150">';
-    s+='<rect x="30" y="56" width="700" height="14" rx="3" fill="#e6edf4" stroke="#9fb6c9"/>';
-    s+='<text x="380" y="66" text-anchor="middle" font-family="IBM Plex Mono, sans-serif" font-size="8.3" fill="#234b71">'+t_('sys.pitrWal')+'</text>';
-    s+='<line x1="30" y1="96" x2="730" y2="96" stroke="#cbd0d6" stroke-width="2"/>';
-    [0,6,12,18,24].forEach(h=>{const x=X(h);s+='<line x1="'+x+'" y1="92" x2="'+x+'" y2="100" stroke="#cbd0d6" stroke-width="1.5"/><text x="'+x+'" y="115" text-anchor="middle" font-family="IBM Plex Mono, sans-serif" font-size="8" fill="#8a919a">'+String(h).padStart(2,'0')+':00</text>';});
-    const sx=X(2);
-    s+='<circle cx="'+sx+'" cy="96" r="7" fill="#dcebe1" stroke="#226a3c" stroke-width="1.5"/><path d="M'+(sx-3)+' 96l2.2 2.2 4-4" stroke="#226a3c" stroke-width="1.5" fill="none"/>';
-    s+='<text x="'+sx+'" y="132" text-anchor="middle" font-family="IBM Plex Mono, sans-serif" font-size="8" fill="#226a3c">'+t_('sys.pitrSnap')+'</text>';
-    const ex=X(14.6);
-    s+='<circle cx="'+ex+'" cy="96" r="7" fill="#f5dedb" stroke="#a82820" stroke-width="1.5"/><path d="M'+(ex-2.6)+' '+(96-2.6)+'l5.2 5.2M'+(ex+2.6)+' '+(96-2.6)+'l-5.2 5.2" stroke="#a82820" stroke-width="1.5"/>';
-    s+='<text x="'+ex+'" y="132" text-anchor="middle" font-family="IBM Plex Mono, sans-serif" font-size="8" fill="#a82820">'+t_('sys.pitrErr')+'</text>';
-    const rx2=ex-16;
-    s+='<path d="M'+(ex+2)+' 84 C '+(ex+34)+' 30, '+(rx2-44)+' 26, '+rx2+' 80" fill="none" stroke="#226a3c" stroke-width="1.6"/><path d="M'+(rx2-4)+' 74l4 9 4.5-7z" fill="#226a3c"/>';
-    s+='<text x="'+(ex+42)+'" y="34" font-family="IBM Plex Mono, sans-serif" font-size="8.5" fill="#226a3c">'+t_('sys.pitrRes')+'</text>';
-    return s+'</svg>';}
-  function sysP3(){
-    const col=(icon,hd,items)=>'<div class="sys-col"><div class="sys-colhd">'+icon+hd+'</div>'+items.map(i=>'<div class="sys-li"><span class="b"></span><span>'+i+'</span></div>').join('')+'</div>';
-    return '<div class="sys-cols">'+
-      col(SYSI.lock,t_('sys.p3c1'),[t_('sys.p3c1a'),t_('sys.p3c1b')])+
-      col(SYSI.db,t_('sys.p3c2'),[t_('sys.p3c2a'),t_('sys.p3c2b'),t_('sys.p3c2c')])+
-      col(SYSI.restore,t_('sys.p3c3'),[t_('sys.p3c3a'),t_('sys.p3c3b'),t_('sys.p3c3c')])+
-      '</div>'+
-      '<div class="sys-card"><div class="sys-chd">'+t_('sys.pitrHd')+'</div><div class="sys-cbd sys-fig sm">'+sysPitr()+'</div></div>'+
-      '<div class="sys-note">'+SYSI.shield+'<span>'+t_('sys.p3note')+'</span></div>';}
-  function renderSysMain(){const m=document.getElementById('sys-main');let inner='';
-    if(sysCur==='p1'){inner='<div class="sys-body"><div class="sys-split">'+
-      '<div class="sys-card"><div class="sys-chd">'+t_('sys.p1hd')+'<span class="mono2">'+t_('sys.p1hd2')+'</span></div><div class="sys-cbd sys-fig">'+sysArch()+'</div></div>'+
-      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd sys-fig">'+sysArchBad()+'</div></div></div></div>';}
-    else if(sysCur==='p2'){inner='<div class="sys-body"><div class="sys-toolbar"><button class="cbtn" data-sysrun="ok">▶ '+t_('sys.runOk')+'</button><button class="cbtn" data-sysrun="deny">▶ '+t_('sys.runDeny')+'</button></div><div class="sys-split">'+
-      '<div class="sys-card"><div class="sys-chd">'+t_('sys.p2hd')+'<span class="mono2">'+t_('sys.p2hd2')+'</span></div><div class="sys-cbd sys-pipewrap">'+sysPipe()+'</div></div>'+
-      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd">'+sysPipeBad()+'</div></div></div></div>';}
-    else{inner='<div class="sys-body">'+sysP3()+'</div>';}
-    m.innerHTML='<div class="phd"><div class="ptab">'+t_('sys.'+sysCur+'t')+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hcnt">'+(SYSP.indexOf(sysCur)+1)+' / 3</div><div class="hctl">'+DOTS+'</div></div>'+inner;}
-  document.getElementById('sys-list').addEventListener('click',e=>{const r=e.target.closest('.sys-row');if(r){sysCur=r.dataset.k;renderSysList();renderSysMain();}});
-  document.getElementById('sys-main').addEventListener('click',e=>{const b=e.target.closest('[data-sysrun]');if(!b)return;const p=document.getElementById('sys-pipe');if(!p)return;p.classList.remove('run-ok','run-deny');void p.offsetWidth;p.classList.add(b.dataset.sysrun==='ok'?'run-ok':'run-deny');});
+  function sysPhd(title,extra,count){return '<div class="phd"><div class="ptab">'+title+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div>'+(extra||'')+(count?'<div class="hcnt">'+count+'</div>':'')+'<div class="hctl">'+DOTS+'</div></div>';}
+  function renderSysMain(){const m=document.getElementById('sys-main');
+    if(sysCur==='p1'){m.innerHTML=sysPhd(t_('sys.p1hd'),'',t_('sys.p1hd2'))+
+      '<div class="sys-body"><div class="sys-card"><div class="sys-cbd sys-fig">'+sysArch()+'</div></div></div>';}
+    else if(sysCur==='p2'){m.innerHTML=sysPhd(t_('sys.p2hd'),
+      '<button class="sys-hbtn" data-sysrun="ok">▶ '+t_('sys.runOk')+'</button><button class="sys-hbtn" data-sysrun="deny">▶ '+t_('sys.runDeny')+'</button>','')+
+      '<div class="sys-body"><div class="sys-pipewrap">'+sysPipe()+'</div></div>';}
+    else{m.innerHTML=sysPhd(t_('sys.p3t'),
+      '<button class="sys-hbtn" data-sysrun="oops">▶ '+t_('sys.simOops')+'</button>','TLS · AES-256 · EU · PITR')+
+      '<div class="sys-body"><div class="sys-pipewrap">'+sysFlow3()+'</div><div class="sys-note">'+SYSI.shield+'<span>'+t_('sys.p3note')+'</span></div></div>';}}
+  function renderSysBad(){const m=document.getElementById('sys-bad');let body='';
+    if(sysCur==='p1')body='<div class="sys-card"><div class="sys-cbd sys-fig">'+sysArchBad()+'</div></div>';
+    else if(sysCur==='p2')body=sysPipeBad();
+    else body=sysFlow3Bad();
+    m.innerHTML=sysPhd(t_('sys.badHd'))+'<div class="sys-body">'+body+'</div>';}
+  document.getElementById('sys-list').addEventListener('click',e=>{const r=e.target.closest('.sys-row');if(r){sysCur=r.dataset.k;renderSysList();renderSysMain();renderSysBad();}});
+  document.getElementById('sys-main').addEventListener('click',e=>{const b=e.target.closest('[data-sysrun]');if(!b)return;const mode=b.dataset.sysrun;
+    if(mode==='oops'){['sys-flow3','sys-flow3b'].forEach(id=>{const p=document.getElementById(id);if(p){p.classList.remove('run');void p.offsetWidth;p.classList.add('run');}});return;}
+    ['sys-pipe','sys-pipeb'].forEach(id=>{const p=document.getElementById(id);if(p){p.classList.remove('run-ok','run-deny');void p.offsetWidth;p.classList.add(mode==='ok'?'run-ok':'run-deny');}});});
 
   /* ---------------- shared mechanisms ---------------- */
   const NAVKEY={'Timesheet':'nav.timesheet','Customer Service':'nav.service','Scheduling':'nav.schedule','Jobs':'nav.jobs','Customers':'nav.customers','Employees':'nav.employees','System':'nav.system','Settings':'nav.settings','Help':'nav.help'};
@@ -1289,7 +1293,7 @@
   renderEmpDir();renderProfile(empCur);
   renderJobSeg();renderJobTable();
   renderCustList();renderCustProfile(custCur);
-  renderSysList();renderSysMain();
+  renderSysList();renderSysMain();renderSysBad();
   renderRailBadges();
 
   /* re-render everything on language change */
@@ -1301,7 +1305,7 @@
     renderEmpDir();renderProfile(empCur);
     renderJobSeg();renderJobTable();
     renderCustList();renderCustProfile(custCur);
-    renderSysList();renderSysMain();
+    renderSysList();renderSysMain();renderSysBad();
     renderRailBadges();
     csDock();tsDock();schedDock();empDock();jobDock();custDock();
     const ph=document.querySelector('.screen.ph');if(curPhMod&&ph&&ph.classList.contains('on'))showScreen(curPhMod);
