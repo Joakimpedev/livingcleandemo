@@ -329,6 +329,7 @@
   .sys-pipe.run-deny .sys-deny2{animation:sysDenyOpen .45s ease both;animation-delay:calc(var(--gi)*.22s + .25s)}
   .sys-pipeb.run-ok .sys-step:not(.miss){animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.22s)}
   .sys-pipeb.run-deny .sys-step:not(.miss){animation:sysGateRed .45s ease both;animation-delay:calc(var(--i)*.22s)}
+  .sys-pipe.run-ok .sys-step.miss,.sys-pipe.run-deny .sys-step.miss,.sys-pipeb.run-ok .sys-step.miss,.sys-pipeb.run-deny .sys-step.miss{animation:none}
   .sys-anim.run .sys-step{animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.3s)}
   .sys-anim.run .sys-step.miss{animation:none}
   .sys-anim.run .sys-step.inc,.sys-anim.run .sys-step.lost{animation-name:sysGateRed}
