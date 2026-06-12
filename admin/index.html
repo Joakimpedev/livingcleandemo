@@ -638,6 +638,9 @@
     'sys.wal':{en:'Transaction log (WAL)',no:'Transaksjonslogg (WAL)'},
     'sys.walC':{en:'every change archived continuously',no:'hver endring arkiveres fortløpende'},
     'sys.oops':{en:'Incident',no:'Uhell'},
+    'sys.mon':{en:'Monitoring',no:'Overvåking'},
+    'sys.monC':{en:'errors captured automatically → alert',no:'feil fanges automatisk → varsel'},
+    'sys.bMonC':{en:'discovered only when someone complains',no:'oppdages først når noen klager'},
     'sys.pitr2':{en:'Point-in-time recovery',no:'Point-in-time recovery'},
     'sys.pitr2c':{en:'snapshot 02:00 + WAL up to 14:36',no:'snapshot 02:00 + WAL frem til 14:36'},
     'sys.pitr2d':{en:'restored to the minute before the incident',no:'gjenopprettet til minuttet før uhellet'},
@@ -1211,6 +1214,7 @@
       ['',SYSI.copy,t_('sys.snap'),t_('sys.snapC'),''],
       ['',SYSI.book,t_('sys.wal'),t_('sys.walC'),''],
       ['inc',SYSI.warn,t_('sys.oops'),'14:37',''],
+      ['',SYSI.bolt,t_('sys.mon'),t_('sys.monC'),''],
       ['res',SYSI.restore,t_('sys.pitr2'),t_('sys.pitr2c'),t_('sys.pitr2d')]
     ];
     return '<div class="sys-pipe sys-anim" id="sys-flow3">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
@@ -1222,6 +1226,7 @@
       ['miss',X,t_('sys.snap'),M,''],
       ['miss',X,t_('sys.wal'),M,''],
       ['inc',SYSI.warn,t_('sys.oops'),'14:37',''],
+      ['miss',X,t_('sys.mon'),t_('sys.bMonC'),''],
       ['lost',X,t_('sys.rec'),t_('sys.recX'),'']
     ];
     return '<div class="sys-pipe sys-anim" id="sys-flow3b">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
