@@ -275,6 +275,7 @@
   .avmark{font-size:8px;font-weight:700;color:#fff;background:var(--red);padding:1px 5px;border-radius:8px;letter-spacing:.03em;vertical-align:middle}
   /* ----- System (technical overview) ----- */
   .sys-body{flex:1;overflow:auto;min-height:0;padding:13px;display:flex;flex-direction:column;gap:12px;background:var(--canvas)}
+  .sys-body>*{flex:0 0 auto}
   .sys-row{display:flex;gap:10px;padding:12px 13px;border-bottom:1px solid var(--line-2);cursor:pointer;align-items:flex-start}
   .sys-row:hover{background:var(--panel-2)}
   .sys-row.sel{background:var(--accent-bg)}
@@ -285,24 +286,28 @@
   .sys-chd{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:1px solid var(--line-2);background:var(--hd);font-size:11.5px;font-weight:600;color:var(--ink)}
   .sys-chd .mono2{font-family:'IBM Plex Mono';font-size:9.5px;color:var(--faint);font-weight:400;margin-left:auto}
   .sys-cbd{padding:13px}
+  .sys-split{display:flex;gap:12px;align-items:stretch;min-height:0}
+  .sys-split>.sys-card{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
+  .sys-split>.sys-card.bad{flex:0 0 36%}
+  .sys-split .sys-cbd{flex:1;display:flex;flex-direction:column;justify-content:center}
   .sys-fig{display:flex;justify-content:center}
-  .sys-fig svg{width:100%;max-width:720px;height:auto;display:block}
-  .sys-fig.sm svg{max-width:660px}
+  .sys-fig svg{width:100%;max-width:680px;height:auto;display:block}
+  .sys-fig.sm svg{max-width:640px}
   .sys-card.bad{border-color:#dcb6b1}
   .sys-card.bad .sys-chd{color:var(--red);background:var(--red-bg);border-bottom-color:#ecd5d2}
-  .sys-badflow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-  .sys-bnode{border:1px solid #c98f88;border-radius:7px;background:#fff;padding:7px 12px;font-size:11px;font-weight:600;color:var(--ink)}
+  .sys-badcol{display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0}
+  .sys-bnode{border:1px solid #c98f88;border-radius:7px;background:#fff;padding:7px 12px;font-size:11px;font-weight:600;color:var(--ink);min-width:150px;text-align:center}
   .sys-barrow{font-family:'IBM Plex Mono';font-size:9px;color:var(--red)}
-  .sys-miss{display:flex;gap:12px;margin-left:16px;font-size:10.3px;color:var(--red);align-items:center;flex-wrap:wrap}
-  .sys-miss b{font-weight:600}
+  .sys-missv{margin-top:14px;display:flex;flex-direction:column;gap:6px;font-size:10.5px;color:var(--red);align-items:flex-start}
+  .sys-missv b{font-weight:600}
   .sys-note{font-size:10.3px;color:var(--faint);line-height:1.45;display:flex;gap:7px;align-items:flex-start;padding:0 2px}
   .sys-note svg{width:13px;height:13px;flex:0 0 auto;margin-top:1px}
   /* request pipeline (panel 2) */
   .sys-toolbar{display:flex;gap:8px;align-items:center;justify-content:center}
   .sys-toolbar .cbtn{background:#fff}
   .sys-pipewrap{display:flex;justify-content:center}
-  .sys-pipe{width:100%;max-width:560px;margin-right:236px;display:flex;flex-direction:column}
-  .sys-step{position:relative;display:flex;gap:11px;align-items:flex-start;border:1px solid var(--line);border-radius:7px;background:#fff;padding:7px 11px;min-width:0}
+  .sys-pipe{width:100%;max-width:560px;display:flex;flex-direction:column}
+  .sys-step{position:relative;display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:7px;background:#fff;padding:6px 11px;min-width:0}
   .sys-step .ic{width:17px;height:17px;flex:0 0 auto;color:var(--muted);margin-top:2px}
   .sys-step .ic svg{width:100%;height:100%;display:block}
   .sys-step.gate .ic{color:var(--accent-d)}
@@ -311,22 +316,21 @@
   .sys-step .sc{font-family:'IBM Plex Mono';font-size:10px;color:var(--blue);margin-top:3px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .sys-step .sd{font-size:10.3px;color:var(--muted);margin-top:2px;line-height:1.4}
   .sys-step.gate{border-color:var(--accent);background:var(--accent-bg)}
-  .sys-conn{width:2px;height:10px;background:var(--line);margin-left:28px;flex:0 0 auto}
-  .sys-deny{position:absolute;left:calc(100% + 16px);top:-2px;width:212px;border:1px solid #dcb6b1;background:var(--red-bg);border-radius:7px;padding:8px 11px;opacity:0;pointer-events:none}
-  .sys-deny .dt2{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--red);display:block}
-  .sys-deny .dd2{font-size:10px;color:#7c423c;line-height:1.4;margin-top:3px;display:block}
-  .sys-deny::before{content:"";position:absolute;left:-16px;top:17px;width:16px;height:2px;background:#dcb6b1}
+  .sys-conn{width:2px;height:8px;background:var(--line);margin-left:28px;flex:0 0 auto}
+  .sys-deny2{overflow:hidden;max-height:0;opacity:0}
+  .sys-deny2 .dt2{font-family:'IBM Plex Mono';font-size:10.5px;font-weight:600;color:var(--red);display:block}
+  .sys-deny2 .dd2{font-size:10px;color:#7c423c;line-height:1.4;margin-top:2px;display:block}
   @keyframes sysOn{to{border-color:var(--green);box-shadow:0 0 0 2px var(--green-bg)}}
   @keyframes sysGateOk{to{border-color:var(--green);box-shadow:0 0 0 2px var(--green-bg);background:#fff}}
   @keyframes sysGateRed{to{border-color:var(--red);box-shadow:0 0 0 2px var(--red-bg);background:var(--red-bg)}}
   @keyframes sysDim{to{opacity:.3}}
-  @keyframes sysDenyIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+  @keyframes sysDenyOpen{to{max-height:50px;opacity:1;margin-top:6px}}
   .sys-pipe.run-ok .sys-step{animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.22s)}
   .sys-pipe.run-ok .sys-step.gate{animation-name:sysGateOk}
   .sys-pipe.run-deny .sys-step.pre{animation:sysOn .4s ease both;animation-delay:calc(var(--i)*.22s)}
   .sys-pipe.run-deny .sys-step.gate{animation:sysGateRed .45s ease both;animation-delay:calc(var(--gi)*.22s)}
   .sys-pipe.run-deny .sys-step.post{animation:sysDim .4s ease both;animation-delay:calc(var(--gi)*.22s + .35s)}
-  .sys-pipe.run-deny .sys-deny{animation:sysDenyIn .4s ease both;animation-delay:calc(var(--gi)*.22s + .3s)}
+  .sys-pipe.run-deny .sys-deny2{animation:sysDenyOpen .45s ease both;animation-delay:calc(var(--gi)*.22s + .25s)}
   /* data protection (panel 3) */
   .sys-cols{display:flex;gap:12px}
   .sys-col{flex:1;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
@@ -1154,50 +1158,50 @@
   function sysTx(x,y,s,fill,size,anchor,weight,mono){return '<text x="'+x+'" y="'+y+'"'+(anchor?' text-anchor="'+anchor+'"':'')+' font-family="'+(mono?'IBM Plex Mono':'IBM Plex Sans')+', sans-serif" font-size="'+size+'"'+(weight?' font-weight="'+weight+'"':'')+' fill="'+fill+'">'+s+'</text>';}
   function sysVl(x,y1,y2){return '<line x1="'+x+'" y1="'+y1+'" x2="'+x+'" y2="'+y2+'" stroke="#9fb6c9" stroke-width="1.5"/><path d="M'+(x-3.5)+' '+(y2-6)+'l3.5 6 3.5-6z" fill="#9fb6c9"/>';}
   function sysArch(){
-    let s='<svg viewBox="0 0 760 420">';
-    s+='<rect x="8" y="10" width="744" height="330" rx="10" fill="none" stroke="#9fb6c9" stroke-dasharray="7 5"/>';
-    s+=sysTx(20,28,t_('sys.mono'),'#2a5379',10,null,600,1);
-    const cls=[[26,t_('sys.cl1'),t_('sys.clMob')],[277,t_('sys.cl2'),t_('sys.clMob')],[528,t_('sys.cl3'),t_('sys.clWeb')]];
-    cls.forEach(c=>{const cx=c[0]+103;
-      s+=sysBox(c[0],38,206,42,'#fff','#cbd0d6');
-      s+=sysTx(cx,55,c[1],'#1a1e23',10.8,'middle',600);
-      s+=sysTx(cx,70,c[2],'#5f666e',8.5,'middle',null,1);
+    let s='<svg viewBox="0 0 560 420">';
+    s+='<rect x="8" y="10" width="544" height="330" rx="10" fill="none" stroke="#9fb6c9" stroke-dasharray="7 5"/>';
+    s+=sysTx(20,28,t_('sys.mono'),'#2a5379',9.5,null,600,1);
+    const cls=[[20,t_('sys.cl1'),t_('sys.clMob')],[200,t_('sys.cl2'),t_('sys.clMob')],[380,t_('sys.cl3'),t_('sys.clWeb')]];
+    cls.forEach(c=>{const cx=c[0]+80;
+      s+=sysBox(c[0],38,160,42,'#fff','#cbd0d6');
+      s+=sysTx(cx,55,c[1],'#1a1e23',10,'middle',600);
+      s+=sysTx(cx,70,c[2],'#5f666e',8,'middle',null,1);
       s+=sysVl(cx,80,112);});
-    s+=sysTx(140,100,'HTTPS / TLS','#5f666e',8.5,null,null,1);
-    s+=sysBox(26,114,708,32,'#e6edf4','#2d5d8c');
-    s+=sysTx(40,134,t_('sys.apiBar'),'#234b71',11,null,600);
-    const mods=[[26,t_('sys.m1'),0],[205,t_('sys.m2'),0],[384,t_('sys.m3'),0],[563,t_('sys.mNext'),1]];
-    mods.forEach(m=>{const cx=m[0]+84;
+    s+=sysTx(190,100,'HTTPS / TLS','#5f666e',8,'middle',null,1);
+    s+=sysBox(20,114,520,32,'#e6edf4','#2d5d8c');
+    s+=sysTx(280,134,t_('sys.apiBar'),'#234b71',10.5,'middle',600);
+    const mods=[[20,t_('sys.m1'),0],[153,t_('sys.m2'),0],[286,t_('sys.m3'),0],[419,t_('sys.mNext'),1]];
+    mods.forEach(m=>{const cx=m[0]+60;
       s+=sysVl(cx,146,168);
-      if(m[2]){s+='<rect x="'+m[0]+'" y="170" width="168" height="46" rx="7" fill="none" stroke="#2d5d8c" stroke-dasharray="6 4"/>';
-        s+=sysTx(cx,197,m[1],'#2d5d8c',10.5,'middle',600);}
-      else{s+=sysBox(m[0],170,168,46,'#fff','#cbd0d6');
-        s+=sysTx(cx,197,m[1],'#1a1e23',10.5,'middle',600);}
-      s+='<line x1="'+cx+'" y1="216" x2="'+cx+'" y2="238" stroke="#2d5d8c" stroke-width="1.2" stroke-dasharray="3 3"/>';});
-    s+='<line x1="26" y1="238" x2="734" y2="238" stroke="#2d5d8c" stroke-width="1.5" stroke-dasharray="6 4"/>';
-    s+=sysTx(380,253,t_('sys.bus'),'#234b71',8.5,'middle',null,1);
-    s+=sysBox(26,264,708,42,'#f6f7f9','#cbd0d6');
-    s+=sysTx(40,281,t_('sys.pkg'),'#1a1e23',9.8,null,600);
-    s+=sysTx(40,297,t_('sys.pkgList'),'#2a5379',8.5,null,null,1);
-    s+=sysVl(380,306,352);
-    s+=sysTx(392,334,'ORM','#5f666e',8,null,null,1);
-    s+=sysBox(26,356,708,42,'#fff','#cbd0d6',8);
-    s+='<ellipse cx="50" cy="369" rx="9" ry="3.5" fill="none" stroke="#5f666e" stroke-width="1.5"/><path d="M41 369v14c0 1.9 4 3.5 9 3.5s9-1.6 9-3.5v-14" fill="none" stroke="#5f666e" stroke-width="1.5"/>';
-    s+=sysTx(70,381,t_('sys.db1'),'#1a1e23',10.8,null,600);
+      if(m[2]){s+='<rect x="'+m[0]+'" y="170" width="120" height="42" rx="7" fill="none" stroke="#2d5d8c" stroke-dasharray="6 4"/>';
+        s+=sysTx(cx,195,m[1],'#2d5d8c',9.3,'middle',600);}
+      else{s+=sysBox(m[0],170,120,42,'#fff','#cbd0d6');
+        s+=sysTx(cx,195,m[1],'#1a1e23',9.3,'middle',600);}
+      s+='<line x1="'+cx+'" y1="212" x2="'+cx+'" y2="234" stroke="#2d5d8c" stroke-width="1.2" stroke-dasharray="3 3"/>';});
+    s+='<line x1="20" y1="234" x2="540" y2="234" stroke="#2d5d8c" stroke-width="1.5" stroke-dasharray="6 4"/>';
+    s+=sysTx(280,249,t_('sys.bus'),'#234b71',8.5,'middle',null,1);
+    s+=sysBox(20,260,520,42,'#f6f7f9','#cbd0d6');
+    s+=sysTx(32,277,t_('sys.pkg'),'#1a1e23',9.5,null,600);
+    s+=sysTx(32,293,t_('sys.pkgList'),'#2a5379',8,null,null,1);
+    s+=sysVl(280,302,352);
+    s+=sysTx(290,332,'ORM','#5f666e',8,null,null,1);
+    s+=sysBox(20,356,520,42,'#fff','#cbd0d6',8);
+    s+='<ellipse cx="42" cy="369" rx="9" ry="3.5" fill="none" stroke="#5f666e" stroke-width="1.5"/><path d="M33 369v14c0 1.9 4 3.5 9 3.5s9-1.6 9-3.5v-14" fill="none" stroke="#5f666e" stroke-width="1.5"/>';
+    s+=sysTx(62,381,t_('sys.db1'),'#1a1e23',10,null,600);
     return s+'</svg>';}
   function sysArchBad(){
-    const B=[['c1',30,20,200,t_('sys.cl1')],['c2',280,20,200,t_('sys.cl2')],['c3',530,20,200,t_('sys.cl3')],['lg',60,110,210,t_('sys.badLogic')],['ep',330,110,230,t_('sys.badEp')],['db',280,190,200,t_('sys.dbWord')]];
-    const C={};B.forEach(b=>{C[b[0]]=[b[1]+b[3]/2,b[2]+18];});
+    const B=[['c1',20,18,150,t_('sys.cl1')],['c2',205,18,150,t_('sys.cl2')],['c3',390,18,150,t_('sys.cl3')],['lg',45,104,185,t_('sys.badLogic')],['ep',300,104,215,t_('sys.badEp')],['db',205,182,150,t_('sys.dbWord')]];
+    const C={};B.forEach(b=>{C[b[0]]=[b[1]+b[3]/2,b[2]+17];});
     const P=[['c1','lg',0],['c1','ep',0],['c1','db',1],['c2','lg',0],['c2','ep',0],['c2','db',1],['c3','lg',0],['c3','ep',0],['c3','db',1],['c1','c2',0],['c2','c3',0],['lg','db',0],['ep','db',0],['lg','ep',0]];
     const lines=P.map(p=>'<line x1="'+C[p[0]][0]+'" y1="'+C[p[0]][1]+'" x2="'+C[p[1]][0]+'" y2="'+C[p[1]][1]+'" stroke="#a82820" stroke-opacity=".4" stroke-width="1.3"'+(p[2]?' stroke-dasharray="5 3"':'')+'/>').join('');
-    const boxes=B.map(b=>'<g><rect x="'+b[1]+'" y="'+b[2]+'" width="'+b[3]+'" height="36" rx="7" fill="#fff" stroke="#c98f88"/><text x="'+(b[1]+b[3]/2)+'" y="'+(b[2]+22)+'" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#1a1e23">'+b[4]+'</text></g>').join('');
-    return '<svg viewBox="0 0 760 246">'+lines+boxes+'</svg>';}
+    const boxes=B.map(b=>'<g><rect x="'+b[1]+'" y="'+b[2]+'" width="'+b[3]+'" height="34" rx="7" fill="#fff" stroke="#c98f88"/><text x="'+(b[1]+b[3]/2)+'" y="'+(b[2]+21)+'" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#1a1e23">'+b[4]+'</text></g>').join('');
+    return '<svg viewBox="0 0 560 236">'+lines+boxes+'</svg>';}
   function sysPipeBad(){
-    return '<div class="sys-badflow">'+
-      '<div class="sys-bnode">'+t_('sys.s0t')+'</div><span class="sys-barrow">— HTTP →</span>'+
-      '<div class="sys-bnode">'+t_('sys.badEp2')+'</div><span class="sys-barrow">— SQL →</span>'+
+    return '<div class="sys-badcol">'+
+      '<div class="sys-bnode">'+t_('sys.s0t')+'</div><span class="sys-barrow">HTTP ↓</span>'+
+      '<div class="sys-bnode">'+t_('sys.badEp2')+'</div><span class="sys-barrow">SQL ↓</span>'+
       '<div class="sys-bnode">'+t_('sys.dbWord')+'</div>'+
-      '<div class="sys-miss"><b>'+t_('sys.badMissing')+'</b><span>✕ '+t_('sys.badNoAuth')+'</span><span>✕ '+t_('sys.badNoRbac')+'</span><span>✕ '+t_('sys.badNoAudit')+'</span></div>'+
+      '<div class="sys-missv"><b>'+t_('sys.badMissing')+'</b><span>✕ '+t_('sys.badNoAuth')+'</span><span>✕ '+t_('sys.badNoRbac')+'</span><span>✕ '+t_('sys.badNoAudit')+'</span></div>'+
       '</div>';}
   function sysPipe(){
     const steps=[
@@ -1213,8 +1217,8 @@
     ];
     return '<div class="sys-pipe" id="sys-pipe" style="--gi:4">'+steps.map((st,i)=>
       '<div class="sys-step '+st[0]+'" style="--i:'+i+'">'+
-        (st[0]==='gate'?'<div class="sys-deny"><span class="dt2">403 Forbidden</span><span class="dd2">'+t_('sys.s4xd')+'</span></div>':'')+
-        '<span class="ic">'+st[1]+'</span><div class="sb"><div class="st">'+t_(st[2])+'</div><span class="sc">'+st[3]+'</span>'+(st[4]?'<div class="sd">'+t_(st[4])+'</div>':'')+'</div></div>'
+        '<span class="ic">'+st[1]+'</span><div class="sb"><div class="st">'+t_(st[2])+'</div><span class="sc">'+st[3]+'</span>'+(st[4]?'<div class="sd">'+t_(st[4])+'</div>':'')+
+        (st[0]==='gate'?'<div class="sys-deny2"><span class="dt2">403 Forbidden</span><span class="dd2">'+t_('sys.s4xd')+'</span></div>':'')+'</div></div>'
     ).join('<div class="sys-conn"></div>')+'</div>';}
   function sysPitr(){
     const X=h=>30+700*(h/24);
@@ -1243,10 +1247,12 @@
       '<div class="sys-card"><div class="sys-chd">'+t_('sys.pitrHd')+'</div><div class="sys-cbd sys-fig sm">'+sysPitr()+'</div></div>'+
       '<div class="sys-note">'+SYSI.shield+'<span>'+t_('sys.p3note')+'</span></div>';}
   function renderSysMain(){const m=document.getElementById('sys-main');let inner='';
-    if(sysCur==='p1'){inner='<div class="sys-body"><div class="sys-card"><div class="sys-chd">'+t_('sys.p1hd')+'<span class="mono2">'+t_('sys.p1hd2')+'</span></div><div class="sys-cbd sys-fig">'+sysArch()+'</div></div>'+
-      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd sys-fig sm">'+sysArchBad()+'</div></div></div>';}
-    else if(sysCur==='p2'){inner='<div class="sys-body"><div class="sys-toolbar"><button class="cbtn" data-sysrun="ok">▶ '+t_('sys.runOk')+'</button><button class="cbtn" data-sysrun="deny">▶ '+t_('sys.runDeny')+'</button></div><div class="sys-card"><div class="sys-chd">'+t_('sys.p2hd')+'<span class="mono2">'+t_('sys.p2hd2')+'</span></div><div class="sys-cbd sys-pipewrap">'+sysPipe()+'</div></div>'+
-      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd">'+sysPipeBad()+'</div></div></div>';}
+    if(sysCur==='p1'){inner='<div class="sys-body"><div class="sys-split">'+
+      '<div class="sys-card"><div class="sys-chd">'+t_('sys.p1hd')+'<span class="mono2">'+t_('sys.p1hd2')+'</span></div><div class="sys-cbd sys-fig">'+sysArch()+'</div></div>'+
+      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd sys-fig">'+sysArchBad()+'</div></div></div></div>';}
+    else if(sysCur==='p2'){inner='<div class="sys-body"><div class="sys-toolbar"><button class="cbtn" data-sysrun="ok">▶ '+t_('sys.runOk')+'</button><button class="cbtn" data-sysrun="deny">▶ '+t_('sys.runDeny')+'</button></div><div class="sys-split">'+
+      '<div class="sys-card"><div class="sys-chd">'+t_('sys.p2hd')+'<span class="mono2">'+t_('sys.p2hd2')+'</span></div><div class="sys-cbd sys-pipewrap">'+sysPipe()+'</div></div>'+
+      '<div class="sys-card bad"><div class="sys-chd">'+t_('sys.badHd')+'</div><div class="sys-cbd">'+sysPipeBad()+'</div></div></div></div>';}
     else{inner='<div class="sys-body">'+sysP3()+'</div>';}
     m.innerHTML='<div class="phd"><div class="ptab">'+t_('sys.'+sysCur+'t')+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hcnt">'+(SYSP.indexOf(sysCur)+1)+' / 3</div><div class="hctl">'+DOTS+'</div></div>'+inner;}
   document.getElementById('sys-list').addEventListener('click',e=>{const r=e.target.closest('.sys-row');if(r){sysCur=r.dataset.k;renderSysList();renderSysMain();}});
