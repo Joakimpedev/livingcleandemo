@@ -273,6 +273,100 @@
   .avmeta2{font-size:9.5px;color:var(--faint);font-family:'IBM Plex Mono';margin-top:6px}
   .avaction{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.4}.avaction b{color:var(--ink)}
   .avmark{font-size:8px;font-weight:700;color:#fff;background:var(--red);padding:1px 5px;border-radius:8px;letter-spacing:.03em;vertical-align:middle}
+  /* ----- System (how it is built — meeting explainer) ----- */
+  .sys-body{flex:1;overflow:auto;min-height:0;padding:13px;display:flex;flex-direction:column;gap:12px;background:var(--canvas)}
+  .sys-intro{font-size:11.8px;color:var(--muted);line-height:1.5;padding:0 2px}
+  .sys-split{display:flex;gap:12px;align-items:stretch}
+  .sys-half{flex:1 1 0;min-width:0;border:1px solid;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;background:#fff}
+  .sys-half.bad{border-color:#dcb6b1}
+  .sys-half.good{border-color:#b7d2c1}
+  .sys-hd{display:flex;align-items:center;gap:8px;padding:8px 12px;font-family:'IBM Plex Mono';font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid}
+  .sys-hd .mk{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:9px;flex:0 0 auto}
+  .sys-half.bad .sys-hd{color:var(--red);border-color:#ecd5d2;background:var(--red-bg)}
+  .sys-half.bad .sys-hd .mk{background:var(--red)}
+  .sys-half.good .sys-hd{color:var(--green);border-color:#d2e4d9;background:var(--green-bg)}
+  .sys-half.good .sys-hd .mk{background:var(--green)}
+  .sys-fig{flex:1;display:grid;place-items:center;padding:12px 14px 2px}
+  .sys-fig svg{width:100%;max-width:440px;height:auto;display:block}
+  .sys-fig svg .tangle{transition:stroke-opacity .25s}
+  .sys-half.bad .sys-fig:hover svg .tangle{stroke-opacity:.9}
+  .sys-cap{padding:8px 14px 13px;font-size:11.8px;line-height:1.55}
+  .sys-cap b{font-weight:600}
+  .sys-half.bad .sys-cap{color:#7c423c}
+  .sys-half.good .sys-cap{color:#2e4f3b}
+  .sys-row{display:flex;gap:10px;padding:12px 13px;border-bottom:1px solid var(--line-2);cursor:pointer;align-items:flex-start}
+  .sys-row:hover{background:var(--panel-2)}
+  .sys-row.sel{background:var(--accent-bg)}
+  .sys-num{width:22px;height:22px;flex:0 0 auto;border-radius:6px;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'IBM Plex Mono';font-size:11px;font-weight:600}
+  .sys-row .rt{font-size:12.5px;font-weight:600;line-height:1.25}
+  .sys-row .rs{font-size:10.8px;color:var(--muted);margin-top:3px;line-height:1.4}
+  /* request flow (panel 2) */
+  .sys-toolbar{display:flex;gap:8px;align-items:center;justify-content:center}
+  .sys-toolbar .cbtn{background:#fff}
+  .sys-flow{position:relative;display:flex;align-items:center;width:100%;padding:30px 12px 12px;gap:0}
+  .sys-node{flex:0 0 auto;min-width:88px;max-width:46%;border:1px solid var(--line);background:#fff;border-radius:7px;padding:8px 10px;text-align:center;font-size:11.5px;font-weight:600;color:var(--ink)}
+  .sys-node .sub{display:block;font-weight:400;font-size:9.5px;color:var(--faint);margin-top:3px;line-height:1.35}
+  .sys-node svg{width:16px;height:16px;display:block;margin:0 auto 4px;color:var(--muted)}
+  .sys-node.gate{border-color:var(--accent);background:var(--accent-bg);color:var(--accent-d);min-width:112px}
+  .sys-node.gate svg{color:var(--accent-d)}
+  .sys-node.gate .sub{color:var(--blue)}
+  .sys-arrow{flex:1 1 0;min-width:20px;height:2px;background:var(--line);position:relative;margin:0 4px}
+  .sys-arrow::after{content:"";position:absolute;right:-2px;top:-3.5px;width:0;height:0;border:4.5px solid transparent;border-left-color:var(--line);border-right:none}
+  .sys-dot{position:absolute;left:3%;top:calc(50% + 4px);width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-bg);opacity:0;z-index:3;pointer-events:none}
+  .sys-tag{position:absolute;top:5px;font-family:'IBM Plex Mono';font-size:9px;font-weight:600;letter-spacing:.04em;padding:2.5px 9px;border-radius:9px;opacity:0;white-space:nowrap;z-index:4}
+  .sys-tag.deny{color:#fff;background:var(--red)}
+  .sys-tag.ok{color:#fff;background:var(--green)}
+  .sys-tag.warn{color:#fff;background:var(--amber)}
+  .sys-logrow{padding:0 12px 12px}
+  .sys-log{display:flex;align-items:center;gap:9px;border:1px dashed var(--line);border-radius:7px;background:var(--panel-2);padding:8px 11px;font-size:10.8px;color:var(--muted);line-height:1.4}
+  .sys-log svg{width:15px;height:15px;flex:0 0 auto;color:var(--muted)}
+  .sys-log b{color:var(--ink)}
+  @keyframes sysDotGo{0%{left:3%;opacity:0}10%{opacity:1}88%{opacity:1}100%{left:90%;opacity:0}}
+  @keyframes sysDotStop{0%{left:3%;opacity:0}10%{opacity:1}48%{left:43%}60%{left:40%;opacity:1}80%{left:41%;opacity:.5}100%{left:41%;opacity:0}}
+  @keyframes sysFlashRed{0%,35%{box-shadow:none}45%,80%{box-shadow:0 0 0 3px var(--red-bg);border-color:var(--red)}100%{box-shadow:none}}
+  @keyframes sysFlashGreen{0%,68%{box-shadow:none}78%,95%{box-shadow:0 0 0 3px var(--green-bg);border-color:var(--green)}100%{box-shadow:none}}
+  @keyframes sysTagIn{0%,52%{opacity:0;transform:translateY(4px)}64%,94%{opacity:1;transform:translateY(0)}100%{opacity:0}}
+  .sys-p2.run-ok .sys-flow .sys-dot{animation:sysDotGo 2.3s ease-in-out both}
+  .sys-p2.run-ok .sys-node.data{animation:sysFlashGreen 2.3s both}
+  .sys-p2.run-ok .sys-half.good .sys-tag.ok{animation:sysTagIn 3s both}
+  .sys-p2.run-ok .sys-half.bad .sys-tag.warn{animation:sysTagIn 3s both}
+  .sys-p2.run-ok .sys-half.good .sys-log{animation:sysFlashGreen 2.6s both;border-style:solid}
+  .sys-p2.run-deny .sys-half.bad .sys-dot{animation:sysDotGo 2.3s ease-in-out both;background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+  .sys-p2.run-deny .sys-half.bad .sys-node.data{animation:sysFlashRed 2.3s both}
+  .sys-p2.run-deny .sys-half.bad .sys-tag.deny{animation:sysTagIn 3s both}
+  .sys-p2.run-deny .sys-half.good .sys-dot{animation:sysDotStop 2.3s ease-in-out both;background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+  .sys-p2.run-deny .sys-half.good .sys-node.gate{animation:sysFlashRed 2.3s both}
+  .sys-p2.run-deny .sys-half.good .sys-tag.deny{animation:sysTagIn 3s both}
+  /* panel 3 bands */
+  .sys-band{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+  .sys-bhd{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:1px solid var(--line-2);background:var(--hd);font-size:11.5px;font-weight:600;color:var(--ink)}
+  .sys-bhd .bnum{width:17px;height:17px;border-radius:5px;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'IBM Plex Mono';font-size:9.5px;font-weight:600;flex:0 0 auto}
+  .sys-bbd{padding:12px}
+  .sys-days{display:flex;gap:8px}
+  .sys-day{flex:1;border:1px solid var(--line);border-radius:7px;background:var(--panel-2);padding:8px 4px;text-align:center}
+  .sys-day .dl{font-family:'IBM Plex Mono';font-size:9px;color:var(--faint);text-transform:uppercase}
+  .sys-day svg{width:15px;height:15px;margin:5px auto 0;display:block;color:var(--green)}
+  .sys-day.bad2{border-color:var(--red);background:var(--red-bg)}
+  .sys-day.bad2 svg{color:var(--red)}
+  .sys-day .dt{font-size:9px;margin-top:3px;color:var(--muted)}
+  .sys-day.bad2 .dt{color:var(--red);font-weight:600}
+  .sys-restore{display:flex;align-items:center;gap:9px;margin-top:9px;border:1px solid #cfe3d6;background:var(--green-bg);color:var(--green);border-radius:7px;padding:7px 11px;font-size:11px;font-weight:500}
+  .sys-restore svg{width:14px;height:14px;flex:0 0 auto}
+  .sys-par{display:grid;grid-template-columns:120px 1fr 1fr 1fr 104px;gap:6px;align-items:stretch;font-size:11px}
+  .sys-par .lab{display:flex;align-items:center;font-weight:600;color:var(--ink);padding:0 4px}
+  .sys-par .cell{border:1px solid var(--line);border-radius:6px;background:var(--panel-2);padding:7px 8px;text-align:center;font-family:'IBM Plex Mono';font-size:11px;color:var(--ink)}
+  .sys-par .cell .ph2{display:block;font-size:8.5px;color:var(--faint);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em}
+  .sys-par .end{display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:10px;font-weight:600;padding:4px 6px;text-align:center}
+  .sys-par .end.off{border:1px dashed var(--line);color:var(--faint);background:#fff}
+  .sys-par .end.on{border:1px solid #b7d2c1;color:var(--green);background:var(--green-bg)}
+  .sys-match{grid-column:2/5;display:flex;gap:6px}
+  .sys-match span{flex:1;text-align:center;color:var(--green);font-size:10px;font-weight:600;padding:3px 0;background:var(--green-bg);border-radius:5px}
+  .sys-parcap{margin-top:10px;font-size:11.8px;color:var(--ink);line-height:1.5}
+  .sys-chips3{display:flex;gap:10px}
+  .sys-chip3{flex:1;display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:8px;background:#fff;padding:10px 12px;font-size:11.3px;color:var(--ink);line-height:1.45}
+  .sys-chip3 svg{width:18px;height:18px;flex:0 0 auto;color:var(--accent)}
+  .sys-foot{font-size:10.3px;color:var(--faint);padding:0 2px 4px;display:flex;gap:7px;align-items:center;line-height:1.4}
+  .sys-foot svg{width:13px;height:13px;flex:0 0 auto}
   ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#bcc1c7;border:3px solid var(--panel)}::-webkit-scrollbar-thumb:hover{background:#a4abb2}::-webkit-scrollbar-track{background:transparent}
 </style>
 </head>
@@ -297,6 +391,7 @@
     <div class="group bottom">
       <div class="nav" data-mod="Customers"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13,2H4A2,2,0,0,0,2,4V22H14V3A1,1,0,0,0,13,2ZM7,19H5V17H7Zm0-4H5V13H7Zm0-4H5V9H7Zm0-4H5V5H7Zm4,12H9V17h2Zm0-4H9V13h2Zm0-4H9V9h2Zm0-4H9V5h2Z"/><path d="M21,9H16a1,1,0,0,0-1,1V22h7V11A2,2,0,0,0,21,9ZM19,19H17V17h2Zm0-4H17V13h2Z" fill="#2d5d8c"/></svg><span data-i18n="nav.customers">Customers</span></div>
       <div class="nav" data-mod="Employees"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15,12H9a6,6,0,0,0-6,6v1a1,1,0,0,0,.29.71C3.53,19.94,5.77,22,12,22s8.47-2.06,8.71-2.29A1,1,0,0,0,21,19V18A6,6,0,0,0,15,12Z" fill="#2d5d8c"/><circle cx="12" cy="8" r="6"/></svg><span data-i18n="nav.employees">Employees</span></div>
+      <div class="nav" data-mod="System"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,2,3.5,5.06V11c0,5.55,3.58,10,8.5,11.74C16.92,21,20.5,16.55,20.5,11V5.06Z"/><path d="m10.94,15.06-2.5-2.5a1,1,0,0,1,1.41-1.41l1.79,1.79,3.99-4a1,1,0,1,1,1.42,1.42l-4.7,4.7a1,1,0,0,1-1.41,0Z" fill="#2d5d8c"/></svg><span data-i18n="nav.system">System</span></div>
       <div class="nav" data-mod="Settings"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.89,9.78h-.65a1.16,1.16,0,0,1-1-.74V9a1.13,1.13,0,0,1,.22-1.26l.46-.46a1.13,1.13,0,0,0,0-1.58L18.29,4.14a1.13,1.13,0,0,0-1.58,0l-.46.46A1.13,1.13,0,0,1,15,4.82h0a1.16,1.16,0,0,1-.74-1V3.11A1.11,1.11,0,0,0,13.11,2H10.89A1.11,1.11,0,0,0,9.78,3.11v.65a1.16,1.16,0,0,1-.74,1H9A1.13,1.13,0,0,1,7.75,4.6l-.46-.46a1.13,1.13,0,0,0-1.58,0L4.14,5.71a1.13,1.13,0,0,0,0,1.58l.46.46A1.13,1.13,0,0,1,4.82,9V9a1.16,1.16,0,0,1-1,.74H3.11A1.11,1.11,0,0,0,2,10.89v2.22a1.11,1.11,0,0,0,1.11,1.11h.65a1.16,1.16,0,0,1,1,.74v0a1.13,1.13,0,0,1-.22,1.26l-.46.46a1.13,1.13,0,0,0,0,1.58l1.57,1.57a1.13,1.13,0,0,0,1.58,0l.46-.46A1.13,1.13,0,0,1,9,19.18H9a1.16,1.16,0,0,1,.74,1v.65A1.11,1.11,0,0,0,10.89,22h2.22a1.11,1.11,0,0,0,1.11-1.11v-.65a1.16,1.16,0,0,1,.74-1h0a1.13,1.13,0,0,1,1.26.22l.46.46a1.13,1.13,0,0,0,1.58,0l1.57-1.57a1.13,1.13,0,0,0,0-1.58l-.46-.46A1.13,1.13,0,0,1,19.18,15v0a1.16,1.16,0,0,1,1-.74h.65A1.11,1.11,0,0,0,22,13.11V10.89A1.11,1.11,0,0,0,20.89,9.78Z"/><circle cx="12" cy="12" r="4" fill="#2d5d8c"/></svg><span data-i18n="nav.settings">Settings</span></div>
       <div class="nav" data-mod="Help"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12,17a1,1,0,0,1-1-1V12a1,1,0,0,1,2,0v4A1,1,0,0,1,12,17ZM12,6.5A1.5,1.5,0,1,0,13.5,8,1.5,1.5,0,0,0,12,6.5Z" fill="#2d5d8c"/></svg><span data-i18n="nav.help">Help</span></div>
     </div>
@@ -395,6 +490,17 @@
         <div class="convcol" id="cust-profile"></div>
         <div class="rsz-x" data-rz="next"></div>
         <div class="rightcol" id="cust-right"></div>
+      </div>
+    </div>
+
+    <div class="screen" data-screen="System">
+      <div class="panes">
+        <div class="listpane" style="--w:250px">
+          <div class="phd"><div class="ptab"><span data-i18n="sys.tab">How it is built</span> <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div></div>
+          <div class="pbd" id="sys-list"></div>
+        </div>
+        <div class="rsz-x" data-rz="prev"></div>
+        <div class="convcol" id="sys-main"></div>
       </div>
     </div>
 
@@ -523,7 +629,66 @@
     'jobs.openWord':{en:'open',no:'åpne'},
     'tab.messages':{en:'Messages',no:'Meldinger'},
     'btn.send':{en:'Send',no:'Send'},
-    'emp.msgPlaceholder':{en:'Message ',no:'Send melding til '}
+    'emp.msgPlaceholder':{en:'Message ',no:'Send melding til '},
+    /* system explainer */
+    'nav.system':{en:'System',no:'System'},
+    'sys.tab':{en:'How it is built',no:'Slik er det bygd'},
+    'sys.intro1':{en:'Three pictures that show why the system is safe and can grow. Step through 1–2–3.',no:'Tre bilder som viser hvorfor systemet er trygt og kan vokse. Gå gjennom 1–2–3.'},
+    'sys.badHd':{en:'How it is often done',no:'Slik gjøres det ofte'},
+    'sys.goodHd':{en:'How this is built',no:'Slik er dette bygd'},
+    'sys.p1t':{en:'Building blocks — not a tangle',no:'Byggeklosser — ikke floke'},
+    'sys.p1s':{en:'New feature = a new block, never a rebuild',no:'Ny funksjon = ny kloss, aldri ombygging'},
+    'sys.p2t':{en:'The lock sits in front of the data',no:'Låsen sitter foran dataene'},
+    'sys.p2s':{en:'Every request is checked — and everything is logged',no:'Hver forespørsel sjekkes — og alt loggføres'},
+    'sys.p3t':{en:'The data is never lost',no:'Dataene går aldri tapt'},
+    'sys.p3s':{en:'Daily copies, EU storage, parallel run on payroll',no:'Daglige kopier, EU-lagring, parallellkjøring på lønn'},
+    'sys.p1badCap':{en:'<b>Everything is woven into everything.</b> The apps reach straight into the database and the parts poke around in each other. One change can break something completely different — a new feature means surgery on the whole tangle.',no:'<b>Alt er vevd inn i alt.</b> Appene går rett i databasen, og delene roter i hverandre. Én endring kan knekke noe helt annet — en ny funksjon betyr inngrep i hele floken.'},
+    'sys.p1goodCap':{en:'<b>Each part is its own block behind one door.</b> Apps and admin all pass the same checked entrance. A new feature is a new block — nothing existing is torn down.',no:'<b>Hver del er sin egen kloss bak én dør.</b> Apper og admin går gjennom samme kontrollerte inngang. Ny funksjon er en ny kloss — ingenting eksisterende rives.'},
+    'sys.adminP':{en:'Admin panel',no:'Adminpanel'},
+    'sys.custApp':{en:'Customer app',no:'Kundeapp'},
+    'sys.empApp':{en:'Employee app',no:'Ansattapp'},
+    'sys.modTs':{en:'Timesheet',no:'Timeføring'},
+    'sys.modCs':{en:'Customer service',no:'Kundeservice'},
+    'sys.modMsg':{en:'Messages',no:'Meldinger'},
+    'sys.modNext':{en:'+ next module',no:'+ neste modul'},
+    'sys.oneDoor':{en:'ONE DOOR IN',no:'ÉN DØR INN'},
+    'sys.oneDoorSub':{en:'the same checked entrance for everyone',no:'samme kontrollerte inngang for alle'},
+    'sys.oneDb':{en:'One database — one truth',no:'Én database — én sannhet'},
+    'sys.dbWord':{en:'Database',no:'Database'},
+    'sys.p2btnOk':{en:'Send a request',no:'Send en forespørsel'},
+    'sys.p2btnDeny':{en:'Try without access',no:'Prøv uten tilgang'},
+    'sys.screen':{en:'Screen',no:'Skjerm'},
+    'sys.screenSubBad':{en:'the “lock” is a hidden button',no:'«låsen» er en skjult knapp'},
+    'sys.screenSubGood':{en:'app or admin — same rules',no:'app eller admin — samme regler'},
+    'sys.gate':{en:'THE GUARD',no:'VAKTEN'},
+    'sys.gateSub':{en:'Who are you? Is your role allowed?',no:'Hvem er du? Har rollen din lov?'},
+    'sys.data':{en:'Data',no:'Data'},
+    'sys.dataSubBad':{en:'no check in front',no:'ingen sjekk foran'},
+    'sys.dataSubGood':{en:'opens only after the guard',no:'åpnes først etter vakten'},
+    'sys.tagDenied':{en:'DENIED — never reached the data',no:'AVVIST — nådde aldri dataene'},
+    'sys.tagStraightIn':{en:'straight in — nobody noticed',no:'rett inn — ingen merket det'},
+    'sys.tagOk':{en:'OK — and logged',no:'OK — og loggført'},
+    'sys.tagNoLog':{en:'changed — no trace left',no:'endret — uten spor'},
+    'sys.logbook':{en:'<b>THE LOGBOOK:</b> every change is written down — who, what, when. Full traceability, always.',no:'<b>LOGGBOKEN:</b> alt som endres skrives ned — hvem, hva, når. Full sporbarhet, alltid.'},
+    'sys.p2badCap':{en:'<b>The “security” is a hidden button in the app.</b> Anyone who goes around the app reaches the data directly — and leaves no trace behind.',no:'<b>«Sikkerheten» er en skjult knapp i appen.</b> Den som går utenom appen, når dataene direkte — og etterlater ikke noe spor.'},
+    'sys.p2goodCap':{en:'<b>The check happens on the server, in front of the data — every single time.</b> There is no way around the guard, and every change lands in the logbook.',no:'<b>Sjekken skjer på serveren, foran dataene — hver eneste gang.</b> Det finnes ingen vei utenom vakten, og hver endring havner i loggboken.'},
+    'sys.p3aHd':{en:'Automatic copy every night',no:'Automatisk kopi hver natt'},
+    'sys.p3days':{en:'Mon Tue Wed Thu Fri Sat Sun',no:'man tir ons tor fre lør søn'},
+    'sys.p3copy':{en:'copy',no:'kopi'},
+    'sys.p3oops':{en:'incident',no:'uhell'},
+    'sys.p3restore':{en:'Restored from the night’s copy — nothing lost, nobody notices.',no:'Gjenopprettet fra nattens kopi — ingenting tapt, ingen merker noe.'},
+    'sys.p3bHd':{en:'Parallel run before payroll is switched',no:'Parallellkjøring før lønn byttes'},
+    'sys.p3old':{en:'Today’s system',no:'Dagens system'},
+    'sys.p3new':{en:'This system',no:'Dette systemet'},
+    'sys.p3per':{en:'Payroll run',no:'Lønnskjøring'},
+    'sys.p3match':{en:'✓ the numbers match',no:'✓ tallene stemmer'},
+    'sys.p3off':{en:'switched off',no:'skrus av'},
+    'sys.p3on':{en:'takes over ✓',no:'tar over ✓'},
+    'sys.p3parCap':{en:'Both systems run side by side for 2–3 payroll periods. <b>Only when you see the numbers match is the old one switched off — no one’s pay is ever at risk.</b>',no:'Begge systemene kjører side om side i 2–3 lønnsperioder. <b>Først når dere ser at tallene stemmer, skrus det gamle av — ingens lønn er noen gang i fare.</b>'},
+    'sys.p3eu':{en:'<b>Stored in the EU.</b> The data physically lives in the EU and never leaves the EU/EEA.',no:'<b>Lagret i EU.</b> Dataene ligger fysisk i EU og forlater aldri EU/EØS.'},
+    'sys.p3enc':{en:'<b>Encrypted</b> in transit and at rest — locked on the way and on the shelf.',no:'<b>Kryptert</b> under sending og i ro — låst på veien og på hylla.'},
+    'sys.p3ver':{en:'<b>Backups verified by restore.</b> A copy that was never tested is not a copy.',no:'<b>Kopier verifisert med gjenoppretting.</b> En kopi som aldri er testet, er ingen kopi.'},
+    'sys.p3note':{en:'Production checklist: these items are configured and verified before any real personal data is moved in.',no:'Produksjonssjekkliste: punktene konfigureres og verifiseres før ekte persondata flyttes inn.'}
   };
   function t(k){const e=DICT[k];return e?(e[LOCALE]||e.en):k;}
   const t_=t; // alias for use inside functions whose loop/param var is named `t`
@@ -982,8 +1147,96 @@
     [{tabs:['billing'],active:'billing'},{tabs:['docs','notes'],active:'docs'}],
     {billing:{label:()=>t_('tab.billing'),body:custBillBody},docs:{label:()=>t_('tab.documents'),body:custDocBody},notes:{label:()=>t_('tab.notes'),body:custNotesBody}});
 
+  /* ----- System (how it is built — meeting explainer) ----- */
+  let sysCur='p1';
+  const SYSP=['p1','p2','p3'];
+  const SYSI={
+    db:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4.5 4.8V11c0 5 3.2 8.7 7.5 10.4C16.3 19.7 19.5 16 19.5 11V4.8z"/><path d="m9 11.5 2.2 2.2L15.5 9"/></svg>',
+    screen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>',
+    book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17.5H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/></svg>',
+    restore:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>',
+    globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
+    lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+    warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 2.5 20h19z"/><path d="M12 9.5V14M12 16.8v.2"/></svg>'
+  };
+  function renderSysList(){document.getElementById('sys-list').innerHTML=SYSP.map((k,i)=>
+    '<div class="sys-row'+(k===sysCur?' sel':'')+'" data-k="'+k+'"><div class="sys-num">'+(i+1)+'</div><div><div class="rt">'+t_('sys.'+k+'t')+'</div><div class="rs">'+t_('sys.'+k+'s')+'</div></div></div>').join('');}
+  function sysSplit(bad,good){return '<div class="sys-split">'+
+    '<div class="sys-half bad"><div class="sys-hd"><span class="mk">✕</span>'+t_('sys.badHd')+'</div>'+bad+'</div>'+
+    '<div class="sys-half good"><div class="sys-hd"><span class="mk">✓</span>'+t_('sys.goodHd')+'</div>'+good+'</div></div>';}
+  function sysP1Bad(){
+    const B=[['admin',16,14,96,t_('sys.adminP')],['app',268,12,96,t_('sys.custApp')],['msg',142,56,96,t_('sys.modMsg')],['ts',28,110,96,t_('sys.modTs')],['cs',248,106,112,t_('sys.modCs')],['db',140,202,100,t_('sys.dbWord')]];
+    const C={};B.forEach(b=>{C[b[0]]=[b[1]+b[3]/2,b[2]+15];});
+    const P=[['admin','app',0],['admin','msg',0],['admin','ts',0],['admin','cs',0],['admin','db',1],['app','msg',0],['app','ts',0],['app','cs',0],['app','db',1],['msg','ts',0],['msg','cs',0],['msg','db',0],['ts','cs',0],['ts','db',0],['cs','db',0]];
+    const lines=P.map(p=>'<line class="tangle" x1="'+C[p[0]][0]+'" y1="'+C[p[0]][1]+'" x2="'+C[p[1]][0]+'" y2="'+C[p[1]][1]+'" stroke="#a82820" stroke-opacity=".38" stroke-width="1.4"'+(p[2]?' stroke-dasharray="5 3"':'')+'/>').join('');
+    const boxes=B.map(b=>'<g><rect x="'+b[1]+'" y="'+b[2]+'" width="'+b[3]+'" height="30" rx="6" fill="#fff" stroke="#c98f88"/><text x="'+(b[1]+b[3]/2)+'" y="'+(b[2]+19)+'" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#1a1e23">'+b[4]+'</text></g>').join('');
+    return '<svg viewBox="0 0 380 248">'+lines+boxes+'</svg>';}
+  function sysP1Good(){
+    const surf=[[16,t_('sys.custApp')],[138,t_('sys.empApp')],[260,t_('sys.adminP')]];
+    const mods=[[16,t_('sys.modTs'),0],[106,t_('sys.modCs'),0],[196,t_('sys.modMsg'),0],[286,t_('sys.modNext'),1]];
+    let s='<svg viewBox="0 0 380 300">';
+    surf.forEach(x=>{const cx=x[0]+52;
+      s+='<rect x="'+x[0]+'" y="10" width="104" height="28" rx="6" fill="#fff" stroke="#cbd0d6"/><text x="'+cx+'" y="28" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#1a1e23">'+x[1]+'</text>'+
+        '<line x1="'+cx+'" y1="38" x2="'+cx+'" y2="70" stroke="#9fb6c9" stroke-width="1.6"/><path d="M'+(cx-4)+' 68l4 7 4-7z" fill="#9fb6c9"/>';});
+    s+='<rect x="16" y="78" width="348" height="40" rx="8" fill="#e6edf4" stroke="#2d5d8c" stroke-width="1.4"/>';
+    s+='<rect x="28" y="92" width="12" height="11" rx="2" fill="#2d5d8c"/><path d="M31 92v-3a3 3 0 0 1 6 0v3" fill="none" stroke="#2d5d8c" stroke-width="1.6"/>';
+    s+='<text x="196" y="95" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" font-weight="600" fill="#234b71">'+t_('sys.oneDoor')+'</text>';
+    s+='<text x="196" y="109" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="8.5" fill="#2a5379">'+t_('sys.oneDoorSub')+'</text>';
+    mods.forEach(m=>{const cx=m[0]+40;
+      s+='<line x1="'+cx+'" y1="118" x2="'+cx+'" y2="146" stroke="#9fb6c9" stroke-width="1.6"/><path d="M'+(cx-4)+' 144l4 7 4-7z" fill="#9fb6c9"/>';
+      s+=m[2]?'<rect x="'+m[0]+'" y="152" width="80" height="44" rx="6" fill="none" stroke="#2d5d8c" stroke-dasharray="5 4"/><text x="'+cx+'" y="178" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#2d5d8c">'+m[1]+'</text>'
+        :'<rect x="'+m[0]+'" y="152" width="80" height="44" rx="6" fill="#fff" stroke="#cbd0d6"/><text x="'+cx+'" y="178" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9.5" fill="#1a1e23">'+m[1]+'</text>';
+      if(!m[2])s+='<line x1="'+cx+'" y1="196" x2="'+cx+'" y2="238" stroke="#cbd0d6" stroke-width="1.6"/>';});
+    s+='<rect x="16" y="242" width="348" height="30" rx="7" fill="#f6f7f9" stroke="#cbd0d6"/>';
+    s+='<text x="190" y="261" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" font-weight="600" fill="#1a1e23">'+t_('sys.oneDb')+'</text>';
+    return s+'</svg>';}
+  function sysNode(cls,icon,label,sub){return '<div class="sys-node'+(cls?' '+cls:'')+'">'+icon+label+'<span class="sub">'+sub+'</span></div>';}
+  function sysFlowBad(){return '<div class="sys-flow">'+
+    '<div class="sys-dot"></div>'+
+    '<div class="sys-tag deny" style="right:3%">'+t_('sys.tagStraightIn')+'</div>'+
+    '<div class="sys-tag warn" style="right:3%">'+t_('sys.tagNoLog')+'</div>'+
+    sysNode('',SYSI.screen,t_('sys.screen'),t_('sys.screenSubBad'))+
+    '<div class="sys-arrow"></div>'+
+    sysNode('data',SYSI.db,t_('sys.data'),t_('sys.dataSubBad'))+
+    '</div>';}
+  function sysFlowGood(){return '<div class="sys-flow">'+
+    '<div class="sys-dot"></div>'+
+    '<div class="sys-tag deny" style="left:30%">'+t_('sys.tagDenied')+'</div>'+
+    '<div class="sys-tag ok" style="right:3%">'+t_('sys.tagOk')+'</div>'+
+    sysNode('',SYSI.screen,t_('sys.screen'),t_('sys.screenSubGood'))+
+    '<div class="sys-arrow"></div>'+
+    sysNode('gate',SYSI.shield,t_('sys.gate'),t_('sys.gateSub'))+
+    '<div class="sys-arrow"></div>'+
+    sysNode('data',SYSI.db,t_('sys.data'),t_('sys.dataSubGood'))+
+    '</div>';}
+  function sysP3(){
+    const days=t_('sys.p3days').split(' ');
+    const cells=days.map((d,i)=>{const bad=i===3;return '<div class="sys-day'+(bad?' bad2':'')+'"><div class="dl">'+d+'</div>'+(bad?SYSI.warn:SYSI.db)+'<div class="dt">'+(bad?t_('sys.p3oops'):t_('sys.p3copy'))+'</div></div>';}).join('');
+    const vals=['1 482','1 396','1 451'];
+    const row=vals.map((v,i)=>'<div class="cell"><span class="ph2">'+t_('sys.p3per')+' '+(i+1)+'</span>'+v+' '+t_('unit.h')+'</div>').join('');
+    return '<div class="sys-band"><div class="sys-bhd"><span class="bnum">1</span>'+t_('sys.p3aHd')+'</div><div class="sys-bbd"><div class="sys-days">'+cells+'</div><div class="sys-restore">'+SYSI.restore+'<span>'+t_('sys.p3restore')+'</span></div></div></div>'+
+      '<div class="sys-band"><div class="sys-bhd"><span class="bnum">2</span>'+t_('sys.p3bHd')+'</div><div class="sys-bbd"><div class="sys-par">'+
+        '<div class="lab">'+t_('sys.p3old')+'</div>'+row+'<div class="end off">'+t_('sys.p3off')+'</div>'+
+        '<div class="lab">'+t_('sys.p3new')+'</div>'+row+'<div class="end on">'+t_('sys.p3on')+'</div>'+
+        '<div></div><div class="sys-match"><span>'+t_('sys.p3match')+'</span><span>'+t_('sys.p3match')+'</span><span>'+t_('sys.p3match')+'</span></div><div></div>'+
+      '</div><div class="sys-parcap">'+t_('sys.p3parCap')+'</div></div></div>'+
+      '<div class="sys-chips3"><div class="sys-chip3">'+SYSI.globe+'<span>'+t_('sys.p3eu')+'</span></div><div class="sys-chip3">'+SYSI.lock+'<span>'+t_('sys.p3enc')+'</span></div><div class="sys-chip3">'+SYSI.restore+'<span>'+t_('sys.p3ver')+'</span></div></div>'+
+      '<div class="sys-foot">'+SYSI.shield+'<span>'+t_('sys.p3note')+'</span></div>';}
+  function renderSysMain(){const m=document.getElementById('sys-main');let inner='';
+    if(sysCur==='p1'){inner='<div class="sys-body"><div class="sys-intro">'+t_('sys.intro1')+'</div>'+sysSplit(
+      '<div class="sys-fig">'+sysP1Bad()+'</div><div class="sys-cap">'+t_('sys.p1badCap')+'</div>',
+      '<div class="sys-fig">'+sysP1Good()+'</div><div class="sys-cap">'+t_('sys.p1goodCap')+'</div>')+'</div>';}
+    else if(sysCur==='p2'){inner='<div class="sys-body sys-p2" id="sys-p2"><div class="sys-toolbar"><button class="cbtn" data-sysrun="ok">▶ '+t_('sys.p2btnOk')+'</button><button class="cbtn" data-sysrun="deny">▶ '+t_('sys.p2btnDeny')+'</button></div>'+sysSplit(
+      sysFlowBad()+'<div class="sys-cap">'+t_('sys.p2badCap')+'</div>',
+      sysFlowGood()+'<div class="sys-logrow"><div class="sys-log">'+SYSI.book+'<span>'+t_('sys.logbook')+'</span></div></div><div class="sys-cap">'+t_('sys.p2goodCap')+'</div>')+'</div>';}
+    else{inner='<div class="sys-body">'+sysP3()+'</div>';}
+    m.innerHTML='<div class="phd"><div class="ptab">'+t_('sys.'+sysCur+'t')+' <span class="cx">×</span></div><div class="padd">+</div><div class="grow"></div><div class="hcnt">'+(SYSP.indexOf(sysCur)+1)+' / 3</div><div class="hctl">'+DOTS+'</div></div>'+inner;}
+  document.getElementById('sys-list').addEventListener('click',e=>{const r=e.target.closest('.sys-row');if(r){sysCur=r.dataset.k;renderSysList();renderSysMain();}});
+  document.getElementById('sys-main').addEventListener('click',e=>{const b=e.target.closest('[data-sysrun]');if(!b)return;const p=document.getElementById('sys-p2');if(!p)return;p.classList.remove('run-ok','run-deny');void p.offsetWidth;p.classList.add(b.dataset.sysrun==='ok'?'run-ok':'run-deny');});
+
   /* ---------------- shared mechanisms ---------------- */
-  const NAVKEY={'Timesheet':'nav.timesheet','Customer Service':'nav.service','Scheduling':'nav.schedule','Jobs':'nav.jobs','Customers':'nav.customers','Employees':'nav.employees','Settings':'nav.settings','Help':'nav.help'};
+  const NAVKEY={'Timesheet':'nav.timesheet','Customer Service':'nav.service','Scheduling':'nav.schedule','Jobs':'nav.jobs','Customers':'nav.customers','Employees':'nav.employees','System':'nav.system','Settings':'nav.settings','Help':'nav.help'};
   function navLabel(m){return DICT[NAVKEY[m]]?t(NAVKEY[m]):m;}
   let curPhMod=null;
   function showScreen(mod){let m=null;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.screen').forEach(s=>{if(s.dataset.screen===mod)m=s;});
@@ -1013,6 +1266,7 @@
   renderEmpDir();renderProfile(empCur);
   renderJobSeg();renderJobTable();
   renderCustList();renderCustProfile(custCur);
+  renderSysList();renderSysMain();
   renderRailBadges();
 
   /* re-render everything on language change */
@@ -1024,6 +1278,7 @@
     renderEmpDir();renderProfile(empCur);
     renderJobSeg();renderJobTable();
     renderCustList();renderCustProfile(custCur);
+    renderSysList();renderSysMain();
     renderRailBadges();
     csDock();tsDock();schedDock();empDock();jobDock();custDock();
     const ph=document.querySelector('.screen.ph');if(curPhMod&&ph&&ph.classList.contains('on'))showScreen(curPhMod);
