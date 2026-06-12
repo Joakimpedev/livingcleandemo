@@ -295,7 +295,7 @@
   .sys-toolbar .cbtn{background:#fff}
   .sys-pipewrap{display:flex;justify-content:center}
   .sys-pipe{width:100%;max-width:560px;display:flex;flex-direction:column}
-  .sys-step{position:relative;display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:7px;background:#fff;padding:6px 11px;min-width:0}
+  .sys-step{position:relative;display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:7px;background:#fff;padding:6px 11px;min-width:0;min-height:52px;box-sizing:border-box}
   .sys-step .ic{width:17px;height:17px;flex:0 0 auto;color:var(--muted);margin-top:2px}
   .sys-step .ic svg{width:100%;height:100%;display:block}
   .sys-step.gate .ic{color:var(--accent-d)}
@@ -1202,8 +1202,9 @@
       ['',SYSI.route,t_('sys.badEpT'),t_('sys.badEp'),''],
       ['miss',X,t_('sys.s3t'),M,''],
       ['miss',X,t_('sys.s4t'),M,''],
-      ['',SYSI.db,t_('sys.dbWord'),t_('sys.bDbc'),''],
+      ['',SYSI.cog,t_('sys.s5t'),t_('sys.bDbc'),''],
       ['miss',X,t_('sys.audit'),M,''],
+      ['miss',X,t_('sys.s7t'),M,''],
       ['',SYSI.check,t_('sys.s8t'),'200 OK','']
     ];
     return '<div class="sys-pipe sys-pipeb" id="sys-pipeb">'+st.map((s,i)=>sysStepHtml(s[0],i,s[1],s[2],s[3],s[4])).join('<div class="sys-conn"></div>')+'</div>';}
