@@ -24,11 +24,11 @@
   .app{display:grid;grid-template-rows:46px 1fr 22px;grid-template-columns:62px 1fr;width:calc(100vw / var(--zoom));height:calc(100vh / var(--zoom));transform:scale(var(--zoom));transform-origin:0 0}
 
   .topbar{grid-column:1/3;display:flex;align-items:center;background:var(--topbar);border-bottom:1px solid var(--line);height:46px;padding-left:10px;position:relative}
-  .brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;pointer-events:none;user-select:none}
-  .brand img{height:22px;display:block}
-  .brand .bt{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:.01em}
-  .brand .bt b{font-weight:600}
-  .brand .bt span{color:var(--muted);font-weight:500}
+  .brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;pointer-events:none;user-select:none}
+  .brand img{height:19px;display:block}
+  .brand .bt{font-size:12.5px;line-height:1;color:var(--ink);display:flex;align-items:baseline;gap:6px}
+  .brand .bt b{font-weight:600;letter-spacing:.01em}
+  .brand .bt span{color:var(--faint);font-weight:500;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase}
   .search{width:330px;position:relative}
   .search input{width:100%;height:28px;background:#fff;border:1px solid var(--line);padding:0 12px 0 30px;font-family:inherit;font-size:12px;color:var(--ink);outline:none;border-radius:14px}
   .search input:focus{border-color:var(--accent)}
